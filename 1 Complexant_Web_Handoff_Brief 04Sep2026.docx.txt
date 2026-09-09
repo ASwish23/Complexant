@@ -1,0 +1,290 @@
+﻿Complexant Partners LLC logo 
+
+COMPLEXANT PARTNERS LLC
+
+
+Web Design Hand-off Brief
+Preliminary package for scope and quote. Draft 04Sep2026.
+
+
+
+
+________________
+How to read this document
+This is a condensed brief, not the full hand-off. It gathers the brand decisions that are settled so you can scope the work and give us a quote. A complete asset package, sitemap, and copy deck follow once scope is agreed.
+
+
+Sections 2, 3, 5, 6, 7 decided conceptually and will not change in substance; wording may still tweak, and we are open to your input on how it is expressed.
+Section 4 is a placeholder for pillars/service lines. Wording and details being developed in parallel and available by time of build.
+Section 10 lists what is still open, so you can price around it. If anything here conflicts with an earlier file you have received, this document wins.
+________________
+1. Company facts
+Item
+	Detail
+ 
+	Legal name
+	Complexant Partners LLC 
+(no comma or periods; LLC included in wordmark)
+	Entity
+	Delaware limited liability company, 
+formed 02Jun2026
+	Registered address
+	8 The Green, Suite 24683, Dover, DE 19901
+	Founders
+	Alexandra (Lexie) Pieper and Anthony Davis 
+50/50 partners and co-founders
+	Primary domain
+	complexantpartners.com 
+(registered at IONOS, with Domain Guard). 
+This is the site we are building.
+	Second domain
+	complexantpartners.ai 
+(same registrar IONOS). 
+Held for the toolbox, which is in development. Build the .com so the .ai can be connected later without a rebuild; see Section 1a.
+	General inbox
+	info@complexantpartners.com
+	Lexie Pieper
+	lexiepieper@complexantpartners.com
+	Anthony Davis
+	anthonydavis@complexantpartners.com
+	Launch timing
+	Soft launch October 2026 
+Hard launch January 2027, anchored to in-person roundtable late January
+	Email is hosted at IONOS today. Tell us if your build assumes a different mail or DNS arrangement.
+1a. The two domains, and what we need from the build
+We are building complexantpartners.com now. We also hold complexantpartners.ai, which will carry a client-facing toolbox in the future. We are not asking you to build the toolbox or second site. Ask: the .com is built so the .ai can be attached later without rebuilding. Concretely:
+* Both domains are ours and we can use or hold them as needed. The .ai can either park or redirect to the .com for now; tell us which you recommend, including whether a placeholder now and a subdomain later is the cleaner path.
+* The design system, type, color, and components are built so a subdomain or a separate .ai property can reuse them rather than be redesigned.
+* Navigation and footer can take a new top-level destination (a tools or platform entry) later without a restructure.
+* Nothing in the build hard-codes a single hostname in a way that makes adding the second one a migration.
+
+
+2. Name, mission, and purpose
+Mission (what we do)
+Complexant Partners guides regulated life sciences companies in closing gaps, turning complexity into competency and competency into clarity. We partner to build confidence, governance and infrastructure that makes innovation safe, defensible, and reliable.
+Purpose (why we exist)
+Regulated operations are evolving faster than the confidence to trust them. Companies are told to adopt or fall behind, then left alone with the only question that matters in this industry: prove it.
+Hero statement
+Safely adapting to innovation. Intelligence you can trust.
+Motto and tagline
+Complexity. Competency. Clarity.
+
+
+"Intelligence you can trust" is the hero anchor and closes the hero statement. "Complexity. Competency. Clarity." is the motto and is what appears near the logo, in the footer, and on the favicon-adjacent brand furniture.
+The name
+Complexant carries "Lex" and "Ant" from the two founders' names, Lexie and Anthony, and the idea that we make the complex simple: adopt then adapt. The X is the brand's signature letter and is always the element that gets the special treatment. See Section 6.
+________________
+3. Who the site is speaking to (clients)
+One primary reader, one secondary gatekeeper. The site should be written for the first and give them ammunition for the second.
+Primary: the quality leader
+* Heads of Quality, Regulatory, IT, and Validation, plus CTOs and COOs, Director level through Chief Quality Officer.
+* Pharmaceuticals, biologics, cell and gene therapy, medical devices, and IVD (in vitro diagnostics).
+* Mid-size and emerging companies, Phase 2 and beyond. Any stage of maturity, from paper-based systems through predictive analytics. We are not opposed to partnering with large companies; they are simply not the primary target.
+* GMP-fluent, curious about AI and innovation, and wary of it. They have sat through vendor demos that could not answer an inspector's first question. They personally answer for "who approved this, and on what evidence?"
+Secondary: the gatekeepers
+* Financial, cybersecurity, and regulatory decision-makers who sign off on spend.
+* The copy has to hand the quality leader the words to win the CFO conversation: predictable cost, reduced inspection exposure, no science project.
+What clients are buying
+A boutique practice with roughly 60 years of combined experience in the exact roles they hold. Personal involvement from both principals, not a bench of juniors. The ability to say yes to fast-moving innovation and still be able to prove it.
+________________
+4. Placeholder examples for Pillars/Service Lines 
+Four pillars, in sequence. This is the spine of the site's structure and the likely shape of the main navigation. No pricing appears anywhere on the site.
+Pillar
+	What it is, in client language
+	State at go-live
+ 
+	1. Regulatory risk
+	Find out where the exposure actually is across the quality system, compliance, and regulatory intelligence. Inventory of innovation use cases (for example AI and automation), GxP classification, risk ranking by system and data type, data integrity review, and a gap snapshot with a recommended roadmap.
+	Live as process and consultancy. A supporting tool is in development and rolls out after go-live. Needs a placeholder in the build, inactive or marked coming soon.
+	2. Sandbox
+	Prove it before innovation touches production. A contained environment that emulates the real system, so tools and models are tested against regulatory expectations without any path back into live systems.
+	Tool in development, rolling out after go-live. Needs a placeholder in the build, inactive or marked coming soon.
+	3. Implementation
+	Put it in place and make it hold up. Governance frameworks, validation strategy, documentation, and the evidence trail that survives an inspection.
+	Live at go-live.
+	4. Monitoring
+	Watch it over time and plan for change. Ongoing performance and drift monitoring, periodic review, and change planning so the system stays qualified as it evolves.
+	Live at go-live.
+	
+
+On the placeholders: There will be 4 Pillars/Service Lines. Naming and wording in progress. 
+We will have initial offerings of consulting services, and supporting tools with additional services will follow after go-live. We need the site to carry those placeholder tools that are visible but inactive entries, so the four-pillar structure reads complete on day one and the tools can be switched on later without a redesign. Tell us in your quote how you would handle that, and what turning one on later involves.
+
+
+Naming note for the designer: the four are example placeholders only. 
+Pillar and tool names in progress and will be available prior to build. 
+
+
+Terms and naming are open to your input and will be confirmed as the site takes shape.
+
+
+Entry point: most client relationships begin with a fixed-scope, fixed-fee readiness assessment. 
+Pricing placeholders will be needed but content not yet defined. We want to be price-transparent but this will evolve and may not be available in Oct.
+5. Color Scheme
+Five brand colors plus two support neutrals. These hex values are the source of truth. Do not color-pick from any image, including the textures, which read darker than the palette.
+See Brand Visual Guide
+Color
+	Hex
+	Role
+ 
+	Complexant Blue
+	#235A74
+	Primary. The dominant color on the site. Headers, dark sections, primary buttons. Used in Complexant of logo.
+	Muted Teal
+	#4F8F8E
+	Secondary. Supporting panels, secondary elements, second data series. Used in Partners of logo.
+	Pale Teal
+	#B7D6D2
+	Lighter secondary. Soft fills, subtle section backgrounds.
+	Warm Ivory
+	#F6F3ED
+	Light neutral. The default light background. Not pure white.
+	Copper
+	#C7742D
+	Accent only. Never a background, never body text, never a general second color. Used in X and signal of logo.
+	Charcoal
+	#2B2F33
+	Body text and dark interface. The darkest value in the system.
+	Fog Gray
+	#A6ACB2
+	Rules, dividers, and subtle interface backgrounds. Too light for small body text. Used in LLC of logo.
+	Supplemental color
+One more color was added to the system after the palette above was locked. It is supplemental, not a replacement for Complexant Blue, and it is available for use to give depth and gradation. 
+Color
+	Hex
+	Role
+ 
+	Deep Teal
+	#3A7481
+	Supplemental. RGB 58, 116, 129. The perceptual midpoint between Pale Teal and Complexant Blue. Use for depth and layering: darker sections, layered panels, hover and pressed states, the foot of a gradient. Never a replacement for the primary.
+	All eight values above are locked.
+Hard rules on color
+* Hierarchy: blue largest, teal next, copper smallest, fog gray recessive.
+* Copper carries meaning. It marks the critical point, the apex, the thing that matters most. If copper appears more than once or twice in a single view, pull it back.
+* Never pure black in graphics. Charcoal #2B2F33 is the floor and must read distinctly from black.
+* Warm Ivory and Pale Teal sit close together. Do not rely on those two alone to separate adjacent elements; add a rule, a shadow, or a label.
+* If you propose a dark mode, tell us in the quote. We have not specified one. The reversed logo exists, so the mark is not a blocker.
+6. Logo, signal, and wordmark
+Three elements are in scope for the website. A fourth brand graphic, the heat map node, is deliberately excluded from this hand-off; do not use it and do not price for it.
+The Signal (the icon)
+* A field of crisp vertical rounded-end lines that scatter on the left and converge left-to-right into a single copper point.
+* Each line is built from stacked palette color segments, so the lines have internal gradation rather than one flat fill.
+* Copper appears sparsely across the field and concentrates at the output point on the right.
+* Direction is fixed. Never flip, rotate, or mirror the convergence.
+* It sits on a transparent background, so it embeds inline as an icon or bullet without a panel.
+The Wordmark
+* Set as COMPLEXANT PARTNERS LLC, with no comma or trailing period.
+* Agatho and Poppins are what the delivered wordmark is built in. Both font files and their licences ship with our logo package to download and use. 
+* COMPLEXANT is set in Agatho, a high-contrast display serif. 
+* PARTNERS and LLC are set in Poppins, uppercase and widely tracked.
+* Poppins is the body copy face across brand materials and is what the site body type should use.
+The two X treatments
+Signal-X. The X in COMPLEXANT is not a typed letter. The signal lines begin spread out over the E, then grow denser and converge to a pinnacle that forms the X itself. The convergence is the X. This is the full lockup and the primary site logo.
+Copper-X. The typed version, for anywhere the signal graphic is impractical: running prose, email, headings, plain interface text. Write the name normally and color only the X in Copper #C7742D, in the same face and weight as the rest of the name. Where color cannot be controlled, the name is simply Complexant with no special treatment.
+The scattered X is a separate asset. It exists now in full-color as an editable vector (AI and SVG) plus PNG exports. A copper version of both the scattered-X wordmark and the scattered-X full logo is in production with our logo designer and will follow. Treat the scattered X as the standalone X mark, useful small, in isolation, or as a repeating brand element. It is not a substitute for the full lockup.
+Usage rules
+* Clear space around any lockup equal to the height of the Signal icon, or the cap height of COMPLEXANT. Nothing intrudes.
+* Minimum size: full logo no smaller than about 180 px wide on screen. The icon stays legible to about 32 px; below that use the icon alone.
+* Light artwork on Warm Ivory or white. Reversed artwork on Complexant Blue, Muted Teal, or Charcoal. Always strong contrast, never over a busy photograph or a busy fold of a texture.
+* Do not recolor outside the palette, stretch, skew, rotate, add effects, or rebuild the wordmark in a substitute font.
+7. Textures
+Four raster textures establish material and mood. They are style and atmosphere references, not logos and not patterns to tile. Files are supplied in the shared folder.
+Texture
+	Character
+	Where it belongs
+ 
+	Composure
+	Warm light curve
+	Calm light backgrounds, section bands, and panels sitting behind text.
+	Structure
+	Complexant Blue folds
+	Dark hero sections, page covers, premium cards.
+	Confidence
+	Atmospheric ridges
+	Website hero banners and headers, where depth and horizon are wanted. This is the most likely hero texture.
+	Discernment
+	Copper surface
+	A single emphasis section only. Rare by design; treat it like copper itself.
+	Hard rules on texture
+* One texture per view recommended. Avoid competing on the same screen unless intentional comparison.
+* Grade each texture toward the palette. The supplied files read darker than the brand colors; the palette hex values govern, not the images.
+* Under text or the logo, add a soft blue or ivory scrim and keep contrast. Place the logo on a calm region or a solid panel, never across a busy fold.
+* Keep Discernment, the copper texture, rare.
+* Heroes want roughly 2560 px wide, ideally at 2x. Tell us if you need larger source files.
+
+
+Textures are provided by AI during scheme and naming evaluation. We are open to different, unique or similar textures if they capture the same coloring, richness, meanings that align with the company, industry and themes. These were AI-generated and unclear if they are unique for us or generally available 
+
+
+________________
+8. Voice and copy rules
+These apply to every word on the site, including microcopy, buttons, alt text, and metadata. They are not stylistic preferences; several of them are positioning decisions.
+Avoid term “control” unless part of tool name, QC or intentionally worded/provided
+We avoid using "control" or control framing to describe our own role. We guide, advise, verify, and equip. The client decides, flies, and is accountable. The approved line is: "You stay pilot in command. You decide and you fly; we guide, advise, verify, and equip."
+We are not an AI company
+We focus on compliance, regulatory intelligence and quality around innovation, including automation and AI. We will leverage AI, guide in the AI journey, but also experts in non-AI Q&R.
+The aviation thread
+There is an aviation thread in our internal language (pilot, instruments, flight plan). Partnering together on their Journey is core. No puns or pictures of planes.
+Vocabulary
+Preferred: guide, advise, verify, evidence, prove, judgment, competency, clarity, fit-for-purpose, phase-appropriate, adopt then adapt.
+Avoid/Intentional use: controlled, revolutionary, cutting-edge, game-changing, best-in-class, seamless, landscape, transformational. If a claim needs an adjective, it needs evidence instead.
+One correction to carry forward
+The line "Complexity, controlled." appears on some earlier internal materials. It is retired and breaches the rule above. If you see it in anything we send you, ignore it and tell us where you found it.
+________________
+9. Assets
+The logo assets are already produced. You should not need to generate exports, and you should not need to wait on our logo designer to start.
+In your shared folder now
+* Full-color logo lockup, signal plus wordmark, as PDF.
+* Signal icon, full color, 512 x 512 PNG.
+* The four textures as high-resolution PNGs.
+* Reference sites we like, in the Example Websites subfolder.
+Production pack, ready to use when we build
+A complete web-ready set was produced from the vector artwork, in the designer's own fonts. It ships with its own README. Ask and we will send it as a folder or a single zip.
+* Lockup, wordmark, and signal, each as transparent PNG on a named ladder: 2048, 1024, 512, 256, 128, 64, 32, and 16 px on the longest edge.
+* Three treatments throughout: full color, solid black, and reversed white for dark surfaces. The scattered X also comes in copper.
+* Favicon set: square PNG at 16, 32, 48, 180, and 512, plus a real favicon.ico.
+* WebP of the lockup and wordmark at 256, 512, and 1024.
+* LinkedIn banners and a Teams/Zoom/Meet background will be finalized to align with web build.
+* Vector masters of the full lockup: editable AI, EPS, SVG, and vector PDF.
+* Agatho and Poppins font files with their licences.
+Items still in production
+Our logo designer is finishing these. None of them blocks a start, and none should appear in your quote as work for you.
+* Wordmark and logos containing copper versions of X in the word Complexant. Complexant remains blue except for the X that either contains scattered X in copper or metallic-effect non-scatter X in copper. 
+* The full-color signal as a standalone vector. Today it exists only as raster up to 512 px, so if your design needs the full-color signal larger than that, tell us and we will chase it.
+Deliberately not produced
+* The heat map node. Redesign or alternate visuals needed.
+* Blue, teal, and cream background versions of the marks. We place the transparent artwork on color ourselves, and so should the site.
+
+
+If you need a size, crop, or format that is not in the pack, ask us rather than exporting your own. We would rather produce it and keep one source of truth.
+________________
+10. Open items to price around
+These are unresolved. Flag any that materially change your quote.
+Item
+	Status
+ 
+	Sitemap and copy
+	Not yet written. This brief covers brand, not content. Quote for build and integration; quote copy separately if you offer it.
+	.ai domain
+	Use of .ai domain will be future, likely for tools in development. 
+Scope for building it is not in this quote, but building for future subdomain relevant as it will be used in the future. 
+See Section 1a for what we need the .com build to leave room for.
+	Trademark
+	Filing is held pending a final decision on scope, wordmark versus name. 
+No trademark symbol appears on the site at this time, but planned for future.
+	Dark mode
+	Price it as an option if you recommend it.
+	Heat map node
+	Redesign graphic needed - example of concept available for viewing but will not be used as is.
+	Future Content
+	Content and drop-downs will be established during build. Some are placeholders for future content (e.g., blogs, articles, pricing, upcoming events) that we know we will use but it will be created later. 
+Create as inactive or “coming soon” are options.
+	Auto uploads
+	Content on drives should be able to auto-upload to site to keep one source of truth and avoid duplicate effort. Example: completed training/certifications will be saved in a folder as they are completed and website update to capture the new information.
+	Contacts on website
+	Ability to connect to calendars, send emails, notify, request info, etc. 
+	
+
+
+
+Complexant Partners LLC        Page  of

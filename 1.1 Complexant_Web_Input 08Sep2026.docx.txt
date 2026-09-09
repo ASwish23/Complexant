@@ -1,0 +1,202 @@
+﻿Complexant Partners LLC logo 
+
+COMPLEXANT PARTNERS LLC
+
+
+Web Design Website Input
+08Sep2026.
+________________
+General feedback:
+
+
+* Dark blue background
+* Dynamic graphics
+* Dynamic content boxes
+* User-interaction
+* Font strategically used for impact
+* Consistent icons/graphics use indicates meaning
+* Open to graphics that give similar effect/impact 
+* Use of signal, scatter coming to simplicity desired
+* Use approved color scheme (end of doc and in hand-off brief)
+* Avoid black background
+* Copper is high impact and must be metallic
+* Open to alternate font for discussion; font in logo is fixed
+* Website feedback shows pro/con below
+* Dynamic graphics, symbols and fonts should enhance impact, but distract
+* Goal: sophistication, clarity, impact
+Color
+________________
+
+
+Chrysalis Website (FAVORITE EXAMPLE FOR EFFECT)
+Biomedical Consulting Experts | Chrysalis Biomed
+
+
+Pros:
+* Dark background powerful
+   * We are using Complexant Blue as our primary color 
+   * Darker background is rich, sophisticated and would make the teal, cream and copper pop.
+* Moving graphic in the background: enhances without distracting from content, responds to the user
+   * Likely want the moving graphic to be copper in color
+   * Open to what actual graphic is use, want similar effect.
+   * Like the contrast against the darker background 
+   * Rotation responds to page movement- one direction or assembles when scrolling down and different direction or scatter when scrolling up.
+* Writing is clear and visible
+   * Used grey to clearly denote where to enter information on contact page
+* Team info links to longer bio, greys when you are focusing on the other person.
+* Approach page – highlights and movement as the user navigates. 
+   * Open to actual design/graphics. 
+   * Similar effect, impact, contrast desired
+* Dynamic and use of graphics
+* Market Breadth 
+   * Beautiful, dynamic, stacking content with key pieces bolded for impact
+   * Open to graphic, looking for similar impact and functionality
+* Page sizes to half screen. 
+Cons:
+* Most font is white that greys out. No words or key info stand out.
+* Menu font too large. Trying to fill page but it is remedial.
+* “schedule a call” should be a button or stand-out rather than underlined text
+* Blocks with text (blog, business questions) do not transition/stand out when hovering
+* Confusing meaning of graphics. Use of astro, layering, cube, helix end up trying to mean butterfly chrysalis (only actual graphic seen on Blog page). While they are beautiful, the meaning is not consistent.
+* History of Transformation section: numbers should be dynamic, real-time updated, link to something.
+
+
+
+
+________________
+
+
+Slalom Website
+Business consulting firm & AI consulting firm | Slalom
+
+
+Pros:
+* Dark background powerful makes content pop.
+* Hovering over boxes provides content behind.
+   * Dynamic without clutter
+* Oval circle around action buttons make navigation clear and stand out
+   * Shadowed bullets like we use in our logo on the sides of the word Partners would be an interesting effect here. 
+* Defined then consistent use of icons/symbols
+   * Do not like that they used letters (I think they were going for Periodic Table effect) but I like that wherever you see it, it means the same thing.
+* “Let’s talk” is a form to complete and provide info.  
+   * Something like this would be better than “here is our email and phone” link. 
+   * Start the partnership right from the first click!
+* Magnifying glass to ask a question or search site.
+   * Doesn’t need to open new page, but ability to navigate and search is useful beyond just the menu.
+Cons:
+* Colors too bright – use our approved color scheme
+* Cheesy pictures and videos, often freeze due to bandwidth
+* Page does not size well to half screen. Stays same size and truncates unless full screen.
+* Font is basic and not sophisticated.
+   * Like the attempt to use fonts to call out key info. Multiple fonts, sizes, use seems inconsistent.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+________________
+
+
+Rare Moon Consulting Website
+Business consulting firm & AI consulting firm | Slalom
+
+
+Pros:
+* Dark background powerful makes content pop.
+* Hovering over boxes provides content behind.
+   * Dynamic without clutter
+* Immediate opening page is a layout of choice/path to info
+   * Schedule a consult is too assertive for 2 boxes, but the concept is great 
+* Defined then consistent use of icons/symbols
+   * Their use is overly simple/basic but I like that wherever you see it, it means the same thing.
+* Consistent use of color
+* Metrics are dynamic, settling on final numbers 
+   * Updated numbers June 2025. 
+   * Info needs to be current, updated real-time.
+* Insights page links to articles, date published, who published and read time estimate.
+* “Ask the Expert” section is interesting to interact. 
+   * We would have to think about how to use this and if we do it make sure we respond, but it is a great idea.
+* “About Us” page
+   * Color photo when hovering, grey when not
+   * Team/Purpose/Values
+   * Overall page layout nice
+   * Prefer short bio with each of us and click for longer bio and CV (only 2 of us)
+* Page sizes to half screen. 
+
+
+Cons:
+* Colors too dark – use our approved color scheme
+* Avoid black background. 
+* Copper should be popping, metallic. It is flat and too dark, with font that is often too thin to read clearly.
+* Lacking dynamic graphics in background.
+* Offering details are at the bottom of the page in small white font. 
+
+
+
+
+
+
+________________
+
+
+Beyond Drug Development Consulting Website
+Australia Clinical Trials | Early Phase | Drug Development
+
+
+Pros:
+* Dark background powerful makes content pop.\
+* Dynamic graphics
+   * Seems to be on a loop that restarts, not interactive
+   * Gold is impactful on dark background (we would use copper)
+* Menu is shown in heading rather than dropdown.
+   * Less clicks and visibility/simplicity useful if possible.
+Cons:
+* Page does not size well to half screen. Stays same size and truncates unless full screen.
+* Font is difficult to read, unnecessary to bold paragraphs.
+* Dynamic graphics are on loops, do not respond to users. 
+   * This may be fine, just less effective than on Chrysalis website.
+* Boxes either are not dynamic or text pop-up over boxes – basic, not sophisticated
+* Dislike cartoon photos of team immensely. 
+* Dislike bio boxes that cover up “headshot”
+* Contact us is not in enough places, and basic white boxes. Insufficient.
+________________
+Approved color schema for Complexant Partners LLC
+Color
+	Hex
+	Role
+ 
+	Complexant Blue
+	#235A74
+	Primary. The dominant color on the site. Headers, dark sections, primary buttons. Used in Complexant of logo.
+	Muted Teal
+	#4F8F8E
+	Secondary. Supporting panels, secondary elements, second data series. Used in Partners of logo.
+	Pale Teal
+	#B7D6D2
+	Lighter secondary. Soft fills, subtle section backgrounds.
+	Warm Ivory
+	#F6F3ED
+	Light neutral. The default light background. Not pure white.
+	Copper
+	#C7742D
+	Accent only. Never a background, never body text, never a general second color. Used in X and signal of logo.
+	Charcoal
+	#2B2F33
+	Body text and dark interface. The darkest value in the system.
+	Fog Gray
+	#A6ACB2
+	Rules, dividers, and subtle interface backgrounds. Too light for small body text. Used in LLC of logo.
+	
+
+Complexant Partners LLC        Page  of

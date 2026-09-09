@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Complexant Partners LLC — Safely Adapting to Innovation</title>
+<meta name="description" content="Complexant Partners guides regulated life sciences companies in closing gaps, turning complexity into competency and competency into clarity." />
+<link rel="icon" href="assets/signal.png" type="image/png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<script>document.documentElement.classList.add('js');</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  // Preflight off: this page ships its own base/reset below, and Tailwind's
+  // CDN styles are injected after it, so preflight would win and flatten
+  // every heading back to 16px.
+  tailwind.config = { corePlugins: { preflight: false } };
+</script>
+
+<style>
+/* ============================================================
+   COMPLEXANT PARTNERS — design tokens
+   Every color traces to the approved schema:
+   Complexant Blue #235A74 · Muted Teal #4F8F8E · Pale Teal #B7D6D2
+   Warm Ivory #F6F3ED · Copper #C7742D · Charcoal #2B2F33 · Fog Gray #A6ACB2
+   Surfaces are color-mix blends between two approved values only.
+   ============================================================ */
+:root{
+  --blue:#235A74;
+  --teal:#4F8F8E;
+  --pale:#B7D6D2;
+  --ivory:#F6F3ED;
+  --copper:#C7742D;
+  --charcoal:#2B2F33;
+  --fog:#A6ACB2;
+
+  /* Layered dark surfaces: base -> elevated -> floating */
+  --surface-0: var(--charcoal);
+  --surface-1: color-mix(in srgb, var(--blue) 14%, var(--charcoal) 86%);
+  --surface-2: color-mix(in srgb, var(--blue) 26%, var(--charcoal) 74%);
+  --surface-3: color-mix(in srgb, var(--blue) 40%, var(--charcoal) 60%);
+  --hairline: color-mix(in srgb, var(--fog) 26%, transparent);
+  --hairline-strong: color-mix(in srgb, var(--fog) 46%, transparent);
+
+  /* Dark radial field — rich blue falling to charcoal, never black */
+  --dark-rad-bg: radial-gradient(96% 92% at 74% 6%,
+      var(--blue) 0%,
+      color-mix(in srgb, var(--blue) 46%, var(--charcoal) 54%) 40%,
+      color-mix(in srgb, var(--blue) 12%, var(--charcoal) 88%) 78%,
+      var(--charcoal) 100%);
+
+  --text-primary: var(--ivory);
+  --text-secondary: color-mix(in srgb, var(--ivory) 74%, var(--charcoal) 26%);
+  --text-muted: var(--fog);
+
+  --h1: clamp(2.5rem, 1.45rem + 4.6vw, 5.75rem);
+  --h2: clamp(1.75rem, 1.28rem + 2.1vw, 3.5rem);
+  --h3: clamp(1.5rem, 1.2rem + 1.3vw, 2.75rem);
+  --h4: clamp(1.125rem, 1.04rem + 0.38vw, 1.5rem);
+  --text-l: clamp(1rem, 0.95rem + 0.24vw, 1.25rem);
+  --text-m: 1rem;
+  --text-s: 0.875rem;
+  --text-xs: 0.75rem;
+
+  --lh-heading:1.12;
+  --lh-body:1.6;
+  --ls-heading:-0.02em;
+  --ls-body:0.01em;
+  --ls-caps:0.18em;
+
+  --sect-pad-f: clamp(80px, 4rem + 6vw, 200px);
+  --sect-pad-h: clamp(44px, 2.4rem + 3vw, 100px);
+  --gutter: clamp(20px, 0.5rem + 5.4vw, 120px);
+
+  /* Right-hand lane reserved for the DNA spine. Collapses on narrow screens,
+     where the helix drops back to a faint full-width backdrop instead. */
+  --lane: 0px;
+
+  --ease: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --speed: 0.4s;
+
+  color-scheme: dark;
+}
+
+*{ box-sizing:border-box; }
+/* no scroll-behavior:smooth — Lenis owns smoothing and the two fight each other */
+html{ -webkit-text-size-adjust:100%; }
+body{
+  margin:0;
+  background: var(--charcoal);
+  color: var(--text-primary);
+  font-family:'Poppins', system-ui, sans-serif;
+  font-weight:400;
+  font-size: var(--text-m);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4,.display{
+  font-family:'Bodoni Moda', Georgia, serif;
+  font-weight:400;
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-heading);
+  margin:0;
+}
+h1{ font-size:var(--h1); }
+h2{ font-size:var(--h2); }
+h3{ font-size:var(--h3); }
+p{ margin:0; }
+a{ color:inherit; text-decoration:none; }
+ul{ margin:0; padding:0; list-style:none; }
+img{ max-width:100%; display:block; }
+
+::selection{ background: var(--blue); color: var(--ivory); }
+
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex]:focus-visible{
+  outline:2px solid var(--copper);
+  outline-offset:3px;
+  border-radius:2px;
+}
+
+.skip-link{
+  position:absolute; left:-9999px; top:0; z-index:200;
+  background:var(--ivory); color:var(--charcoal);
+  padding:12px 20px; font-size:var(--text-s); font-weight:500;
+}
+.skip-link:focus{ left:16px; top:16px; }
+
+/* ---------- continuous background field ----------
+   One fixed backdrop for the whole document instead of per-section fills, so the
+   DNA layer behind the content reads as part of the page rather than being
+   chopped up by opaque section blocks. */
+.page-backdrop{
+  position:fixed; inset:0; z-index:-3;
+  background:var(--dark-rad-bg);
+  pointer-events:none;
+}
+
+/* ---------- layout ---------- */
+.section{
+  position:relative;
+  padding-left:var(--gutter);
+  /* the lane replaces the right gutter rather than stacking on top of it */
+  padding-right:max(var(--gutter), var(--lane));
+  padding-top:var(--sect-pad-f);
+  padding-bottom:var(--sect-pad-f);
+}
+.inner{ max-width:1600px; margin:0 auto; width:100%; }
+
+@media (min-width:1100px){
+  :root{ --lane: 34vw; }
+}
+
+.eyebrow{
+  font-size:var(--text-xs);
+  letter-spacing:var(--ls-caps);
+  text-transform:uppercase;
+  font-weight:500;
+  color:var(--pale);
+}
+.lede{
+  font-size:var(--text-l);
+  line-height:var(--lh-body);
+  color:var(--text-secondary);
+}
+
+/* Metallic copper — mixes of approved Copper with approved Ivory / Charcoal only */
+.copper-metal{
+  background:linear-gradient(100deg,
+    color-mix(in srgb, var(--copper) 55%, var(--charcoal) 45%) 0%,
+    var(--copper) 18%,
+    color-mix(in srgb, var(--copper) 35%, var(--ivory) 65%) 32%,
+    color-mix(in srgb, var(--copper) 12%, var(--ivory) 88%) 38%,
+    color-mix(in srgb, var(--copper) 35%, var(--ivory) 65%) 44%,
+    var(--copper) 58%,
+    color-mix(in srgb, var(--copper) 55%, var(--charcoal) 45%) 72%,
+    var(--copper) 86%,
+    color-mix(in srgb, var(--copper) 30%, var(--ivory) 70%) 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+/* ---------- buttons ---------- */
+.btn{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  gap:14px;
+  padding:14px 14px 14px 28px;
+  border-radius:999px;
+  font-size:var(--text-s);
+  font-weight:500;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  border:1px solid var(--hairline-strong);
+  color:var(--ivory);
+  background:transparent;
+  cursor:pointer;
+  transition:transform var(--speed) var(--ease-out), opacity var(--speed) var(--ease-out);
+  overflow:hidden;
+}
+.btn .btn-bg{
+  position:absolute; inset:0; border-radius:999px;
+  background:var(--ivory);
+  transform:scaleX(0); transform-origin:left center;
+  transition:transform 0.5s var(--ease);
+  z-index:0;
+}
+.btn > span, .btn > .btn-dot{ position:relative; z-index:1; }
+.btn .btn-dot{
+  width:30px; height:30px; border-radius:50%;
+  background:var(--ivory);
+  display:grid; place-items:center;
+  transition:transform var(--speed) var(--ease-out);
+}
+.btn .btn-dot svg{ width:13px; height:13px; stroke:var(--charcoal); }
+.btn:hover, .btn:focus-visible{ transform:translateY(-2px); }
+.btn:hover .btn-bg, .btn:focus-visible .btn-bg{ transform:scaleX(1); }
+.btn:hover > span, .btn:focus-visible > span{ color:var(--charcoal); }
+.btn:hover .btn-dot, .btn:focus-visible .btn-dot{ background:var(--blue); transform:translateX(3px); }
+.btn:hover .btn-dot svg, .btn:focus-visible .btn-dot svg{ stroke:var(--ivory); }
+.btn:active{ transform:translateY(0); }
+.btn > span{ transition:color var(--speed) var(--ease); }
+
+/* Copper button — the single apex action */
+.btn-copper{ border-color:color-mix(in srgb, var(--copper) 70%, transparent); }
+.btn-copper .btn-bg{
+  background:linear-gradient(100deg,
+    color-mix(in srgb, var(--copper) 62%, var(--charcoal) 38%) 0%,
+    var(--copper) 30%,
+    color-mix(in srgb, var(--copper) 40%, var(--ivory) 60%) 50%,
+    var(--copper) 72%,
+    color-mix(in srgb, var(--copper) 62%, var(--charcoal) 38%) 100%);
+  transform:scaleX(1);
+}
+.btn-copper > span{ color:var(--ivory); }
+.btn-copper:hover > span, .btn-copper:focus-visible > span{ color:var(--ivory); }
+.btn-copper .btn-dot{ background:var(--ivory); }
+.btn-copper .btn-dot svg{ stroke:var(--copper); }
+.btn-copper:hover .btn-dot, .btn-copper:focus-visible .btn-dot{ background:var(--ivory); }
+.btn-copper:hover .btn-dot svg, .btn-copper:focus-visible .btn-dot svg{ stroke:var(--copper); }
+
+/* ---------- header ---------- */
+.site-header{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  padding:clamp(18px,2.2vw,34px) var(--gutter);
+  display:flex; align-items:center; justify-content:space-between;
+  pointer-events:none;
+}
+/* content scrolls under the fixed header, so it needs a scrim to stay legible
+   against the logo and menu */
+.site-header::before{
+  content:"";
+  position:absolute; inset:0; z-index:-1;
+  background:linear-gradient(180deg,
+    color-mix(in srgb, var(--charcoal) 92%, transparent) 0%,
+    color-mix(in srgb, var(--charcoal) 62%, transparent) 55%,
+    transparent 100%);
+  opacity:0;
+  transition:opacity 0.4s var(--ease);
+  pointer-events:none;
+}
+.site-header.is-stuck::before{ opacity:1; }
+.site-header > *{ pointer-events:auto; }
+.brand{ display:flex; align-items:center; gap:14px; }
+.brand img{ width:38px; height:38px; object-fit:contain; }
+.brand-type{ display:flex; align-items:baseline; gap:9px; line-height:1; }
+.brand-name{
+  font-family:'Bodoni Moda', serif;
+  font-size:clamp(15px,1.25vw,20px);
+  letter-spacing:0.06em;
+  color:var(--ivory);
+}
+.brand-sub{
+  font-size:clamp(8px,0.62vw,10px);
+  letter-spacing:0.3em;
+  font-weight:500;
+  color:var(--pale);
+}
+.brand-llc{
+  font-size:clamp(7px,0.5vw,8px);
+  letter-spacing:0.24em;
+  color:var(--fog);
+}
+
+.menu-btn{
+  display:inline-flex; align-items:center; gap:12px;
+  padding:11px 22px 11px 18px;
+  border-radius:999px;
+  border:1px solid var(--hairline-strong);
+  background:color-mix(in srgb, var(--charcoal) 55%, transparent);
+  backdrop-filter:blur(10px);
+  color:var(--ivory);
+  font-size:var(--text-s);
+  font-weight:500;
+  letter-spacing:0.04em;
+  cursor:pointer;
+  transition:transform var(--speed) var(--ease-out), opacity var(--speed) var(--ease-out);
+}
+.menu-btn:hover, .menu-btn:focus-visible{ transform:translateY(-2px); }
+.menu-glyph{ display:flex; flex-direction:column; gap:3px; }
+.menu-glyph i{
+  display:block; width:14px; height:1.5px; background:var(--ivory);
+  transition:transform var(--speed) var(--ease), opacity var(--speed) var(--ease);
+}
+.menu-open .menu-glyph i:nth-child(1){ transform:translateY(4.5px) rotate(45deg); }
+.menu-open .menu-glyph i:nth-child(2){ opacity:0; }
+.menu-open .menu-glyph i:nth-child(3){ transform:translateY(-4.5px) rotate(-45deg); }
+
+/* ---------- menu overlay ---------- */
+.overlay{
+  position:fixed; inset:0; z-index:99;
+  background:var(--dark-rad-bg);
+  display:grid;
+  grid-template-columns:1fr;
+  align-content:center;
+  padding:clamp(90px,12vh,150px) var(--gutter) var(--sect-pad-h);
+  opacity:0; visibility:hidden;
+  transform:translateY(-12px);
+  transition:opacity 0.45s var(--ease), transform 0.45s var(--ease), visibility 0.45s;
+}
+.overlay.is-open{ opacity:1; visibility:visible; transform:translateY(0); }
+.overlay-grid{ max-width:1600px; margin:0 auto; width:100%; display:grid; gap:clamp(40px,6vw,90px); grid-template-columns:1fr; }
+@media (min-width:900px){ .overlay-grid{ grid-template-columns:1.15fr 0.85fr; align-items:start; } }
+.overlay-nav a{
+  display:block;
+  font-family:'Bodoni Moda', serif;
+  /* deliberately restrained — not oversized */
+  font-size:clamp(1.5rem, 1.1rem + 1.3vw, 2.25rem);
+  letter-spacing:-0.01em;
+  padding:11px 0;
+  border-bottom:1px solid var(--hairline);
+  color:var(--ivory);
+  transition:color var(--speed) var(--ease), transform var(--speed) var(--ease-out);
+}
+.overlay-nav a:hover, .overlay-nav a:focus-visible{ color:var(--ivory); transform:translateX(10px); }
+.overlay-meta{ display:grid; gap:26px; align-content:start; }
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;
+  min-height:100vh;
+  min-height:100svh;
+  background:transparent;
+  padding:clamp(120px,17vh,200px) max(var(--gutter), var(--lane)) clamp(48px,15vh,140px) var(--gutter);
+  display:flex; flex-direction:column; justify-content:space-between;
+}
+
+/* ---------- the right-hand spine ----------
+   Signal particles and the DNA footage share the same fixed rect so the mark can
+   morph into the helix in place rather than being swapped for it. */
+.spine{
+  position:fixed;
+  top:0; right:0;
+  width:46vw; height:100vh; height:100svh;
+  pointer-events:none;
+  /* strongest at the right edge, dissolved before it reaches the text column */
+  -webkit-mask-image:linear-gradient(to left, #000 42%, rgba(0,0,0,0.55) 68%, transparent 96%);
+  mask-image:linear-gradient(to left, #000 42%, rgba(0,0,0,0.55) 68%, transparent 96%);
+}
+#dna-canvas{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  z-index:-2;
+  /* near-black source: screen blending erases the background entirely, so the
+     helix sits in the page rather than on a visible panel */
+  mix-blend-mode:screen;
+  opacity:0;
+}
+#signal-canvas{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  z-index:-1;
+}
+/* No reserved lane below this width, so the helix has to sit behind the text.
+   Pull it right back to a hint at the right edge rather than a full backdrop. */
+@media (max-width:1099px){
+  .spine{ width:72%; opacity:0.20;
+    -webkit-mask-image:linear-gradient(to left, #000 18%, transparent 72%);
+    mask-image:linear-gradient(to left, #000 18%, transparent 72%);
+  }
+}
+.hero-inner{ max-width:1600px; margin:0 auto; width:100%; display:flex; flex-direction:column; justify-content:space-between; flex:1; gap:clamp(40px,7vh,90px); }
+.hero h1{ max-width:15ch; }
+.hero-foot{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:28px;
+  justify-items:start;
+}
+@media (min-width:1000px){
+  .hero-foot{ grid-template-columns:1fr minmax(420px, 46%); align-items:end; }
+  .hero-foot > .hero-foot-block{ grid-column:2; }
+}
+.hero-foot-block{ position:relative; display:grid; gap:26px; max-width:56ch; }
+.hero-foot-block > *{ position:relative; z-index:1; }
+/* soft scrim keeps the copy readable over the signal field */
+.hero-foot-block::before{
+  content:"";
+  position:absolute; inset:-70px -90px;
+  z-index:0; pointer-events:none;
+  background:radial-gradient(58% 62% at 50% 48%,
+    color-mix(in srgb, var(--charcoal) 88%, transparent) 0%,
+    color-mix(in srgb, var(--charcoal) 60%, transparent) 42%,
+    transparent 68%);
+}
+.hero .lede{ color:var(--ivory); }
+.hero-modalities{
+  display:flex; flex-wrap:wrap; gap:10px clamp(18px,2.6vw,44px);
+  padding-top:clamp(20px,2.4vw,34px);
+  border-top:1px solid var(--hairline);
+  font-size:var(--text-xs);
+  letter-spacing:var(--ls-caps);
+  text-transform:uppercase;
+  color:var(--fog);
+}
+
+/* ---------- generic dark section ---------- */
+/* Sections are transparent so the backdrop and the DNA spine run behind them
+   uninterrupted. Section rhythm comes from very low-opacity tints instead of
+   the solid fills that used to break the page into blocks. */
+.dark-section{ background:transparent; }
+.dark-grad{
+  background:linear-gradient(180deg,
+    color-mix(in srgb, var(--blue) 12%, transparent) 0%,
+    color-mix(in srgb, var(--blue) 4%, transparent) 55%,
+    transparent 100%);
+}
+
+/* ---------- pillar cluster ---------- */
+.cluster-layout{
+  display:grid; gap:clamp(48px,6vw,96px);
+  grid-template-columns:1fr;
+  align-items:center;
+}
+/* The reserved DNA lane leaves too little room to sit the cluster and the
+   question list side by side without cramping the tiles, so they stack until
+   there is genuinely enough width. */
+@media (min-width:1700px){ .cluster-layout{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); } }
+
+.cluster{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+  gap:clamp(12px,1.4vw,20px);
+  max-width:680px;
+}
+.cluster > *:nth-child(2n){ transform:translateY(clamp(22px,3vw,44px)); }
+.pillar-tile{
+  position:relative;
+  display:grid; gap:12px; align-content:start;
+  padding:clamp(18px,2vw,28px);
+  border-radius:16px;
+  border:1px solid var(--hairline);
+  background:linear-gradient(158deg, var(--surface-2) 0%, var(--surface-1) 100%);
+  color:var(--text-secondary);
+  text-align:left;
+  cursor:pointer;
+  transition:transform var(--speed) var(--ease-out), border-color var(--speed) var(--ease), color var(--speed) var(--ease);
+}
+.pillar-tile .glow{
+  position:absolute; inset:-1px; border-radius:16px;
+  box-shadow:0 0 0 1px color-mix(in srgb, var(--copper) 70%, transparent),
+             0 12px 40px -12px color-mix(in srgb, var(--copper) 55%, transparent),
+             0 2px 10px -2px color-mix(in srgb, var(--copper) 35%, transparent);
+  opacity:0;
+  transition:opacity var(--speed) var(--ease);
+  pointer-events:none;
+}
+.pillar-tile:hover, .pillar-tile:focus-visible{ transform:translateY(-6px); border-color:var(--hairline-strong); color:var(--ivory); }
+.pillar-tile[aria-selected="true"]{ color:var(--ivory); border-color:transparent; }
+.pillar-tile[aria-selected="true"] .glow{ opacity:1; }
+.pillar-tile[aria-selected="true"] .tile-index{ color:var(--copper); }
+.tile-top{ display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.tile-index{ font-family:'Bodoni Moda',serif; font-size:var(--text-s); color:var(--fog); transition:color var(--speed) var(--ease); }
+.tile-name{ font-family:'Bodoni Moda',serif; font-size:var(--h4); letter-spacing:-0.01em; color:var(--ivory); }
+.tile-status{
+  font-size:10px; letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--fog);
+}
+.tile-status.is-live{ color:var(--pale); }
+
+.cluster-readout{ margin-top:clamp(46px,5vw,72px); max-width:520px; }
+.readout-rule{
+  height:2px; width:96px; margin:14px 0 18px;
+  background:linear-gradient(90deg, var(--copper) 0%, color-mix(in srgb, var(--copper) 20%, transparent) 100%);
+}
+.readout-name{ font-family:'Bodoni Moda',serif; font-size:var(--h4); color:var(--ivory); }
+.readout-body{ margin-top:12px; color:var(--text-secondary); font-size:var(--text-s); }
+
+.q-group{ margin-top:clamp(28px,3vw,44px); }
+.q-label{
+  font-size:var(--text-xs); letter-spacing:var(--ls-caps);
+  text-transform:uppercase; color:var(--pale); font-weight:500;
+  margin-bottom:14px;
+}
+.q-list li{
+  display:grid; grid-template-columns:26px 1fr; gap:4px;
+  padding:5px 0;
+  color:var(--text-secondary);
+  font-size:var(--text-s);
+}
+.q-list li span{ color:var(--teal); }
+
+/* ---------- stats ---------- */
+.stats-layout{ display:grid; grid-template-columns:1fr; gap:clamp(40px,5vw,80px); }
+@media (min-width:1080px){
+  /* content sits left; the right lane belongs to the DNA spine */
+  .stats-layout{ grid-template-columns:minmax(0,62%) 1fr; }
+  .stats-content{ grid-column:1; }
+}
+.stats-content{ display:grid; gap:clamp(24px,2.6vw,38px); max-width:60ch; }
+.stat-row{ display:flex; flex-wrap:wrap; gap:clamp(20px,3vw,44px); align-items:stretch; }
+.stat{ display:grid; gap:6px; padding-right:clamp(20px,3vw,44px); border-right:1px solid var(--hairline); }
+.stat:last-child{ border-right:none; padding-right:0; }
+/* dividers leave a dangling rule once the row wraps */
+@media (max-width:900px){ .stat{ border-right:none; padding-right:0; } }
+.stat a{ display:grid; gap:6px; transition:transform var(--speed) var(--ease-out); }
+.stat a:hover, .stat a:focus-visible{ transform:translateY(-3px); }
+.stat-num{
+  font-family:'Bodoni Moda',serif;
+  font-size:var(--h3);
+  color:var(--ivory);
+  line-height:1;
+}
+.stat-num .plus{ color:var(--fog); }
+.stat-label{
+  font-size:var(--text-xs); letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--fog);
+}
+.stat a:hover .stat-label, .stat a:focus-visible .stat-label{ color:var(--pale); }
+
+/* ---------- difference cards ---------- */
+.card-grid{
+  display:grid; gap:clamp(14px,1.6vw,22px);
+  grid-template-columns:1fr;
+  margin-top:clamp(40px,4.5vw,68px);
+  max-width:1180px;
+}
+@media (min-width:820px){ .card-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+.card{
+  position:relative;
+  padding:clamp(24px,2.4vw,38px);
+  border-radius:16px;
+  border:1px solid var(--hairline);
+  background:linear-gradient(158deg, var(--surface-2) 0%, var(--surface-1) 100%);
+  overflow:hidden;
+  transition:transform var(--speed) var(--ease-out), border-color var(--speed) var(--ease);
+}
+.card::after{
+  content:""; position:absolute; inset:0; border-radius:16px;
+  background:linear-gradient(158deg,
+    color-mix(in srgb, var(--blue) 30%, transparent) 0%,
+    transparent 60%);
+  box-shadow:0 0 0 1px color-mix(in srgb, var(--teal) 92%, transparent),
+             0 26px 60px -22px color-mix(in srgb, var(--blue) 95%, transparent),
+             0 4px 14px -6px color-mix(in srgb, var(--charcoal) 90%, transparent);
+  opacity:0; transition:opacity var(--speed) var(--ease); pointer-events:none;
+}
+.card:hover, .card:focus-within{ transform:translateY(-6px); }
+.card:hover::after, .card:focus-within::after{ opacity:1; }
+.card-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+.card h3{ font-size:var(--h4); max-width:12ch; }
+.card p{ margin-top:18px; color:var(--text-secondary); font-size:var(--text-s); }
+.card-icon{ flex:none; width:56px; height:56px; opacity:0.95; }
+
+/* ---------- breadth grid ---------- */
+.breadth-wrap{ margin-top:clamp(40px,5vw,72px); }
+.breadth-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(148px, 1fr));
+  gap:clamp(8px,0.9vw,14px);
+  max-width:1400px; margin:0 auto;
+}
+.breadth-cell{
+  position:relative;
+  min-height:clamp(84px,8vw,118px);
+  border-radius:14px;
+  border:1px solid var(--hairline);
+  background:var(--surface-1);
+  padding:14px;
+  display:grid; align-content:center; justify-items:center; gap:8px;
+  text-align:center;
+  color:var(--text-secondary);
+  font-size:var(--text-s);
+  cursor:default;
+  transition:transform var(--speed) var(--ease-out), border-color var(--speed) var(--ease), color var(--speed) var(--ease);
+}
+.breadth-cell:nth-child(even){ transform:translateY(clamp(8px,1.1vw,18px)); }
+.breadth-cell:hover{ transform:translateY(-5px); border-color:var(--hairline-strong); color:var(--ivory); }
+.breadth-cell:nth-child(even):hover{ transform:translateY(clamp(3px,0.6vw,13px)); }
+.breadth-cell.is-anchor{
+  background:linear-gradient(158deg,
+    color-mix(in srgb, var(--blue) 72%, var(--charcoal) 28%) 0%,
+    color-mix(in srgb, var(--blue) 34%, var(--charcoal) 66%) 100%);
+  border-color:color-mix(in srgb, var(--teal) 75%, transparent);
+  box-shadow:0 10px 34px -14px color-mix(in srgb, var(--blue) 90%, transparent);
+  color:var(--ivory);
+  font-weight:600;
+  letter-spacing:0.09em;
+  text-transform:uppercase;
+  font-size:var(--text-xs);
+}
+.breadth-cell.is-anchor .cell-glyph{ opacity:1; }
+.cell-glyph{ width:26px; height:14px; opacity:0.55; transition:opacity var(--speed) var(--ease); }
+.breadth-cell:hover .cell-glyph{ opacity:1; }
+
+/* ---------- process path ---------- */
+.path-wrap{ position:relative; margin-top:clamp(48px,6vw,90px); }
+.path-svg{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+.path-steps{ position:relative; display:grid; gap:clamp(28px,4vw,64px); }
+@media (min-width:900px){
+  .path-steps{ grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .path-steps .step:nth-child(odd){ grid-column:1; }
+  .path-steps .step:nth-child(even){ grid-column:2; margin-top:clamp(-40px,-2vw,0px); }
+}
+.step{
+  position:relative;
+  padding:clamp(22px,2.2vw,34px);
+  border-radius:16px;
+  border:1px solid var(--hairline);
+  background:color-mix(in srgb, var(--surface-1) 80%, transparent);
+  backdrop-filter:blur(4px);
+  transition:opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out), border-color var(--speed) var(--ease);
+  max-width:520px;
+}
+.step:hover{ border-color:var(--hairline-strong); }
+.step-index{
+  font-family:'Bodoni Moda',serif; font-size:var(--text-s);
+  color:var(--copper); letter-spacing:0.08em;
+}
+.step h3{ font-size:var(--h4); margin-top:10px; }
+.step p{ margin-top:12px; color:var(--text-secondary); font-size:var(--text-s); }
+
+.pilot-quote{
+  margin-top:clamp(56px,7vw,110px);
+  text-align:center;
+  max-width:30ch;
+  margin-left:auto; margin-right:auto;
+}
+.pilot-quote blockquote{
+  font-family:'Bodoni Moda',serif;
+  font-size:var(--h3);
+  line-height:1.24;
+  letter-spacing:var(--ls-heading);
+  margin:0;
+}
+.pilot-note{ margin-top:22px; color:var(--text-secondary); font-size:var(--text-s); max-width:46ch; margin-left:auto; margin-right:auto; }
+
+/* ---------- team ---------- */
+.team-grid{
+  display:grid; gap:clamp(20px,2.4vw,36px);
+  grid-template-columns:1fr;
+  margin-top:clamp(40px,4.5vw,68px);
+  max-width:900px;
+}
+@media (min-width:620px){ .team-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+/* keep the portrait from ballooning when the grid is a single column */
+@media (max-width:619px){ .member{ max-width:400px; } }
+.member{ transition:opacity 0.45s var(--ease); }
+/* focusing one member greys the other — requested behaviour */
+.team-grid.has-focus .member{ opacity:0.38; }
+.team-grid.has-focus .member.is-focused{ opacity:1; }
+.member-photo{
+  position:relative; border-radius:16px; overflow:hidden;
+  border:1px solid var(--hairline);
+  aspect-ratio:4/5;
+}
+.member-photo img{
+  width:100%; height:100%; object-fit:cover;
+  filter:grayscale(1) contrast(1.05);
+  transition:filter 0.6s var(--ease), transform 0.9s var(--ease-out);
+}
+.member:hover .member-photo img, .member:focus-within .member-photo img{
+  filter:grayscale(0);
+  transform:scale(1.03);
+}
+.member-photo .tint{
+  position:absolute; inset:0;
+  background:linear-gradient(to top, color-mix(in srgb, var(--charcoal) 78%, transparent) 0%, transparent 55%);
+}
+.member-photo .duo{
+  position:absolute; inset:0;
+  background:var(--blue);
+  mix-blend-mode:multiply;
+  opacity:0.34;
+  transition:opacity 0.6s var(--ease);
+}
+.member:hover .member-photo .duo, .member:focus-within .member-photo .duo{ opacity:0.12; }
+.member h3{ font-size:var(--h4); margin-top:20px; }
+.member-role{ color:var(--teal); font-size:var(--text-s); font-weight:500; margin-top:4px; }
+.member-bio{ color:var(--text-secondary); font-size:var(--text-s); margin-top:14px; }
+.bio-toggle{
+  margin-top:16px;
+  display:inline-flex; align-items:center; gap:9px;
+  background:none; border:none; cursor:pointer; padding:0;
+  color:var(--ivory);
+  font-size:var(--text-xs); letter-spacing:0.12em; text-transform:uppercase; font-weight:500;
+  transition:transform var(--speed) var(--ease-out);
+}
+.bio-toggle:hover, .bio-toggle:focus-visible{ transform:translateX(4px); }
+.bio-toggle .chev{ width:12px; height:12px; stroke:var(--copper); transition:transform var(--speed) var(--ease); }
+.bio-toggle[aria-expanded="true"] .chev{ transform:rotate(90deg); }
+.bio-more{ display:none; margin-top:14px; color:var(--text-secondary); font-size:var(--text-s); border-left:1px solid var(--hairline); padding-left:16px; }
+.bio-more.is-open{ display:block; }
+
+/* ---------- contact ---------- */
+.contact-layout{ display:grid; gap:clamp(40px,5vw,80px); grid-template-columns:1fr; }
+@media (min-width:1000px){ .contact-layout{ grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr); } }
+.field{ display:grid; gap:9px; }
+.field label{
+  font-size:var(--text-xs); letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--fog); font-weight:500;
+}
+.field input, .field textarea{
+  width:100%;
+  /* Fog Gray field wells clearly denote where to enter information */
+  background:color-mix(in srgb, var(--fog) 14%, transparent);
+  border:1px solid color-mix(in srgb, var(--fog) 34%, transparent);
+  border-radius:10px;
+  padding:14px 16px;
+  color:var(--ivory);
+  font-family:'Poppins',sans-serif;
+  font-size:var(--text-s);
+  transition:border-color var(--speed) var(--ease), background-color var(--speed) var(--ease);
+}
+.field input::placeholder, .field textarea::placeholder{ color:color-mix(in srgb, var(--fog) 78%, transparent); }
+.field input:hover, .field textarea:hover{ border-color:color-mix(in srgb, var(--fog) 55%, transparent); }
+.field input:focus, .field textarea:focus{
+  outline:none;
+  border-color:var(--teal);
+  background:color-mix(in srgb, var(--fog) 20%, transparent);
+}
+.field textarea{ resize:vertical; min-height:118px; }
+.form-grid{ display:grid; gap:20px; grid-template-columns:1fr; }
+@media (min-width:640px){ .form-grid.two{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+.contact-detail{ display:grid; gap:6px; }
+.contact-detail a{ transition:color var(--speed) var(--ease); }
+.contact-detail a:hover, .contact-detail a:focus-visible{ color:var(--copper); }
+
+/* ---------- footer ---------- */
+.site-footer{
+  background:var(--surface-0);
+  padding:var(--sect-pad-f) var(--gutter) clamp(28px,3vw,44px);
+  border-top:1px solid var(--hairline);
+}
+.footer-grid{
+  max-width:1600px; margin:0 auto;
+  display:grid; gap:clamp(36px,4vw,70px);
+  grid-template-columns:1fr;
+}
+@media (min-width:900px){ .footer-grid{ grid-template-columns:1.4fr 1fr 1fr; } }
+.footer-links a{ display:block; padding:9px 0; font-size:var(--text-s); letter-spacing:0.1em; text-transform:uppercase; color:var(--text-secondary); transition:color var(--speed) var(--ease), transform var(--speed) var(--ease-out); }
+.footer-links a:hover, .footer-links a:focus-visible{ color:var(--ivory); transform:translateX(5px); }
+.footer-bottom{
+  max-width:1600px; margin:clamp(44px,5vw,80px) auto 0;
+  padding-top:26px; border-top:1px solid var(--hairline);
+  display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between;
+  font-size:var(--text-xs); letter-spacing:0.1em; text-transform:uppercase; color:var(--fog);
+}
+
+/* ---------- reveal on scroll ---------- */
+/* Scoped to .js so content stays visible if the script never runs. */
+.js .reveal{ opacity:0; transform:translateY(22px); transition:opacity 0.75s var(--ease-out), transform 0.75s var(--ease-out); }
+.js .reveal.is-visible{ opacity:1; transform:translateY(0); }
+.js .step{ opacity:0; transform:translateY(26px); }
+.js .step.is-visible{ opacity:1; transform:translateY(0); }
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *, *::before, *::after{ transition-duration:0.01ms !important; animation-duration:0.01ms !important; }
+  .js .reveal, .js .step{ opacity:1 !important; transform:none !important; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="page-backdrop" aria-hidden="true"></div>
+<div class="spine" aria-hidden="true">
+  <canvas id="dna-canvas"></canvas>
+  <canvas id="signal-canvas"></canvas>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <a href="#top" class="brand" aria-label="Complexant Partners LLC — home">
+    <img src="assets/signal.png" alt="" />
+    <span class="brand-type">
+      <span class="brand-name">COMPLE<span class="copper-metal">X</span>ANT</span>
+      <span class="brand-sub">PARTNERS</span>
+      <span class="brand-llc">LLC</span>
+    </span>
+  </a>
+  <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="overlay">
+    <span class="menu-glyph" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span id="menu-btn-label">Menu</span>
+  </button>
+</header>
+
+<!-- ============ MENU OVERLAY ============ -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Site menu">
+  <div class="overlay-grid">
+    <nav class="overlay-nav" aria-label="Primary">
+      <a href="#approach">Approach</a>
+      <a href="#pillars">Pillars</a>
+      <a href="#breadth">Where We Work</a>
+      <a href="#team">Team</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="overlay-meta">
+      <div>
+        <p class="eyebrow" style="margin-bottom:10px;">Complexity · Competency · Clarity</p>
+        <p class="lede" style="max-width:44ch;">Safely adapting to innovation. Intelligence you can trust.</p>
+      </div>
+      <div class="contact-detail" style="font-size:var(--text-s); color:var(--text-secondary);">
+        <a href="mailto:info@complexantpartners.com">info@complexantpartners.com</a>
+        <span>8 The Green, Suite 24683<br />Dover, DE 19901</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <h1>
+      Safely adapting<br />to innovation.
+    </h1>
+
+    <div class="hero-foot">
+      <div class="hero-foot-block">
+        <p class="lede">
+          We guide regulated life sciences companies in closing gaps &mdash; turning complexity into competency, and competency into clarity. <strong style="font-weight:500;color:var(--ivory);">Intelligence you can trust.</strong>
+        </p>
+        <a class="btn" href="#contact">
+          <span class="btn-bg"></span>
+          <span>Start a Readiness Assessment</span>
+          <span class="btn-dot" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-modalities">
+      <span>Pharmaceuticals</span><span>Biologics</span><span>Cell &amp; Gene Therapy</span><span>Medical Devices</span><span>IVD</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PILLARS / CRITICAL QUESTIONS ============ -->
+<section class="section dark-section" id="pillars">
+  <div class="inner cluster-layout">
+
+    <!-- interactive cluster -->
+    <div class="reveal">
+      <div class="cluster" role="tablist" aria-label="The four pillars">
+        <button class="pillar-tile" role="tab" aria-selected="true" id="pillar-1" data-name="Regulatory Risk"
+          data-body="Find where the exposure actually is across the quality system, compliance, and regulatory intelligence — an inventory of innovation use cases, GxP classification, risk ranking, data integrity review, and a gap snapshot with a recommended roadmap.">
+          <span class="glow"></span>
+          <span class="tile-top">
+            <span class="tile-index">01</span>
+            <svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true">
+              <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M3 6v8M11 3v14M19 7v6M27 2v16M35 8v4"/>
+              </g>
+            </svg>
+          </span>
+          <span class="tile-name">Regulatory Risk</span>
+          <span class="tile-status is-live">Live · tool in development</span>
+        </button>
+
+        <button class="pillar-tile" role="tab" aria-selected="false" id="pillar-2" data-name="Sandbox"
+          data-body="Prove it before innovation touches production. A contained environment that emulates the real system, so tools and models are tested against regulatory expectations without any path back into live systems.">
+          <span class="glow"></span>
+          <span class="tile-top">
+            <span class="tile-index">02</span>
+            <svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true">
+              <rect x="2" y="2" width="36" height="16" rx="4" stroke="currentColor" stroke-width="1.4" stroke-dasharray="3 3"/>
+              <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M12 7v6M20 5v10M28 7v6"/>
+              </g>
+            </svg>
+          </span>
+          <span class="tile-name">Sandbox</span>
+          <span class="tile-status">Coming soon</span>
+        </button>
+
+        <button class="pillar-tile" role="tab" aria-selected="false" id="pillar-3" data-name="Implementation"
+          data-body="Put it in place and make it hold up. Governance frameworks, validation strategy, documentation, and the evidence trail that survives an inspection.">
+          <span class="glow"></span>
+          <span class="tile-top">
+            <span class="tile-index">03</span>
+            <svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true">
+              <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M3 2v16M11 4v12M19 6v8M27 8v4"/>
+              </g>
+              <circle cx="35" cy="10" r="2.4" fill="currentColor"/>
+            </svg>
+          </span>
+          <span class="tile-name">Implementation</span>
+          <span class="tile-status is-live">Live</span>
+        </button>
+
+        <button class="pillar-tile" role="tab" aria-selected="false" id="pillar-4" data-name="Monitoring"
+          data-body="Watch it over time and plan for change. Ongoing performance and drift monitoring, periodic review, and change planning so the system stays qualified as it evolves.">
+          <span class="glow"></span>
+          <span class="tile-top">
+            <span class="tile-index">04</span>
+            <svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true">
+              <g stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <path d="M3 8v4M11 8v4M19 3v14M27 8v4M35 8v4"/>
+              </g>
+            </svg>
+          </span>
+          <span class="tile-name">Monitoring</span>
+          <span class="tile-status is-live">Live</span>
+        </button>
+      </div>
+
+      <div class="cluster-readout">
+        <p class="eyebrow">Interact to explore</p>
+        <div class="readout-rule"></div>
+        <p class="readout-name" id="readout-name">Regulatory Risk</p>
+        <p class="readout-body" id="readout-body">Find where the exposure actually is across the quality system, compliance, and regulatory intelligence — an inventory of innovation use cases, GxP classification, risk ranking, data integrity review, and a gap snapshot with a recommended roadmap.</p>
+      </div>
+    </div>
+
+    <!-- questions -->
+    <div class="reveal">
+      <h2 style="max-width:14ch;">The Questions You Have to Answer</h2>
+
+      <div class="q-group">
+        <p class="q-label">For the quality leader</p>
+        <ul class="q-list">
+          <li><span>&mdash;</span>Where is our exposure, actually?</li>
+          <li><span>&mdash;</span>Can we prove this does what we say it does?</li>
+          <li><span>&mdash;</span>Will this evidence hold up in an inspection?</li>
+          <li><span>&mdash;</span>How do we adopt without betting the quality system?</li>
+        </ul>
+      </div>
+
+      <div class="q-group">
+        <p class="q-label">For the gatekeepers</p>
+        <ul class="q-list">
+          <li><span>&mdash;</span>What does this cost, predictably?</li>
+          <li><span>&mdash;</span>How much inspection exposure are we carrying?</li>
+          <li><span>&mdash;</span>Does this have an end, or is it a science project?</li>
+          <li><span>&mdash;</span>Who answers when a regulator asks?</li>
+        </ul>
+      </div>
+
+      <div style="margin-top:clamp(30px,3.4vw,48px);">
+        <a class="btn" href="#contact">
+          <span class="btn-bg"></span>
+          <span>Start a Conversation</span>
+          <span class="btn-dot" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="section dark-grad" id="practice">
+  <div class="inner stats-layout">
+    <div class="stats-content reveal">
+      <h2 style="max-width:13ch;">A Practice Built on Evidence</h2>
+      <p class="lede">
+        Complexant Partners is a boutique practice with roughly sixty years of combined experience in the exact roles our clients hold. Personal involvement from both principals, not a bench of juniors &mdash; and the ability to say yes to fast-moving innovation and still be able to prove it.
+      </p>
+
+      <div class="stat-row" id="stat-row">
+        <div class="stat">
+          <a href="#team">
+            <span class="stat-num"><span class="count" data-target="60">0</span><span class="plus">+</span></span>
+            <span class="stat-label">Years combined experience</span>
+          </a>
+        </div>
+        <div class="stat">
+          <a href="#team">
+            <span class="stat-num"><span class="count" data-target="2">0</span></span>
+            <span class="stat-label">Principals on every engagement</span>
+          </a>
+        </div>
+        <div class="stat">
+          <a href="#pillars">
+            <span class="stat-num"><span class="count" data-target="4">0</span></span>
+            <span class="stat-label">Pillars, end to end</span>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <a class="btn" href="#team">
+          <span class="btn-bg"></span>
+          <span>Meet the Principals</span>
+          <span class="btn-dot" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY WE'RE DIFFERENT ============ -->
+<section class="section dark-section" id="approach">
+  <div class="inner">
+    <h2 class="reveal" style="max-width:16ch;">Why We&rsquo;re Different</h2>
+
+    <div class="card-grid">
+      <article class="card reveal">
+        <div class="card-head">
+          <h3>In the Seat, Not Beside It</h3>
+          <svg class="card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+            <g stroke="#4F8F8E" stroke-width="1.6" stroke-linecap="round">
+              <path d="M8 22v12M16 16v24M24 12v32M32 18v20M40 24v8M48 27v2"/>
+            </g>
+            <circle cx="48" cy="28" r="3" fill="#C7742D"/>
+          </svg>
+        </div>
+        <p>We have held the roles our clients hold, and we answer &ldquo;who approved this, and on what evidence?&rdquo; the way people who have had to answer it do.</p>
+      </article>
+
+      <article class="card reveal">
+        <div class="card-head">
+          <h3>Principals, Not a Bench</h3>
+          <svg class="card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+            <g stroke="#4F8F8E" stroke-width="1.6" stroke-linecap="round">
+              <path d="M14 18v20M22 14v28"/>
+              <path d="M34 14v28M42 18v20"/>
+            </g>
+            <circle cx="28" cy="28" r="3" fill="#C7742D"/>
+          </svg>
+        </div>
+        <p>Both founders stay on the engagement from first call through evidence delivery. No handoff to juniors once the work begins.</p>
+      </article>
+
+      <article class="card reveal">
+        <div class="card-head">
+          <h3>Evidence That Survives</h3>
+          <svg class="card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+            <rect x="10" y="12" width="36" height="32" rx="5" stroke="#4F8F8E" stroke-width="1.6" stroke-dasharray="4 4"/>
+            <g stroke="#4F8F8E" stroke-width="1.6" stroke-linecap="round">
+              <path d="M20 22v12M28 18v20M36 24v8"/>
+            </g>
+            <circle cx="28" cy="28" r="2.6" fill="#C7742D"/>
+          </svg>
+        </div>
+        <p>Governance, validation strategy, and documentation built to hold up under inspection &mdash; not just to close a finding.</p>
+      </article>
+
+      <article class="card reveal">
+        <div class="card-head">
+          <h3>Phase-Appropriate, Always</h3>
+          <svg class="card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+            <g stroke="#4F8F8E" stroke-width="1.6" stroke-linecap="round">
+              <path d="M8 26v4M17 22v12M26 17v22M35 21v14M44 25v6"/>
+            </g>
+            <circle cx="50" cy="28" r="2.6" fill="#C7742D"/>
+          </svg>
+        </div>
+        <p>Fit-for-purpose for where you actually are &mdash; paper-based systems through predictive analytics. Adopt, then adapt.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BREADTH ============ -->
+<section class="section dark-grad" id="breadth">
+  <div class="inner" style="text-align:center;">
+    <h2 class="reveal" style="max-width:14ch;margin:0 auto;">Where We Work</h2>
+    <p class="lede reveal" style="max-width:60ch;margin:22px auto 0;">
+      Regulated modalities and the systems that carry them &mdash; from paper-based quality systems through automation and AI.
+    </p>
+    <p class="eyebrow reveal" style="margin-top:26px;">Hover to explore</p>
+
+    <div class="breadth-wrap reveal">
+      <div class="breadth-grid" id="breadth-grid">
+        <div class="breadth-cell">Quality Systems</div>
+        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="#C7742D" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>Pharmaceuticals</div>
+        <div class="breadth-cell">Data Integrity</div>
+        <div class="breadth-cell">GxP Classification</div>
+        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="#C7742D" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>Biologics</div>
+        <div class="breadth-cell">Validation Strategy</div>
+
+        <div class="breadth-cell">Computer System Validation</div>
+        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="#C7742D" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>Cell &amp; Gene Therapy</div>
+        <div class="breadth-cell">AI &amp; Automation Governance</div>
+        <div class="breadth-cell">Regulatory Intelligence</div>
+        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="#C7742D" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>Medical Devices</div>
+        <div class="breadth-cell">Inspection Readiness</div>
+
+        <div class="breadth-cell">Governance Frameworks</div>
+        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="#C7742D" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>IVD</div>
+        <div class="breadth-cell">Drift Monitoring</div>
+        <div class="breadth-cell">Periodic Review</div>
+        <div class="breadth-cell">Change Planning</div>
+        <div class="breadth-cell">Documentation &amp; Evidence</div>
+        <div class="breadth-cell">Risk Ranking</div>
+        <div class="breadth-cell">Supplier Oversight</div>
+        <div class="breadth-cell">Training &amp; Competency</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW WE PARTNER ============ -->
+<section class="section dark-section" id="process">
+  <div class="inner" style="text-align:center;">
+    <h2 class="reveal" style="max-width:16ch;margin:0 auto;">How We Partner</h2>
+    <p class="lede reveal" style="max-width:58ch;margin:22px auto 0;">
+      Most relationships begin with a fixed-scope, fixed-fee readiness assessment. From there, the work moves in sequence.
+    </p>
+
+    <div class="path-wrap">
+      <svg class="path-svg" id="path-svg" aria-hidden="true">
+        <path id="path-guide" fill="none" stroke="#A6ACB2" stroke-opacity="0.3" stroke-width="2" stroke-dasharray="1 9" stroke-linecap="round"/>
+        <path id="path-progress" fill="none" stroke="#C7742D" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+
+      <div class="path-steps" style="text-align:left;">
+        <article class="step">
+          <p class="step-index">01</p>
+          <h3>Readiness Assessment</h3>
+          <p>Fixed scope, fixed fee. We inventory the innovation use cases in play, classify them against GxP, and rank the risk by system and data type.</p>
+        </article>
+        <article class="step">
+          <p class="step-index">02</p>
+          <h3>Gap Snapshot &amp; Roadmap</h3>
+          <p>A clear read on where exposure actually lives, with a phase-appropriate roadmap you can take to the people who sign off on spend.</p>
+        </article>
+        <article class="step">
+          <p class="step-index">03</p>
+          <h3>Implementation &amp; Evidence</h3>
+          <p>Governance frameworks, validation strategy, and the documentation trail &mdash; built so the evidence stands on its own in an inspection.</p>
+        </article>
+        <article class="step">
+          <p class="step-index">04</p>
+          <h3>Monitoring &amp; Change</h3>
+          <p>Performance and drift monitoring, periodic review, and change planning, so the system stays qualified as it evolves.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="pilot-quote reveal">
+      <blockquote>&ldquo;You stay pilot in command.&rdquo;</blockquote>
+      <p class="pilot-note">You decide and you fly &mdash; we guide, advise, verify, and equip.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TEAM ============ -->
+<section class="section dark-grad" id="team">
+  <div class="inner">
+    <h2 class="reveal" style="max-width:16ch;">Two Principals, Personally</h2>
+    <p class="lede reveal" style="max-width:56ch;margin-top:22px;">
+      Alexandra Pieper and Anthony Davis founded Complexant Partners as equal partners. Both are on every engagement.
+    </p>
+
+    <div class="team-grid" id="team-grid">
+      <article class="member" tabindex="0">
+        <div class="member-photo">
+          <img src="https://placehold.co/800x1000/235A74/F6F3ED?text=Lexie+Pieper" alt="Portrait placeholder for Alexandra Pieper" />
+          <span class="duo"></span>
+          <span class="tint"></span>
+        </div>
+        <h3>Alexandra &ldquo;Lexie&rdquo; Pieper</h3>
+        <p class="member-role">Co-Founder &amp; Partner</p>
+        <p class="member-bio">Co-founder and equal partner, working across quality, regulatory, and validation for regulated life sciences companies.</p>
+        <button class="bio-toggle" aria-expanded="false" aria-controls="bio-lexie">
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          Full bio
+        </button>
+        <div class="bio-more" id="bio-lexie">
+          <p>Full biography and CV are part of the launch content package and will be published here.</p>
+          <p style="margin-top:10px;"><a href="mailto:lexiepieper@complexantpartners.com" style="color:var(--pale);">lexiepieper@complexantpartners.com</a></p>
+        </div>
+      </article>
+
+      <article class="member" tabindex="0">
+        <div class="member-photo">
+          <img src="https://placehold.co/800x1000/235A74/F6F3ED?text=Anthony+Davis" alt="Portrait placeholder for Anthony Davis" />
+          <span class="duo"></span>
+          <span class="tint"></span>
+        </div>
+        <h3>Anthony Davis</h3>
+        <p class="member-role">Co-Founder &amp; Partner</p>
+        <p class="member-bio">Co-founder and equal partner, working across quality, regulatory, and validation for regulated life sciences companies.</p>
+        <button class="bio-toggle" aria-expanded="false" aria-controls="bio-anthony">
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          Full bio
+        </button>
+        <div class="bio-more" id="bio-anthony">
+          <p>Full biography and CV are part of the launch content package and will be published here.</p>
+          <p style="margin-top:10px;"><a href="mailto:anthonydavis@complexantpartners.com" style="color:var(--pale);">anthonydavis@complexantpartners.com</a></p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="section dark-section" id="contact">
+  <div class="inner contact-layout">
+    <div class="reveal">
+      <h2 style="max-width:14ch;">Bring Us What You Can&rsquo;t Yet Prove</h2>
+      <p class="lede" style="margin-top:22px;max-width:44ch;">
+        Start with a fixed-scope, fixed-fee readiness assessment &mdash; or just tell us what is keeping the question open.
+      </p>
+
+      <div style="margin-top:clamp(30px,3.4vw,48px);display:grid;gap:24px;">
+        <div class="contact-detail">
+          <span class="stat-label">General</span>
+          <a href="mailto:info@complexantpartners.com" style="font-size:var(--text-l);">info@complexantpartners.com</a>
+        </div>
+        <div class="contact-detail">
+          <span class="stat-label">Address</span>
+          <span style="color:var(--text-secondary);font-size:var(--text-s);">8 The Green, Suite 24683<br />Dover, DE 19901</span>
+        </div>
+      </div>
+    </div>
+
+    <form id="contact-form" class="reveal" style="display:grid;gap:20px;">
+      <div class="form-grid two">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" required placeholder="Your name" />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required placeholder="you@company.com" />
+        </div>
+      </div>
+      <div class="form-grid two">
+        <div class="field">
+          <label for="company">Company</label>
+          <input id="company" name="company" type="text" placeholder="Company name" />
+        </div>
+        <div class="field">
+          <label for="role">Role</label>
+          <input id="role" name="role" type="text" placeholder="Head of Quality, CTO…" />
+        </div>
+      </div>
+      <div class="field">
+        <label for="message">What are you trying to prove?</label>
+        <textarea id="message" name="message" required placeholder="Tell us where the question is open."></textarea>
+      </div>
+      <div style="margin-top:6px;">
+        <button class="btn btn-copper" type="submit">
+          <span class="btn-bg"></span>
+          <span>Send to Complexant Partners</span>
+          <span class="btn-dot" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+          </span>
+        </button>
+      </div>
+      <p style="font-size:var(--text-xs);color:var(--fog);">Opens your email client, addressed to info@complexantpartners.com.</p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <div class="brand" style="margin-bottom:26px;">
+        <img src="assets/signal.png" alt="" />
+        <span class="brand-type">
+          <span class="brand-name">COMPLE<span class="copper-metal">X</span>ANT</span>
+          <span class="brand-sub">PARTNERS</span>
+          <span class="brand-llc">LLC</span>
+        </span>
+      </div>
+      <p style="font-family:'Bodoni Moda',serif;font-size:var(--text-l);">
+        <a href="mailto:info@complexantpartners.com">info@complexantpartners.com</a>
+      </p>
+      <p class="eyebrow" style="margin-top:18px;color:var(--fog);">Complexity · Competency · Clarity</p>
+    </div>
+
+    <nav class="footer-links" aria-label="Footer">
+      <a href="#approach">Approach</a>
+      <a href="#pillars">Pillars</a>
+      <a href="#breadth">Where We Work</a>
+      <a href="#team">Team</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <div>
+      <p class="stat-label" style="margin-bottom:14px;">Entity</p>
+      <p style="color:var(--text-secondary);font-size:var(--text-s);">
+        Complexant Partners LLC<br />
+        Delaware limited liability company<br />
+        8 The Green, Suite 24683<br />Dover, DE 19901
+      </p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; 2026 Complexant Partners LLC</span>
+    <span>Safely adapting to innovation</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+<script>
+/* ============================================================
+   Lenis smooth scroll — gives the scrubbed helix a weighted, continuous
+   feel instead of stepping frame to frame on each wheel tick.
+   ============================================================ */
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (typeof Lenis === 'undefined') return;   // CDN blocked: native scroll still works
+  const lenis = new Lenis({
+    duration: 1.1,
+    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true
+  });
+  function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+  window.__lenis = lenis;   // lets the screenshot tooling stop smoothing for deterministic captures
+  // anchor links must go through Lenis or they fight the smoothing
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (!id || id === '#') return;
+      const target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      lenis.scrollTo(target, { offset: 0 });
+    });
+  });
+})();
+
+/* ============================================================
+   Menu overlay
+   ============================================================ */
+(function(){
+  const btn = document.getElementById('menu-btn');
+  const overlay = document.getElementById('overlay');
+  const label = document.getElementById('menu-btn-label');
+  let open = false;
+
+  function setOpen(next){
+    open = next;
+    btn.setAttribute('aria-expanded', String(open));
+    btn.classList.toggle('menu-open', open);
+    overlay.classList.toggle('is-open', open);
+    label.textContent = open ? 'Close' : 'Menu';
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  btn.addEventListener('click', () => setOpen(!open));
+  overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && open) setOpen(false); });
+})();
+
+/* ============================================================
+   Header scrim once the page has scrolled off the hero
+   ============================================================ */
+(function(){
+  const header = document.querySelector('.site-header');
+  if (!header) return;
+  const update = () => header.classList.toggle('is-stuck', window.scrollY > 80);
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+})();
+
+/* ============================================================
+   Pillar cluster — interact to explore
+   ============================================================ */
+(function(){
+  const tiles = [...document.querySelectorAll('.pillar-tile')];
+  const name = document.getElementById('readout-name');
+  const body = document.getElementById('readout-body');
+
+  function select(tile){
+    tiles.forEach(t => t.setAttribute('aria-selected', String(t === tile)));
+    name.textContent = tile.dataset.name;
+    body.textContent = tile.dataset.body;
+  }
+  tiles.forEach(tile => {
+    tile.addEventListener('click', () => select(tile));
+    tile.addEventListener('mouseenter', () => select(tile));
+    tile.addEventListener('focus', () => select(tile));
+  });
+})();
+
+/* ============================================================
+   Team — focusing one principal greys the other
+   ============================================================ */
+(function(){
+  const grid = document.getElementById('team-grid');
+  const members = [...grid.querySelectorAll('.member')];
+
+  members.forEach(m => {
+    const on = () => {
+      grid.classList.add('has-focus');
+      members.forEach(x => x.classList.toggle('is-focused', x === m));
+    };
+    const off = () => {
+      grid.classList.remove('has-focus');
+      members.forEach(x => x.classList.remove('is-focused'));
+    };
+    m.addEventListener('mouseenter', on);
+    m.addEventListener('mouseleave', off);
+    m.addEventListener('focusin', on);
+    m.addEventListener('focusout', off);
+  });
+
+  document.querySelectorAll('.bio-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const panel = document.getElementById(btn.getAttribute('aria-controls'));
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      panel.classList.toggle('is-open', !isOpen);
+    });
+  });
+})();
+
+/* ============================================================
+   Contact form -> mailto
+   ============================================================ */
+document.getElementById('contact-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const v = id => document.getElementById(id).value;
+  const subject = encodeURIComponent('Website inquiry from ' + v('name'));
+  const body = encodeURIComponent(
+    'Name: ' + v('name') + '\nEmail: ' + v('email') + '\nCompany: ' + v('company') +
+    '\nRole: ' + v('role') + '\n\n' + v('message')
+  );
+  window.location.href = 'mailto:info@complexantpartners.com?subject=' + subject + '&body=' + body;
+});
+
+/* ============================================================
+   Reveal on scroll + count-up stats + process path
+   ============================================================ */
+(function(){
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // Steps reveal in sequence
+  const stepObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const steps = [...document.querySelectorAll('.step')];
+        const i = steps.indexOf(entry.target);
+        entry.target.style.transitionDelay = (i % 2 === 0 ? 0 : 120) + 'ms';
+        entry.target.classList.add('is-visible');
+        stepObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.25 });
+  document.querySelectorAll('.step').forEach(el => stepObserver.observe(el));
+
+  // Count-up stats
+  const counters = [...document.querySelectorAll('.count')];
+  const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      statObserver.unobserve(entry.target);
+      const target = parseInt(entry.target.dataset.target, 10);
+      if (reduced) { entry.target.textContent = target; return; }
+      const dur = 1400, start = performance.now();
+      const tick = now => {
+        const p = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        entry.target.textContent = Math.round(target * eased);
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  }, { threshold: 0.6 });
+  counters.forEach(c => statObserver.observe(c));
+
+  // Process path: threaded through the actual step positions, drawn on scroll
+  const svg = document.getElementById('path-svg');
+  const guide = document.getElementById('path-guide');
+  const progress = document.getElementById('path-progress');
+  const wrap = document.querySelector('.path-wrap');
+
+  if (svg && progress && wrap) {
+    let len = 0;
+
+    // Catmull-Rom through the waypoints, emitted as cubic beziers
+    function smoothPath(pts){
+      if (pts.length < 2) return '';
+      let d = 'M' + pts[0].x + ',' + pts[0].y;
+      for (let i = 0; i < pts.length - 1; i++){
+        const p0 = pts[i - 1] || pts[i];
+        const p1 = pts[i];
+        const p2 = pts[i + 1];
+        const p3 = pts[i + 2] || p2;
+        // gentle handles — a looser factor overshoots into visible hooks
+        const c1x = p1.x + (p2.x - p0.x) / 10;
+        const c1y = p1.y + (p2.y - p0.y) / 10;
+        const c2x = p2.x - (p3.x - p1.x) / 10;
+        const c2y = p2.y - (p3.y - p1.y) / 10;
+        d += ' C' + c1x + ',' + c1y + ' ' + c2x + ',' + c2y + ' ' + p2.x + ',' + p2.y;
+      }
+      return d;
+    }
+
+    function build(){
+      const wrapRect = wrap.getBoundingClientRect();
+      svg.setAttribute('viewBox', '0 0 ' + wrapRect.width + ' ' + wrapRect.height);
+
+      const steps = [...wrap.querySelectorAll('.step')];
+      const mid = wrapRect.width / 2;
+      const pts = steps.map(step => {
+        const r = step.getBoundingClientRect();
+        const x = r.left - wrapRect.left + r.width / 2 < mid
+          ? r.right - wrapRect.left + 22   // left-column card: exit right
+          : r.left - wrapRect.left - 22;   // right-column card: enter left
+        return { x, y: r.top - wrapRect.top + r.height / 2 };
+      });
+      if (pts.length < 2) return;
+
+      const d = smoothPath(pts);
+      guide.setAttribute('d', d);
+      progress.setAttribute('d', d);
+      len = progress.getTotalLength();
+      progress.style.strokeDasharray = len;
+      progress.style.strokeDashoffset = len;
+      onScroll();
+    }
+
+    function onScroll(){
+      if (!len) return;
+      const r = wrap.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const p = Math.min(Math.max((vh * 0.85 - r.top) / (r.height + vh * 0.3), 0), 1);
+      progress.style.strokeDashoffset = len * (1 - p);
+    }
+
+    build();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', build);
+    window.addEventListener('load', build);
+  }
+})();
+
+/* ============================================================
+   The right-hand spine: Signal -> DNA.
+
+   The logo mark is a field of short vertical bars converging to a copper point;
+   DNA base pairs are also short bars strung between two backbones. So the same
+   particles that draw the Signal are given a second target -- a double helix --
+   and the mark transforms into the helix as you scroll. The real footage
+   crossfades in at the moment the two shapes agree, so the brand becomes the
+   science rather than being swapped out for it.
+
+   Scrolling up runs it backwards: the helix unwinds and the frames rotate the
+   other way.
+   ============================================================ */
+(function(){
+  const spine = document.querySelector('.spine');
+  const signalCanvas = document.getElementById('signal-canvas');
+  const dnaCanvas = document.getElementById('dna-canvas');
+  if (!spine || !signalCanvas || !dnaCanvas) return;
+
+  const sctx = signalCanvas.getContext('2d');
+  const dctx = dnaCanvas.getContext('2d');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- tunables ----
+     Two distinct stages, so the transformation is legible rather than a blur:
+       MORPH_*    the Signal unwinds into a particle helix, no footage yet
+       HANDOFF_*  that particle helix crossfades into the real footage  */
+  const MORPH_START   = 0.030;
+  const MORPH_END     = 0.120;
+  const HANDOFF_START = 0.125;
+  const HANDOFF_END   = 0.210;
+  const HELIX_TURNS   = 2.4;
+  const HELIX_RADIUS  = 0.34;
+  const HELIX_HEIGHT  = 2.30;
+  const HELIX_TILT    = 0.46;   // radians, leans the helix to match the footage
+  const DNA_OPACITY   = 0.60;
+  const FRAME_COUNT   = 150;
+  /* ------------------ */
+
+  const smoothstep = (a, b, t) => {
+    const x = Math.min(Math.max((t - a) / (b - a), 0), 1);
+    return x * x * (3 - 2 * x);
+  };
+  const lerp = (a, b, t) => a + (b - a) * t;
+
+  function rand(seed){
+    const x = Math.sin(seed * 127.1 + 311.7) * 43758.5453;
+    return x - Math.floor(x);
+  }
+
+  /* ---------- build the particle field (the Signal) ---------- */
+  const COLS = 62;
+  const points = [];
+  let id = 0;
+
+  for (let c = 0; c < COLS; c++){
+    const t = c / (COLS - 1);
+    const dense = t < 0.42
+      ? Math.round(1 + rand(c) * 2)
+      : Math.round(3 + (1 - t) * 12);
+    const envelope = t < 0.42
+      ? 0.62 + rand(c + 99) * 0.3
+      : Math.pow(1 - t, 0.85) * 1.06;
+
+    for (let k = 0; k < dense; k++){
+      id++;
+      const spreadY = (rand(id * 1.3) * 2 - 1) * envelope;
+      const x = -1 + t * 2 + (rand(id * 2.1) - 0.5) * 0.02;
+      const z = (rand(id * 3.7) - 0.5) * (t < 0.42 ? 0.55 : 0.4 * (1 - t) + 0.06);
+      const len = t < 0.42
+        ? 0.05 + rand(id * 4.4) * 0.09
+        : 0.06 + Math.pow(1 - t, 1.1) * 0.3;
+
+      const isCopper = t > 0.9 || rand(id * 5.9) > 0.94;
+      let color;
+      if (isCopper) color = '#C7742D';
+      else {
+        const r = rand(id * 6.3);
+        color = r > 0.72 ? '#B7D6D2' : r > 0.45 ? '#4F8F8E' : r > 0.2 ? '#A6ACB2' : '#F6F3ED';
+      }
+
+      points.push({
+        x, y: spreadY, z, len, color,
+        alpha: 0.35 + rand(id * 7.1) * 0.6,
+        sx: (rand(id * 8.2) * 2 - 1) * 1.05,
+        sy: (rand(id * 9.4) * 2 - 1) * 1.0,
+        sz: (rand(id * 10.6) * 2 - 1) * 0.8,
+        slen: 0.03 + rand(id * 11.8) * 0.07
+      });
+    }
+  }
+
+  /* ---------- give every particle a helix target ----------
+     Most sit on the two backbones; the rest span between them as base pairs.
+     The existing vertical-bar rendering reads correctly for both. */
+  points.forEach((p, n) => {
+    const u = (n * 0.6180339887) % 1;              // golden-ratio spread along the axis
+    const strand = n % 2;
+    const th = u * HELIX_TURNS * Math.PI * 2 + strand * Math.PI;
+    const bx = Math.cos(th) * HELIX_RADIUS;
+    const bz = Math.sin(th) * HELIX_RADIUS;
+    p.hy = (u - 0.5) * HELIX_HEIGHT;
+
+    if ((n % 5) < 2){                              // ~40% become rungs
+      const t = (n * 0.7548776662) % 1;
+      p.hx = bx - 2 * bx * t;
+      p.hz = bz - 2 * bz * t;
+      p.hlen = 0.026;
+    } else {
+      p.hx = bx;
+      p.hz = bz;
+      p.hlen = 0.05 + rand(n * 3.3) * 0.03;
+    }
+  });
+
+  /* ---------- DNA frame sequence ---------- */
+  const frames = new Array(FRAME_COUNT);
+  const frameSrc = i => 'assets/dna/frame_' + String(i + 1).padStart(4, '0') + '.webp';
+
+  function loadFrame(i){
+    return new Promise(res => {
+      const img = new Image();
+      img.onload = () => { frames[i] = img; res(); };
+      img.onerror = res;
+      img.src = frameSrc(i);
+    });
+  }
+
+  // Sparse pass first so scrubbing has coverage across the whole range straight
+  // away, then fill in the gaps in the background. Never blocks first paint.
+  (async () => {
+    const first = [];
+    for (let i = 0; i < FRAME_COUNT; i += 10) first.push(i);
+    await Promise.all(first.map(loadFrame));
+    render();
+    for (let i = 0; i < FRAME_COUNT; i++){
+      if (!frames[i]) await loadFrame(i);
+    }
+    render();
+  })();
+
+  function nearestFrame(idx){
+    for (let d = 0; d < FRAME_COUNT; d++){
+      if (frames[idx - d]) return frames[idx - d];
+      if (frames[idx + d]) return frames[idx + d];
+    }
+    return null;
+  }
+
+  /* ---------- sizing ---------- */
+  let W = 0, H = 0, dpr = 1;
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = spine.clientWidth;
+    H = spine.clientHeight;
+    [signalCanvas, dnaCanvas].forEach(cv => {
+      cv.width = Math.round(W * dpr);
+      cv.height = Math.round(H * dpr);
+    });
+    sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    dctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    render();
+  }
+
+  /* ---------- scroll state ---------- */
+  let progress = 0;
+  let cohesion = 0, cohesionTarget = 1;
+  let angle = -0.35, spin = 0.00035;
+  let lastScroll = window.scrollY;
+
+  function docProgress(){
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    return max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
+  }
+
+  function onScroll(){
+    const y = window.scrollY;
+    const down = y > lastScroll;
+    lastScroll = y;
+    progress = docProgress();
+    const morph = smoothstep(MORPH_START, MORPH_END, progress);
+    // Scatter-on-scroll-up belongs to the pure Signal phase only; once the mark
+    // is unwinding into the helix it stays assembled.
+    cohesionTarget = morph > 0.02 ? 1 : (down ? 1 : 0.12);
+    spin = down ? 0.0016 : -0.0016;
+  }
+
+  /* ---------- render ---------- */
+  function render(){
+    const morph = smoothstep(MORPH_START, MORPH_END, progress);
+    const handoff = smoothstep(HANDOFF_START, HANDOFF_END, progress);
+
+    // --- DNA footage ---
+    const dnaAlpha = handoff * DNA_OPACITY;
+    dnaCanvas.style.opacity = dnaAlpha;
+    if (dnaAlpha > 0 && W > 0){
+      const frameProgress = Math.min(Math.max((progress - HANDOFF_START) / (1 - HANDOFF_START), 0), 1);
+      const img = nearestFrame(Math.min(Math.floor(frameProgress * FRAME_COUNT), FRAME_COUNT - 1));
+      if (img && img.naturalWidth){
+        const scale = Math.max(W / img.naturalWidth, H / img.naturalHeight);
+        const dw = img.naturalWidth * scale, dh = img.naturalHeight * scale;
+        dctx.clearRect(0, 0, W, H);
+        dctx.drawImage(img, (W - dw) / 2, (H - dh) / 2, dw, dh);
+      }
+    }
+
+    // --- particles ---
+    sctx.clearRect(0, 0, W, H);
+    const signalAlpha = 1 - handoff;
+    if (signalAlpha <= 0.001) return;
+
+    const scale = Math.min(W, H) * 0.46;
+    const cx = W * lerp(0.44, 0.5, morph);
+    const cy = H * 0.5;
+    const FOV = 2.6;
+    const cos = Math.cos(angle), sin = Math.sin(angle);
+
+    sctx.save();
+    // the helix leans over as it forms, matching the diagonal of the footage
+    sctx.translate(W / 2, H / 2);
+    sctx.rotate(morph * HELIX_TILT);
+    sctx.translate(-W / 2, -H / 2);
+
+    for (let i = 0; i < points.length; i++){
+      const p = points[i];
+      // scattered -> assembled Signal -> helix
+      const ax = lerp(p.sx, p.x, cohesion);
+      const ay = lerp(p.sy, p.y, cohesion);
+      const az = lerp(p.sz, p.z, cohesion);
+      const alen = lerp(p.slen, p.len, cohesion);
+
+      const px = lerp(ax, p.hx, morph);
+      const py = lerp(ay, p.hy, morph);
+      const pz = lerp(az, p.hz, morph);
+      const plen = lerp(alen, p.hlen, morph);
+
+      const rx = px * cos - pz * sin;
+      const rz = px * sin + pz * cos;
+      const persp = FOV / (FOV + rz);
+
+      const sx = cx + rx * scale * persp;
+      const sy = cy + py * scale * persp;
+      const half = plen * scale * persp * 0.5;
+
+      const depth = Math.min(Math.max((rz + 1.2) / 2.4, 0), 1);
+      const alpha = p.alpha * (0.42 + (1 - depth) * 0.58) * (0.5 + cohesion * 0.5) * signalAlpha;
+
+      sctx.globalAlpha = alpha;
+      sctx.strokeStyle = p.color;
+      sctx.lineWidth = Math.max(1.1, 2.5 * persp);
+      sctx.lineCap = 'round';
+      sctx.beginPath();
+      sctx.moveTo(sx, sy - half);
+      sctx.lineTo(sx, sy + half);
+      sctx.stroke();
+    }
+    sctx.globalAlpha = 1;
+    sctx.restore();
+  }
+
+  function frame(){
+    cohesion += (cohesionTarget - cohesion) * 0.045;
+    angle += spin;
+    spin *= 0.985;
+    if (Math.abs(spin) < 0.00035) spin = spin < 0 ? -0.00035 : 0.00035;
+    render();
+    requestAnimationFrame(frame);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  window.addEventListener('scroll', onScroll, { passive: true });
+  // seed progress only — calling onScroll() here would read "not scrolling down"
+  // and start the mark scattered instead of assembled
+  progress = docProgress();
+
+  if (reduced){
+    cohesion = 1;
+    progress = 0.5;
+    render();
+  } else {
+    requestAnimationFrame(frame);
+  }
+})();
+</script>
+
+</body>
+</html>
