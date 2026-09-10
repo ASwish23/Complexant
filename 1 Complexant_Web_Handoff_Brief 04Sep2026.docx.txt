@@ -128,7 +128,7 @@ Color
 	Role
  
 	Complexant Blue
-	#235A74
+	#0d2f3e
 	Primary. The dominant color on the site. Headers, dark sections, primary buttons. Used in Complexant of logo.
 	Muted Teal
 	#4F8F8E

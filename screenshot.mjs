@@ -13,13 +13,32 @@ const width = process.argv[4] ? Number(process.argv[4]) : 1440;
 
 function findChrome() {
   const base = path.join(process.env.USERPROFILE || process.env.HOME, ".cache", "puppeteer", "chrome");
-  if (!fs.existsSync(base)) throw new Error("No cached Chrome found at " + base);
-  const builds = fs.readdirSync(base).sort().reverse();
-  for (const build of builds) {
-    const exe = path.join(base, build, "chrome-win64", "chrome.exe");
-    if (fs.existsSync(exe)) return exe;
+  if (fs.existsSync(base)) {
+    const builds = fs.readdirSync(base).sort().reverse();
+    // platform-specific layouts inside a puppeteer cache build directory
+    const rels = [
+      ["chrome-win64", "chrome.exe"],
+      ["chrome-mac-x64", "Google Chrome for Testing.app", "Contents", "MacOS", "Google Chrome for Testing"],
+      ["chrome-mac-arm64", "Google Chrome for Testing.app", "Contents", "MacOS", "Google Chrome for Testing"],
+      ["chrome-linux64", "chrome"],
+    ];
+    for (const build of builds) {
+      for (const rel of rels) {
+        const exe = path.join(base, build, ...rel);
+        if (fs.existsSync(exe)) return exe;
+      }
+    }
   }
-  throw new Error("No chrome.exe found under " + base);
+  // fall back to a system Chrome install
+  const system = [
+    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+    "/Applications/Chromium.app/Contents/MacOS/Chromium",
+    "/usr/bin/google-chrome",
+    "/usr/bin/chromium",
+    "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  ];
+  for (const exe of system) if (fs.existsSync(exe)) return exe;
+  throw new Error("No Chrome found in the puppeteer cache or in the usual system locations");
 }
 
 function nextIndex() {
