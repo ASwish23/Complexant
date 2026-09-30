@@ -444,36 +444,27 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 
 /* ---------- the continuous particle field ----------
-   The Signal particles form the DNA motif and stay behind every section. */
+   The Signal particles form the logo in the hero, scatter across the whole
+   viewport for the body of the page, and regroup into the logo in the footer.
+   The canvas covers the full viewport; the hero mark's left-edge fade (formerly
+   a CSS mask on a right-hand box) is applied per particle in the script so it
+   can let go as the mark comes apart. */
 .spine{
   position:fixed;
-  top:0; right:0;
-  /* widened from 46vw — now that the coil is traced (not just particle
-     drizzle), it can afford to come forward a little and still read as
-     background */
-  width:52vw; height:100vh; height:100svh;
+  inset:0;
+  width:100vw; height:100vh; height:100svh;
   pointer-events:none;
   z-index:0;
-  -webkit-mask-image:linear-gradient(to left, #000 34%, rgba(0,0,0,0.65) 68%, transparent 100%);
-  mask-image:linear-gradient(to left, #000 34%, rgba(0,0,0,0.65) 68%, transparent 100%);
 }
 #signal-canvas{
   position:absolute; inset:0;
   width:100%; height:100%;
   z-index:0;
-  /* lifted from 0.42, then 0.56 — the field sits on a much deeper navy now and
-     carries real geometry (backbones + rungs) instead of only particles, so it
-     can hold a bit more presence without competing with content */
   opacity:0.62;
   mix-blend-mode:screen;
 }
 @media (max-width:1099px){
-  .spine{
-    width:78%;
-    opacity:0.5;
-    -webkit-mask-image:linear-gradient(to left, #000 18%, transparent 84%);
-    mask-image:linear-gradient(to left, #000 18%, transparent 84%);
-  }
+  .spine{ opacity:0.5; }
 }
 .hero, .section{ z-index:1; }
 .hero-inner{ max-width:1600px; margin:0 auto; width:100%; display:flex; flex-direction:column; justify-content:space-between; flex:1; gap:clamp(40px,7vh,90px); }
@@ -991,8 +982,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .contact-detail a:hover, .contact-detail a:focus-visible{ color:var(--copper); }
 
 /* ---------- footer ---------- */
+/* Sits above the particle canvas, with a translucent fill so the Signal can
+   regroup behind it. */
 .site-footer{
-  background:var(--surface-0);
+  position:relative; z-index:1;
+  background:linear-gradient(180deg,
+    transparent 78%,
+    color-mix(in srgb, var(--charcoal) 40%, transparent) 100%);
   padding:var(--sect-pad-f) var(--gutter) clamp(28px,3vw,44px);
   border-top:1px solid var(--hairline);
 }
@@ -1002,6 +998,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   grid-template-columns:1fr;
 }
 @media (min-width:900px){ .footer-grid{ grid-template-columns:1.4fr 1fr 1fr; } }
+/* a soft charcoal halo lifts the copy off the reformed Signal without boxing it out */
+.footer-grid p, .footer-links a, .footer-bottom{
+  text-shadow:0 0 14px var(--charcoal), 0 0 5px var(--charcoal);
+}
 .footer-links a{ display:block; padding:9px 0; font-size:var(--text-s); letter-spacing:0.1em; text-transform:uppercase; color:var(--text-secondary); transition:color var(--speed) var(--ease), transform var(--speed) var(--ease-out); }
 .footer-links a:hover, .footer-links a:focus-visible{ color:var(--ivory); transform:translateX(5px); }
 .footer-bottom{
@@ -1556,6 +1556,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
         <a href="mailto:info@complexantpartners.com">info@complexantpartners.com</a>
       </p>
       <p class="eyebrow" style="margin-top:18px;color:var(--fog);">Complexity · Competency · Clarity</p>
+      <div style="margin-top:34px;">
+      <p class="stat-label" style="margin-bottom:14px;">Entity</p>
+      <p style="color:var(--text-secondary);font-size:var(--text-s);">
+        Complexant Partners LLC<br />
+        Delaware limited liability company<br />
+        8 The Green, Suite 24683<br />Dover, DE 19901
+      </p>
+      </div>
     </div>
 
     <div>
@@ -1574,14 +1582,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
       </a>
     </div>
 
-    <div>
-      <p class="stat-label" style="margin-bottom:14px;">Entity</p>
-      <p style="color:var(--text-secondary);font-size:var(--text-s);">
-        Complexant Partners LLC<br />
-        Delaware limited liability company<br />
-        8 The Green, Suite 24683<br />Dover, DE 19901
-      </p>
-    </div>
   </div>
 
   <div class="footer-bottom">
@@ -1905,55 +1905,43 @@ document.getElementById('contact-form').addEventListener('submit', e => {
 /* ============================================================
   Continuous particle background.
 
-  The Signal particles assemble into a helix as the page scrolls and remain
-  visible behind every section. Scrolling up reverses the formation.
+  Three states, all driven by scroll:
+    hero   — the particles hold the Signal mark on the right of the viewport;
+    body   — scrolling out of the hero releases them, and they migrate out to
+             seats spread across the whole viewport, drifting and parallaxing
+             with the scroll for the rest of the page;
+    footer — as the footer comes into view they regroup into the mark again,
+             anchored to the footer so it scrolls in with it.
+  Scrolling back up reverses each step.
   ============================================================ */
 (function(){
   const spine = document.querySelector('.spine');
   const signalCanvas = document.getElementById('signal-canvas');
   if (!spine || !signalCanvas) return;
+  const hero = document.querySelector('.hero');
+  const footer = document.querySelector('.site-footer');
 
   const sctx = signalCanvas.getContext('2d');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---- tunables ----
-    The first stage keeps the brand mark legible before it settles into the
-    particle helix used as the page-long background. */
-  const MORPH_START   = 0.030;
-  const MORPH_END     = 0.120;
-  /* The outro. Rather than reforming the Signal mark — which just competes with
-     the real logo sitting in the footer — the strand comes apart and fades out,
-     so the page ends on empty space. The footer enters the viewport at ~0.94, so
-     the dissolve finishes just before it arrives. */
-  const DISSOLVE_START = 0.800;
-  const DISSOLVE_END   = 0.940;
-  const DISSOLVE_SPREAD = 1.85;   // how far the particles drift as they go
-  /* Fewer, wider turns than before (was 3.6 / 0.34) — a tight coil at a wired
-     radius overlaps on itself and muddies the traced backbones; fewer wider
-     turns keep the curve readable now that it is actually drawn as a curve. */
-  const HELIX_TURNS   = 2.8;
-  const HELIX_RADIUS  = 0.50;
-  const HELIX_HEIGHT  = 3.60;   // taller than the viewport, so both ends run off-screen
-  const HELIX_TILT    = 0.14;   // radians — near-upright, just off true vertical
-  /* Opacity of the traced backbone curves and the rungs connecting them —
-     dimmer than the particle sparkle so they read as structure underneath it,
-     not the headline. */
-  const BACKBONE_ALPHA = 0.50;
-  const RUNG_ALPHA     = 0.26;
-
-  /* Motion rates, all per second so the field runs at the same speed on any
-     display. Each has an idle floor — the helix never fully stops — plus a
-     drive term that scrolling feeds. */
-  const FLOW_IDLE  = 0.006;     // strand travel along its own axis, at rest
-  const FLOW_DRIVE = 0.026;     // ...and at full scroll energy
-  const SWAY_IDLE  = 0.035;     // left/right drift phase
-  const SWAY_DRIVE = 0.048;
-  const SPIN_IDLE  = 0.008;     // rotation about the axis
-  const SPIN_DRIVE = 0.045;
-  /* Drift distance as a fraction of the lane. Standing the helix upright freed
-     the width the diagonal used to eat, so the travel can be wider — enough to
-     read as travel, not enough to walk the helix off the screen. */
-  const SWAY_AMP   = 0.140;
+  /* ---- tunables ---- */
+  // fraction of the hero's height scrolled: the mark starts letting go -> fully scattered
+  const RELEASE_START = 0.06;
+  const RELEASE_END   = 0.70;
+  // fraction of the footer on screen: particles start regrouping -> mark fully formed
+  const GATHER_START  = 0.20;
+  const GATHER_END    = 0.92;
+  /* Spread of per-particle start times, as a share of each transition. Nobody
+     leaves (or arrives) at once, so the mark unravels instead of popping. */
+  const STAGGER = 0.45;
+  const FORM_EASE = 2.6;        // per second — how quickly formation catches up to scroll
+  const ARC = 0.22;             // sideways swing of a migrating particle, share of the viewport
+  const DRIFT = 0.010;          // free drift of a scattered particle, viewport per second
+  const PARALLAX_NEAR = 0.34;   // scattered field's scroll parallax, near particles...
+  const PARALLAX_FAR  = 0.08;   // ...and far ones
+  const SCATTER_ALPHA = 0.62;   // scattered brightness relative to formed, keeps copy readable
+  const YAW = -0.35;            // resting 3D turn of the formed mark
+  const YAW_SWING = 0.20;       // and its slow sway either side of that
   /* ------------------ */
 
   const smoothstep = (a, b, t) => {
@@ -1961,13 +1949,7 @@ document.getElementById('contact-form').addEventListener('submit', e => {
     return x * x * (3 - 2 * x);
   };
   const lerp = (a, b, t) => a + (b - a) * t;
-
-  /* How far along the Signal -> helix arc the page is: 0 is the brand mark, 1 is
-     the fully formed helix. */
-  const morphAt = p => smoothstep(MORPH_START, MORPH_END, p);
-
-  /* 0 while the strand is intact, 1 once it has fully dispersed into nothing. */
-  const dissolveAt = p => smoothstep(DISSOLVE_START, DISSOLVE_END, p);
+  const wrap = (v, lo, hi) => { const s = hi - lo; return ((v - lo) % s + s) % s + lo; };
 
   function rand(seed){
     const x = Math.sin(seed * 127.1 + 311.7) * 43758.5453;
@@ -2005,29 +1987,26 @@ document.getElementById('contact-form').addEventListener('submit', e => {
         color = r > 0.72 ? '#B7D6D2' : r > 0.45 ? '#4F8F8E' : r > 0.2 ? '#A6ACB2' : '#F6F3ED';
       }
 
-      points.push({
-        x, y: spreadY, z, len, color,
-        alpha: 0.35 + rand(id * 7.1) * 0.6,
-        sx: (rand(id * 8.2) * 2 - 1) * 1.05,
-        sy: (rand(id * 9.4) * 2 - 1) * 1.0,
-        sz: (rand(id * 10.6) * 2 - 1) * 0.8,
-        slen: 0.03 + rand(id * 11.8) * 0.07
-      });
+      points.push({ x, y: spreadY, z, len, color, alpha: 0.35 + rand(id * 7.1) * 0.6 });
     }
   }
 
-  /* ---------- give every particle a seat on the helix ----------
-     Most sit on the two backbones; the rest span between them as base pairs.
-     Only the seat is fixed here — the actual coordinates are solved per frame
-     from a travelling offset, which is what lets the strand run endlessly
-     instead of sitting at a fixed set of targets. */
+  /* ---------- give every particle a seat in the scattered field ----------
+     Seats come from the R2 low-discrepancy sequence, lightly jittered, so the
+     field reads as random but covers the whole viewport evenly — no clumps, no
+     empty quarters. */
   points.forEach((p, n) => {
-    p.u0     = (n * 0.6180339887) % 1;             // golden-ratio spread along the axis
-    p.strand = n % 2;
-    p.isRung = (n % 5) < 2;                        // ~40% become rungs
-    p.rungT  = (n * 0.7548776662) % 1;             // where along the rung it sits
-    p.hlen   = p.isRung ? 0.026 : 0.05 + rand(n * 3.3) * 0.03;
-    p.phase  = rand(n * 12.9) * Math.PI * 2;       // desynchronised shimmer
+    p.hx = wrap(0.5 + n * 0.7548776662 + (rand(n * 13.1) - 0.5) * 0.05, 0, 1);
+    p.hy = wrap(0.5 + n * 0.5698402910 + (rand(n * 14.7) - 0.5) * 0.05, 0, 1);
+    p.near = rand(n * 15.3);                         // 0 far .. 1 near
+    p.vx = (rand(n * 16.9) - 0.5) * 2 * DRIFT;
+    p.vy = (rand(n * 17.2) - 0.5) * 2 * DRIFT;
+    p.wob = 0.3 + rand(n * 18.4) * 0.7;              // wobble rate
+    p.delay = rand(n * 19.8) * STAGGER;
+    p.arcX = (rand(n * 20.3) - 0.5) * 2 * ARC;
+    p.arcY = (rand(n * 21.6) - 0.5) * 2 * ARC;
+    p.slen = 0.03 + rand(n * 11.8) * 0.07;
+    p.phase = rand(n * 12.9) * Math.PI * 2;          // desynchronised shimmer
   });
 
   /* ---------- sizing ---------- */
@@ -2042,215 +2021,128 @@ document.getElementById('contact-form').addEventListener('submit', e => {
     render();
   }
 
-  /* ---------- scroll + motion state ----------
-     The helix runs on its own clock rather than being scrubbed by scroll
-     position. Scroll feeds `drive`, a decaying pool of energy that speeds every
-     rate up; when the page is still, drive falls to zero and the idle floors
-     keep the field breathing. */
-  let progress = 0;
-  let cohesion = 0, cohesionTarget = 1;
-  let angle = -0.35;
-  let flow = 0;          // travel along the endless strand, wraps 0..1
-  let swayPhase = 0.6;   // left/right drift
-  let breathe = 0;       // slow bob, tilt wobble and shimmer
-  let drive = 0;         // scroll energy, 0..1, bleeds off
-  let dir = 1;           // direction of the last scroll
+  /* ---------- where the mark sits ----------
+     The hero mark keeps the geometry it had when the canvas was a right-hand
+     box (52vw wide on desktop, 78% below 1100px): centred 44% into that box,
+     scaled to it, faded towards its left edge. The footer mark reuses the same
+     box, centred on the footer. */
+  function heroAnchor(){
+    const box = W * (W >= 1100 ? 0.52 : 0.78);
+    const heroH = hero ? hero.offsetHeight : H;
+    return {
+      cx: W - box + box * 0.44,
+      cy: H * 0.5 - Math.min(window.scrollY, heroH) * 0.22,   // lifts gently with the hero
+      scale: Math.min(box, H) * 0.46,
+      right: W, box,
+    };
+  }
+  function footerAnchor(){
+    const box = W * (W >= 1100 ? 0.52 : 0.78);
+    const r = footer.getBoundingClientRect();
+    return {
+      cx: W - box + box * 0.44,
+      cy: r.top + r.height * 0.5,
+      scale: Math.min(box, r.height * 1.05, H) * 0.46,
+      right: W, box,
+    };
+  }
+  /* The old box's CSS mask, as a function of screen x: solid over the right
+     third, 0.65 at two-thirds across, gone at the left edge. */
+  function boxMask(sx, a){
+    const r = (a.right - sx) / a.box;
+    if (r <= 0.34) return 1;
+    if (r <= 0.68) return lerp(1, 0.65, (r - 0.34) / 0.34);
+    if (r <= 1) return lerp(0.65, 0, (r - 0.68) / 0.32);
+    return 0;
+  }
+
+  /* ---------- state ---------- */
+  let heroForm = 1, footForm = 0;     // eased, 0..1
+  let clock = 0;                      // drives drift and shimmer; scrolling speeds it up
+  let drive = 0;                      // scroll energy, 0..1, bleeds off
   let lastScroll = window.scrollY;
   let lastT = performance.now();
 
-  function docProgress(){
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    return max > 0 ? Math.min(Math.max(window.scrollY / max, 0), 1) : 0;
-  }
-
-  function onScroll(){
-    const y = window.scrollY;
-    const dy = y - lastScroll;
-    lastScroll = y;
-    if (dy !== 0) dir = dy > 0 ? 1 : -1;
-    // saturating, so a flick and a fling feel related without the fling tearing
-    // the strand apart
-    drive = Math.min(1, drive + Math.min(Math.abs(dy), 90) / 90);
-    progress = docProgress();
-    const morph = morphAt(progress);
-    // Scatter-on-scroll-up belongs to the hero's Signal phase only; once the mark
-    // is unwinding into the helix it stays assembled. The footer's exit is handled
-    // by `dissolve`, not by this, so it is scoped to the hero explicitly.
-    const inHero = progress < MORPH_END;
-    cohesionTarget = (!inHero || morph > 0.02) ? 1 : (dy > 0 ? 1 : 0.12);
+  function targets(){
+    const heroH = hero ? hero.offsetHeight : H;
+    const heroT = 1 - smoothstep(RELEASE_START, RELEASE_END, window.scrollY / Math.max(heroH, 1));
+    let footT = 0;
+    if (footer){
+      const r = footer.getBoundingClientRect();
+      const seen = (H - r.top) / Math.max(Math.min(r.height, H), 1);
+      footT = smoothstep(GATHER_START, GATHER_END, seen);
+    }
+    return { heroT, footT };
   }
 
   /* ---------- render ---------- */
   function render(){
-    const morph = morphAt(progress);
-    const dissolve = dissolveAt(progress);
-    // fade a little ahead of the spread, so it reads as evaporating rather than
-    // as debris flying apart
-    const dissolveAlpha = Math.pow(1 - dissolve, 1.4);
-
-    // --- particles ---
     sctx.clearRect(0, 0, W, H);
-    const signalAlpha = 1;
+    if (!W || !H) return;
 
-    const scale = Math.min(W, H) * 0.46;
-    // The formed helix drifts left and right on its own clock, so it keeps
-    // travelling when the page is still. Two detuned sines stop the drift from
-    // reading as a metronome.
-    const sway = (Math.sin(swayPhase) * 0.66 + Math.sin(swayPhase * 0.43 + 1.7) * 0.34)
-                 * W * SWAY_AMP * morph;
-    const cx = W * lerp(0.44, 0.46, morph) + sway;
-    const cy = H * 0.5 + Math.sin(breathe) * H * 0.022 * morph;
+    const form = Math.max(heroForm, footForm);
+    // which mark the particles are heading for — normally only one is live
+    const toFoot = footer && (heroForm + footForm) > 0 ? footForm / (heroForm + footForm) : 0;
+    const hA = heroAnchor();
+    const fA = footer ? footerAnchor() : hA;
+
+    const yaw = YAW + Math.sin(clock * 0.09) * YAW_SWING;
+    const cos = Math.cos(yaw), sin = Math.sin(yaw);
     const FOV = 2.6;
-    const cos = Math.cos(angle), sin = Math.sin(angle);
+    const span = Math.min(W, H);
+    const scrollY = window.scrollY;
+    const M = 40;                     // wrap margin, px
 
-    sctx.save();
-    // the helix leans over as it forms, matching the diagonal of the footage;
-    // the lean wobbles slightly so the strand never looks pinned
-    sctx.translate(W / 2, H / 2);
-    sctx.rotate(morph * (HELIX_TILT + Math.sin(breathe * 0.71) * 0.022));
-    sctx.translate(-W / 2, -H / 2);
-
-    /* Projects a point on the helix axis (u along the strand, 0..1; strand 0 or
-       1) into screen space. Pure geometry — no scatter/Signal blending — so it
-       is shared by the backbone curves and the rungs below; particles still do
-       their own projection in the loop further down because they additionally
-       blend against their scattered/Signal position via `morph`/`cohesion`. */
-    function axisPoint(u, strand){
-      const th = u * HELIX_TURNS * Math.PI * 2 + strand * Math.PI;
-      const bx = Math.cos(th) * HELIX_RADIUS;
-      const bz = Math.sin(th) * HELIX_RADIUS;
-      const hy = (u - 0.5) * HELIX_HEIGHT;
-      const rx = bx * cos - bz * sin;
-      const rz = bx * sin + bz * cos;
-      const persp = FOV / (FOV + rz);
-      return {
-        sx: cx + rx * scale * persp,
-        sy: cy + hy * scale * persp,
-        persp,
-        depth: Math.min(Math.max((rz + 1.2) / 2.4, 0), 1),
-      };
-    }
-
-    /* ---------- backbones + rungs ----------
-       Traces the coil itself, underneath the particle sparkle drawn below, so
-       the helix reads as a wired double helix instead of loose speckle. Both
-       fade in with morph and fade out again with the dissolve — there is no
-       separate "at rest" shape for pure geometry the way particles have one
-       (their Signal position), so the seam-edge fade multiplies straight in
-       rather than blending from 1 the way the particle loop's does. */
-    if (morph > 0.001 && dissolveAlpha > 0.001){
-      const wash = morph * dissolveAlpha;
-
-      // backbones: two continuous curves, drawn as short depth-shaded segments
-      // so the coil visibly passes in front of and behind itself
-      const BACKBONE_SAMPLES = 110;
-      const STRAND_COLOR = ['#4F8F8E', '#B7D6D2'];
-      sctx.lineCap = 'round';
-      sctx.lineJoin = 'round';
-      for (let strand = 0; strand < 2; strand++){
-        sctx.strokeStyle = STRAND_COLOR[strand];
-        let prevU = flow;
-        let prev = axisPoint(prevU, strand);
-        for (let i = 1; i <= BACKBONE_SAMPLES; i++){
-          const u = (i / BACKBONE_SAMPLES + flow) % 1;
-          // skip the single sample pair that straddles the wrap seam — it would
-          // otherwise draw a line clear across the canvas. `edge` already fades
-          // both neighbours to near-zero here, so the gap is invisible.
-          if (u >= prevU){
-            const cur = axisPoint(u, strand);
-            const edge = smoothstep(0, 0.13, u) * (1 - smoothstep(0.87, 1, u));
-            const depth = (prev.depth + cur.depth) / 2;
-            const alpha = BACKBONE_ALPHA * (0.42 + (1 - depth) * 0.58) * edge * wash;
-            if (alpha > 0.004){
-              sctx.globalAlpha = alpha;
-              sctx.lineWidth = Math.max(0.9, 1.5 * (prev.persp + cur.persp) / 2);
-              sctx.beginPath();
-              sctx.moveTo(prev.sx, prev.sy);
-              sctx.lineTo(cur.sx, cur.sy);
-              sctx.stroke();
-            }
-            prev = cur;
-          }
-          prevU = u;
-        }
-      }
-
-      // rungs: sparse real connections between the two backbones, dimmer and
-      // thinner than the backbones so they read as structure, not the headline
-      const RUNG_COUNT = 16;
-      sctx.strokeStyle = '#A6ACB2';
-      for (let i = 0; i < RUNG_COUNT; i++){
-        const u = (i / RUNG_COUNT + flow) % 1;
-        const a = axisPoint(u, 0);
-        const b = axisPoint(u, 1);
-        const edge = smoothstep(0, 0.13, u) * (1 - smoothstep(0.87, 1, u));
-        const depth = (a.depth + b.depth) / 2;
-        const alpha = RUNG_ALPHA * (0.42 + (1 - depth) * 0.58) * edge * wash;
-        if (alpha <= 0.004) continue;
-        sctx.globalAlpha = alpha;
-        sctx.lineWidth = Math.max(0.7, (a.persp + b.persp) / 2);
-        sctx.beginPath();
-        sctx.moveTo(a.sx, a.sy);
-        sctx.lineTo(b.sx, b.sy);
-        sctx.stroke();
-      }
-      sctx.globalAlpha = 1;
-    }
+    sctx.lineCap = 'round';
 
     for (let i = 0; i < points.length; i++){
       const p = points[i];
-      // scattered -> assembled Signal -> helix
-      const ax = lerp(p.sx, p.x, cohesion);
-      const ay = lerp(p.sy, p.y, cohesion);
-      const az = lerp(p.sz, p.z, cohesion);
-      const alen = lerp(p.slen, p.len, cohesion);
+      // this particle's own progress through the transition, offset by its delay
+      const e = smoothstep(p.delay, p.delay + 1 - STAGGER, form);
 
-      /* Endless strand: the seat travels, wrapping 0..1, so a particle running
-         off one end of the axis re-enters at the other. The helix reads as a
-         section of something much longer rather than a fixed object. */
-      const u  = (p.u0 + flow) % 1;
-      const th = u * HELIX_TURNS * Math.PI * 2 + p.strand * Math.PI;
-      const bx = Math.cos(th) * HELIX_RADIUS;
-      const bz = Math.sin(th) * HELIX_RADIUS;
-      const hx = p.isRung ? bx - 2 * bx * p.rungT : bx;
-      const hz = p.isRung ? bz - 2 * bz * p.rungT : bz;
-      const hy = (u - 0.5) * HELIX_HEIGHT;
-      // soften the wrap seam at both ends of the axis so nothing pops
-      const edge = smoothstep(0, 0.13, u) * (1 - smoothstep(0.87, 1, u));
-
-      /* Signal -> helix (morph), then helix -> flung apart (dissolve). The
-         dispersal reuses each particle's original scatter vector, pushed out
-         further, so the strand comes apart along the same directions it first
-         assembled from. */
-      const px = lerp(lerp(ax, hx, morph), p.sx * DISSOLVE_SPREAD, dissolve);
-      const py = lerp(lerp(ay, hy, morph), p.sy * DISSOLVE_SPREAD, dissolve);
-      const pz = lerp(lerp(az, hz, morph), p.sz * DISSOLVE_SPREAD, dissolve);
-      const plen = lerp(alen, p.hlen, morph);
-
-      const rx = px * cos - pz * sin;
-      const rz = px * sin + pz * cos;
+      /* --- formed position, projected through the slowly swaying yaw --- */
+      const rx = p.x * cos - p.z * sin;
+      const rz = p.x * sin + p.z * cos;
       const persp = FOV / (FOV + rz);
-
-      const sx = cx + rx * scale * persp;
-      const sy = cy + py * scale * persp;
-      const half = plen * scale * persp * 0.5;
-
+      const lxH = hA.cx + rx * hA.scale * persp, lyH = hA.cy + p.y * hA.scale * persp;
+      const lxF = fA.cx + rx * fA.scale * persp, lyF = fA.cy + p.y * fA.scale * persp;
+      const lx = lerp(lxH, lxF, toFoot), ly = lerp(lyH, lyF, toFoot);
+      const lscale = lerp(hA.scale, fA.scale, toFoot);
+      const mask = lerp(boxMask(lxH, hA), boxMask(lxF, fA), toFoot);
       const depth = Math.min(Math.max((rz + 1.2) / 2.4, 0), 1);
-      const shimmer = 0.84 + 0.16 * Math.sin(breathe * 2.4 + p.phase);
-      const alpha = p.alpha * (0.42 + (1 - depth) * 0.58) * (0.5 + cohesion * 0.5)
-                    * signalAlpha * lerp(1, edge, morph) * shimmer * dissolveAlpha;
 
-      sctx.globalAlpha = alpha;
+      /* --- scattered position: its seat, drifting, parallaxed by scroll,
+             wrapped round the viewport edges --- */
+      const par = lerp(PARALLAX_FAR, PARALLAX_NEAR, p.near);
+      const dx = (p.vx * clock + Math.sin(clock * 0.21 * p.wob + p.phase) * 0.018) * W;
+      const dy = (p.vy * clock + Math.cos(clock * 0.17 * p.wob + p.phase) * 0.018) * H;
+      const sx = wrap(p.hx * W + dx, -M, W + M);
+      const sy = wrap(p.hy * H + dy - scrollY * par, -M, H + M);
+      const edge = smoothstep(-M, M * 0.5, sx) * (1 - smoothstep(W - M * 0.5, W + M, sx))
+                 * smoothstep(-M, M * 0.5, sy) * (1 - smoothstep(H - M * 0.5, H + M, sy));
+
+      /* --- migrate between the two, swinging out along a curve rather than
+             sliding in a straight line --- */
+      const swing = Math.sin(Math.PI * e) * span;
+      const px = lerp(sx, lx, e) + p.arcX * swing;
+      const py = lerp(sy, ly, e) + p.arcY * swing;
+
+      const formedLen = p.len * lscale * persp;
+      const looseLen = p.slen * span * 0.46 * (0.7 + p.near * 0.6) * (1 + drive * 0.7);
+      const half = lerp(looseLen, formedLen, e) * 0.5;
+
+      const shimmer = 0.84 + 0.16 * Math.sin(clock * 0.1 + p.phase);
+      const formedA = p.alpha * (0.42 + (1 - depth) * 0.58) * mask;
+      const looseA = p.alpha * SCATTER_ALPHA * (0.45 + p.near * 0.55) * edge;
+      sctx.globalAlpha = lerp(looseA, formedA, e) * shimmer;
       sctx.strokeStyle = p.color;
-      sctx.lineWidth = Math.max(1.1, 2.5 * persp);
-      sctx.lineCap = 'round';
+      sctx.lineWidth = lerp(1.1 + p.near * 0.9, Math.max(1.1, 2.5 * persp), e);
       sctx.beginPath();
-      sctx.moveTo(sx, sy - half);
-      sctx.lineTo(sx, sy + half);
+      sctx.moveTo(px, py - half);
+      sctx.lineTo(px, py + half);
       sctx.stroke();
     }
     sctx.globalAlpha = 1;
-    sctx.restore();
   }
 
   function frame(now){
@@ -2259,14 +2151,18 @@ document.getElementById('contact-form').addEventListener('submit', e => {
     const dt = Math.min((now - lastT) / 1000, 0.05);
     lastT = now;
 
-    cohesion += (cohesionTarget - cohesion) * Math.min(1, dt * 2.7);
-    drive *= Math.pow(0.20, dt);              // scroll energy bleeds off over ~1.3s
+    const y = window.scrollY;
+    // saturating, so a flick and a fling feel related
+    drive = Math.min(1, drive + Math.min(Math.abs(y - lastScroll), 90) / 90);
+    lastScroll = y;
+    drive *= Math.pow(0.2, dt);                  // bleeds off over ~1.3s
 
-    flow += dir * (FLOW_IDLE + FLOW_DRIVE * drive) * dt;
-    flow = (flow % 1 + 1) % 1;                // keep the wrap positive
-    swayPhase += (SWAY_IDLE + SWAY_DRIVE * drive) * dt;
-    angle += (SPIN_IDLE + SPIN_DRIVE * drive * dir) * dt;
-    breathe += 0.042 * dt;
+    const { heroT, footT } = targets();
+    const k = 1 - Math.exp(-FORM_EASE * dt);
+    heroForm += (heroT - heroForm) * k;
+    footForm += (footT - footForm) * k;
+
+    clock += dt * (1 + drive * 2.2);             // scrolling hurries the drift along
 
     render();
     requestAnimationFrame(frame);
@@ -2274,16 +2170,19 @@ document.getElementById('contact-form').addEventListener('submit', e => {
 
   resize();
   window.addEventListener('resize', resize);
-  window.addEventListener('scroll', onScroll, { passive: true });
-  // seed progress only — calling onScroll() here would read "not scrolling down"
-  // and start the mark scattered instead of assembled
-  progress = docProgress();
 
   if (reduced){
-    cohesion = 1;
-    progress = 0.5;
-    render();
+    // no autonomous motion: snap to the scroll state and redraw only on scroll
+    const still = () => {
+      const { heroT, footT } = targets();
+      heroForm = heroT; footForm = footT;
+      render();
+    };
+    still();
+    window.addEventListener('scroll', still, { passive: true });
   } else {
+    const { heroT, footT } = targets();
+    heroForm = heroT; footForm = footT;          // start in place, not mid-flight
     requestAnimationFrame(frame);
   }
 })();
