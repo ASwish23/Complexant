@@ -1029,7 +1029,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   display:grid; gap:clamp(36px,4vw,70px);
   grid-template-columns:1fr;
 }
-@media (min-width:900px){ .footer-grid{ grid-template-columns:1.4fr 1fr 1fr; } }
+/* --foot-mark is the left region kept clear for the reformed Signal; the script
+   reads this padding to place and size the mark, and the copy sits to its right. */
+@media (min-width:900px){
+  .footer-grid{ grid-template-columns:1.4fr 1fr; padding-left:var(--foot-mark); }
+  .footer-bottom{ padding-left:var(--foot-mark); }
+}
+:root{ --foot-mark:clamp(300px, 32vw, 520px); }
 /* a soft charcoal halo lifts the copy off the reformed Signal without boxing it out */
 .footer-grid p, .footer-links a, .footer-bottom{
   text-shadow:0 0 14px var(--charcoal), 0 0 5px var(--charcoal);
@@ -2059,15 +2065,28 @@ document.getElementById('contact-form').addEventListener('submit', e => {
       right: W, box,
     };
   }
+  /* The footer mark sits in the left region the footer grid reserves for it
+     (its padding-left), tail on the left and the tapered point aimed right at
+     the contact column — it reads as an arrow towards "Let's talk". Sized from
+     that region so the mark and the copy beside it can't drift apart. */
   function footerAnchor(){
-    const box = W * (W >= 1100 ? 0.52 : 0.78);
     const r = footer.getBoundingClientRect();
-    return {
-      cx: W - box + box * 0.44,
-      cy: r.top + r.height * 0.5,
-      scale: Math.min(box, r.height * 1.05, H) * 0.46,
-      right: W, box,
-    };
+    const grid = footer.querySelector('.footer-grid');
+    const g = grid ? grid.getBoundingClientRect() : r;
+    const region = grid ? (parseFloat(getComputedStyle(grid).paddingLeft) || 0) : 0;
+    let cx, cy, scale;
+    if (W >= 900 && region > 0){
+      cx = g.left + region * 0.46;
+      cy = g.top + g.height * 0.5;
+      scale = Math.min(region * 0.46, g.height * 0.62, H * 0.32);
+    } else {
+      // stacked footer: no spare column, so a small mark behind the copy
+      cx = W * 0.5;
+      cy = r.top + r.height * 0.5;
+      scale = Math.min(W * 0.28, r.height * 0.4);
+    }
+    // the tail fades out the same way the hero mark's does, just mirrored onto this box
+    return { cx, cy, scale, right: cx + scale * 0.9, box: scale * 1.9 };
   }
   /* The old box's CSS mask, as a function of screen x: solid over the right
      third, 0.65 at two-thirds across, gone at the left edge. */
