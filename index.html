@@ -227,8 +227,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   position:relative;
   display:inline-flex;
   align-items:center;
-  gap:14px;
-  padding:14px 14px 14px 28px;
+  justify-content:center;
+  text-align:center;
+  padding:17px 32px;
   border-radius:999px;
   font-size:var(--text-s);
   font-weight:500;
@@ -248,19 +249,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   transition:transform 0.5s var(--ease);
   z-index:0;
 }
-.btn > span, .btn > .btn-dot{ position:relative; z-index:1; }
-.btn .btn-dot{
-  width:30px; height:30px; border-radius:50%;
-  background:var(--ivory);
-  display:grid; place-items:center;
-  transition:transform var(--speed) var(--ease-out);
-}
-.btn .btn-dot svg{ width:13px; height:13px; stroke:var(--charcoal); }
+.btn > span{ position:relative; z-index:1; }
 .btn:hover, .btn:focus-visible{ transform:translateY(-2px); }
 .btn:hover .btn-bg, .btn:focus-visible .btn-bg{ transform:scaleX(1); }
 .btn:hover > span, .btn:focus-visible > span{ color:var(--charcoal); }
-.btn:hover .btn-dot, .btn:focus-visible .btn-dot{ background:var(--blue); transform:translateX(3px); }
-.btn:hover .btn-dot svg, .btn:focus-visible .btn-dot svg{ stroke:var(--ivory); }
 .btn:active{ transform:translateY(0); }
 .btn > span{ transition:color var(--speed) var(--ease); }
 
@@ -277,10 +269,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .btn-copper > span{ color:var(--ivory); }
 .btn-copper:hover > span, .btn-copper:focus-visible > span{ color:var(--ivory); }
-.btn-copper .btn-dot{ background:var(--ivory); }
-.btn-copper .btn-dot svg{ stroke:var(--copper); }
-.btn-copper:hover .btn-dot, .btn-copper:focus-visible .btn-dot{ background:var(--ivory); }
-.btn-copper:hover .btn-dot svg, .btn-copper:focus-visible .btn-dot svg{ stroke:var(--copper); }
 
 /* ---------- header ---------- */
 .site-header{
@@ -328,7 +316,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .header-actions{ display:flex; align-items:center; gap:clamp(10px,1.5vw,18px); }
 /* the header's own CTA sits at a slightly tighter scale than the full-size
    .btn used in page content, so it doesn't blow out the header's height */
-.header-actions .btn{ padding:10px 10px 10px 22px; font-size:var(--text-xs); }
+.header-actions .btn{ padding:15px 24px; font-size:var(--text-xs); }
 .header-actions .btn > span{ white-space:nowrap; }
 
 /* Phone-width header: measured that brand + CTA + hamburger stop fitting
@@ -339,9 +327,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   .brand-sub, .brand-llc{ display:none; }
   .site-header{ padding-left:16px; padding-right:16px; }
   .header-actions{ gap:6px; }
-  .header-actions .btn{ padding:8px 6px 8px 14px; gap:8px; }
-  .header-actions .btn .btn-dot{ width:24px; height:24px; }
-  .header-actions .btn .btn-dot svg{ width:11px; height:11px; }
+  .header-actions .btn{ padding:13px 16px; }
 }
 
 .brand{ display:flex; align-items:center; gap:14px; }
@@ -461,8 +447,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   position:absolute; inset:0;
   width:100%; height:100%;
   z-index:0;
-  opacity:0.62;
-  mix-blend-mode:screen;
+  /* drawn at full strength with normal blending: screen would wash out the
+     shading that makes the bars read as solid, and the copper as metal.
+     Readability over copy is handled in the script (SCATTER_ALPHA). */
 }
 @media (max-width:1099px){
   .spine{ opacity:0.5; }
@@ -1096,9 +1083,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     <a class="btn" href="#contact">
       <span class="btn-bg"></span>
       <span>Let&rsquo;s Talk</span>
-      <span class="btn-dot" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
-      </span>
     </a>
     <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="overlay" aria-label="Open menu">
       <span class="menu-glyph" aria-hidden="true"><i></i><i></i><i></i></span>
@@ -1146,9 +1130,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
         <a class="btn" href="#contact">
           <span class="btn-bg"></span>
           <span>Start a Readiness Assessment</span>
-          <span class="btn-dot" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
-          </span>
         </a>
       </div>
     </div>
@@ -1267,9 +1248,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
         <a class="btn" href="#contact">
           <span class="btn-bg"></span>
           <span>Start a Conversation</span>
-          <span class="btn-dot" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
-          </span>
         </a>
       </div>
     </div>
@@ -1312,9 +1290,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
         <a class="btn" href="#team">
           <span class="btn-bg"></span>
           <span>Meet the Principals</span>
-          <span class="btn-dot" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
-          </span>
         </a>
       </div>
     </div>
@@ -1557,9 +1532,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
         <button class="btn btn-copper" type="submit">
           <span class="btn-bg"></span>
           <span>Send to Complexant Partners</span>
-          <span class="btn-dot" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
-          </span>
         </button>
       </div>
       <p style="font-size:var(--text-xs);color:var(--fog);">Opens your email client, addressed to info@complexantpartners.com.</p>
@@ -1605,9 +1577,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
       <a class="btn" href="#contact" style="margin-top:22px;">
         <span class="btn-bg"></span>
         <span>Let&rsquo;s Talk</span>
-        <span class="btn-dot" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
-        </span>
       </a>
     </div>
 
@@ -1968,9 +1937,15 @@ document.getElementById('contact-form').addEventListener('submit', e => {
   const DRIFT = 0.010;          // free drift of a scattered particle, viewport per second
   const PARALLAX_NEAR = 0.34;   // scattered field's scroll parallax, near particles...
   const PARALLAX_FAR  = 0.08;   // ...and far ones
-  const SCATTER_ALPHA = 0.62;   // scattered brightness relative to formed, keeps copy readable
-  const YAW = -0.35;            // resting 3D turn of the formed mark
-  const YAW_SWING = 0.20;       // and its slow sway either side of that
+  const SCATTER_ALPHA = 0.38;   // scattered brightness relative to formed, keeps copy readable
+  const YAW = 0;                // the formed mark rests square on, exactly as the logo is drawn
+  const YAW_SWING = 0.12;       // and turns gently either side of that
+  // the light that passes over the field and catches the copper
+  const SWEEP_PERIOD = 7;       // seconds from one pass to the next
+  const SWEEP_TIME = 2.6;       // seconds a pass takes to cross the viewport
+  const SWEEP_SLOPE = 1.6;      // tilt of the light's edge: x + SLOPE*y = const
+  const SWEEP_SOFT = 0.09;      // width of the lit band, share of the distance it travels
+  const GLINT_RUN = 0.9;        // seconds of a bar's own occasional glint between passes
   /* ------------------ */
 
   const smoothstep = (a, b, t) => {
@@ -1985,40 +1960,263 @@ document.getElementById('contact-form').addEventListener('submit', e => {
     return x - Math.floor(x);
   }
 
-  /* ---------- build the particle field (the Signal) ---------- */
-  const COLS = 62;
+  /* ---------- the bar sprites ----------
+     Every particle is one of the shaded bar renders in "Bar icon files",
+     grouped here by finish. The copper is where the metal lives: its pixels
+     get a harder highlight, plus a set of glint frames — the same bar lit by
+     a warm band at a different height in each — so light can run along it. */
+  const SPRITE_DIR = 'Bar%20icon%20files/';
+  const FINISHES = {
+    copper:     ['14x71', '18x94'],
+    copperNavy: ['11x77', '13x102', '13x71', '14x62', '17x94', '18x83'],
+    navy:       ['14x60', '18x80'],
+    teal:       ['13x60', '18x79'],
+    cream:      ['14x72', '18x95'],
+    navyCream:  ['10x41', '13x55'],
+    silver:     ['silver:14x72', 'silver:18x95'],   // made from the cream bars, see prepareSilver
+  };
+  const GLINT_FRAMES = 24;
+  const GLINT_FROM = -0.35, GLINT_TO = 1.35;   // band centre along the bar, first frame to last
+  const sprites = {};                          // name -> { base:[up, flipped], glint:[up[], flipped[]] | null }
+
+  function canvasOf(w, h){
+    const c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    return c;
+  }
+  function flipped(src){
+    const c = canvasOf(src.width, src.height), g = c.getContext('2d');
+    g.translate(0, src.height); g.scale(1, -1);
+    g.drawImage(src, 0, 0);
+    return c;
+  }
+  const isCopperPx = (r, g, b) => r > 110 && r - b > 55 && r - g > 28;
+  // polished copper, dark to light; the body stop is the brand copper #C7742D
+  const COPPER_STOPS = [[0, [74, 34, 14]], [0.42, [158, 84, 32]], [0.68, [199, 116, 45]], [0.88, [236, 166, 104]], [1, [252, 214, 176]]];
+  // brushed silver for the logo's grey bars, cool rather than warm
+  const SILVER_STOPS = [[0, [66, 69, 72]], [0.4, [110, 113, 116]], [0.7, [162, 165, 168]], [0.9, [206, 208, 210]], [1, [234, 235, 236]]];
+  function ramp(stops, s){
+    let k = 1;
+    while (k < stops.length - 1 && s > stops[k][0]) k++;
+    const [a, ca] = stops[k - 1], [b, cb] = stops[k];
+    const f = Math.min(Math.max((s - a) / (b - a), 0), 1);
+    return [lerp(ca[0], cb[0], f), lerp(ca[1], cb[1], f), lerp(ca[2], cb[2], f)];
+  }
+
+  /* Polish the metal pixels (those in `mask`): re-map their own shading onto
+     a polished ramp — deep shadow, body, bright edge — with a steeper curve
+     than the render's soft one, then a hot specular line down the lit side.
+     One ramp per metal, so every bar of it reads as the same material.
+     Returns how lit each column is, 0..1, for the glint frames. */
+  function polish(px, w, h, mask, stops, spec){
+    const col = new Float32Array(w), colW = new Float32Array(w);
+    let lLo = Infinity, lHi = 0;
+    for (let i = 0; i < w * h; i++) if (mask[i]){
+      const l = px[i * 4] * 0.3 + px[i * 4 + 1] * 0.59 + px[i * 4 + 2] * 0.11;
+      col[i % w] += l * mask[i]; colW[i % w] += mask[i];
+      lLo = Math.min(lLo, l); lHi = Math.max(lHi, l);
+    }
+    let lo = Infinity, hi = 0;
+    for (let x = 0; x < w; x++) if (colW[x]){ col[x] /= colW[x]; lo = Math.min(lo, col[x]); hi = Math.max(hi, col[x]); }
+    for (let x = 0; x < w; x++) col[x] = colW[x] ? (col[x] - lo) / Math.max(hi - lo, 1) : 0;
+    for (let i = 0; i < w * h; i++){
+      if (!mask[i]) continue;
+      const l = (px[i * 4] * 0.3 + px[i * 4 + 1] * 0.59 + px[i * 4 + 2] * 0.11 - lLo) / Math.max(lHi - lLo, 1);
+      const rgb = ramp(stops, smoothstep(0.08, 0.95, l));
+      const s = Math.pow(col[i % w], 4) * spec;
+      px[i * 4]     = Math.min(255, rgb[0] + (255 - rgb[0]) * s);
+      px[i * 4 + 1] = Math.min(255, rgb[1] + (243 - rgb[1]) * s);
+      px[i * 4 + 2] = Math.min(255, rgb[2] + (226 - rgb[2]) * s);
+    }
+    return col;
+  }
+
+  // the sprite at 2x, so the specular line can be narrower than a source pixel
+  function upscale(img){
+    const w = img.naturalWidth * 2, h = img.naturalHeight * 2;
+    const c = canvasOf(w, h), g = c.getContext('2d');
+    g.imageSmoothingQuality = 'high';
+    g.drawImage(img, 0, 0, w, h);
+    return c;
+  }
+  const plain = (c) => ({ base: [c, flipped(c)], glint: null });
+
+  function prepare(img){
+    const base = upscale(img), bg = base.getContext('2d'), w = base.width, h = base.height;
+    let data;
+    try { data = bg.getImageData(0, 0, w, h); }
+    catch (err){ return plain(base); }   // tainted (file://): plain bars, no polish or glint
+
+    const px = data.data, mask = new Float32Array(w * h);
+    let copperPx = 0;
+    for (let i = 0; i < w * h; i++){
+      const a = px[i * 4 + 3] / 255;
+      if (a > 0.05 && isCopperPx(px[i * 4], px[i * 4 + 1], px[i * 4 + 2])){ mask[i] = a; copperPx++; }
+    }
+    if (!copperPx) return plain(base);
+    const col = polish(px, w, h, mask, COPPER_STOPS, 0.6);
+    bg.putImageData(data, 0, 0);
+
+    // glint frames: warm light on the copper only, strongest down the lit side
+    const up = [], down = [];
+    for (let f = 0; f < GLINT_FRAMES; f++){
+      const u = lerp(GLINT_FROM, GLINT_TO, f / (GLINT_FRAMES - 1));
+      const c = canvasOf(w, h), g = c.getContext('2d');
+      const out = g.createImageData(w, h), o = out.data;
+      for (let y = 0; y < h; y++){
+        const band = Math.exp(-Math.pow((y / h - u) / 0.15, 2));
+        for (let x = 0; x < w; x++){
+          const i = y * w + x;
+          if (!mask[i]) continue;
+          const k = col[x];
+          o[i * 4] = 255; o[i * 4 + 1] = 228; o[i * 4 + 2] = 196;
+          o[i * 4 + 3] = 255 * mask[i] * Math.min(1, 0.25 * k + band * (0.65 + 0.35 * k));
+        }
+      }
+      g.putImageData(out, 0, 0);
+      up.push(c);
+      down.push(flipped(c));
+    }
+    return { base: [base, flipped(base)], glint: [up, down] };
+  }
+
+  // silver, made from a cream bar: the whole bar re-mapped onto the silver ramp
+  function prepareSilver(img){
+    const base = upscale(img), bg = base.getContext('2d'), w = base.width, h = base.height;
+    let data;
+    try { data = bg.getImageData(0, 0, w, h); }
+    catch (err){ return plain(base); }
+    /* The cream bar is lit almost evenly, so the silver takes its cylinder
+       from position instead, as the logo's silver bars are drawn: dark grey
+       on the left rising to bright on the right, a little of the bar's own
+       shading kept for its rounded ends and edges. */
+    const px = data.data;
+    for (let i = 0; i < w * h; i++){
+      if (px[i * 4 + 3] <= 12) continue;
+      const l = (px[i * 4] * 0.3 + px[i * 4 + 1] * 0.59 + px[i * 4 + 2] * 0.11) / 255;
+      const across = smoothstep(0.02, 0.8, ((i % w) + 0.5) / w);
+      const rgb = ramp(SILVER_STOPS, Math.min(1, across * (0.55 + 0.45 * l)));
+      px[i * 4] = rgb[0]; px[i * 4 + 1] = rgb[1]; px[i * 4 + 2] = rgb[2];
+    }
+    bg.putImageData(data, 0, 0);
+    return plain(base);
+  }
+
+  // the soft warm flare where the light strikes a copper bar
+  const bloom = canvasOf(64, 64);
+  {
+    const g = bloom.getContext('2d');
+    const rg = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    rg.addColorStop(0, 'rgba(255, 236, 212, 0.9)');
+    rg.addColorStop(0.25, 'rgba(240, 168, 104, 0.35)');
+    rg.addColorStop(1, 'rgba(199, 116, 45, 0)');
+    g.fillStyle = rg;
+    g.fillRect(0, 0, 64, 64);
+  }
+
+  const files = [...new Set(Object.values(FINISHES).flat().map((n) => n.replace('silver:', '')))];
+  const spritesReady = Promise.all(files.map((name) => new Promise((done) => {
+    const img = new Image();
+    img.onload = () => {
+      sprites[name] = prepare(img);
+      if (FINISHES.silver.includes('silver:' + name)) sprites['silver:' + name] = prepareSilver(img);
+      done();
+    };
+    img.onerror = done;
+    img.src = SPRITE_DIR + name + '.png';
+  })));
+
+  /* A bar at any size without stretching its rounded ends: the two caps are
+     drawn at the bar's width, only the straight middle is stretched. */
+  function drawBar(src, cx, top, w, h){
+    const sw = src.width, sh = src.height, sc = sw * 0.5;
+    const dc = Math.min(w * 0.5, h * 0.5);
+    const x = cx - w * 0.5;
+    sctx.drawImage(src, 0, 0, sw, sc, x, top, w, dc);
+    sctx.drawImage(src, 0, sc, sw, sh - 2 * sc, x, top + dc, w, h - 2 * dc);
+    sctx.drawImage(src, 0, sh - sc, sw, sc, x, top + h - dc, w, dc);
+  }
+
+  /* ---------- build the particle field (the Signal) ----------
+     The formed mark is the logo itself (assets/signal.png), measured bar by
+     bar: [centre x, width, top y, height, segments] in the logo's 512px
+     space. Segments run top to bottom, finish letter + length in px:
+     K copper, N navy, T teal, W cream, S silver. Each segment is one
+     particle, so a line in the logo is a stack of bars, as it is drawn. */
+  const LOGO_BARS = [
+    [180, 6, 0, 39, 'S39'], [238.5, 7, 41, 68, 'S68'],
+    [326, 8, 59, 407, 'T12 N59 T49 S49 T12 K44 T8 N61 T46 S48 T19'],
+    [179.5, 7, 64, 23, 'T23'], [206.5, 7, 89, 41, 'S41'], [136.5, 7, 94, 24, 'T24'],
+    [272.5, 7, 97, 66, 'T66'], [342, 8, 97, 330, 'T13 S49 T56 K94 T38 N38 T42'],
+    [75, 6, 102, 24, 'T24'], [308, 8, 126, 274, 'S5 W35 T84 K25 T51 N39 T35'],
+    [238, 8, 130, 64, 'K21 N43'], [358, 6, 132, 261, 'T14 N45 T11 K121 T9 W29 T32'],
+    [154.5, 7, 138, 41, 'S41'], [91.5, 5, 161, 46, 'T18 N28'],
+    [372, 6, 162, 201, 'T6 W13 T7 K149 T7 N12 T7'], [197, 6, 167, 52, 'N21 W31'],
+    [255, 6, 177, 52, 'N21 W31'], [44, 6, 179, 23, 'T23'],
+    [286, 8, 186, 152, 'T16 N32 T21 K14 T23 W36 T10'], [386, 6, 188, 148, 'S16 K116 W16'],
+    [399, 4, 208, 108, 'N11 T7 K77 S6 T7'], [267.5, 5, 217, 63, 'T35 N28'],
+    [119.5, 7, 219, 24, 'T24'], [409, 4, 226, 72, 'T8 K57 T7'], [209, 8, 227, 47, 'S21 N26'],
+    [150.5, 7, 239, 46, 'W20 N26'], [88.5, 5, 240, 38, 'T14 N24'], [177, 6, 240, 31, 'T14 N17'],
+    [417.5, 3, 240, 45, 'K45'], [241.5, 7, 241, 62, 'K20 N42'], [424.5, 3, 245, 35, 'K35'],
+    [429, 2, 248, 29, 'K29'], [433, 2, 251, 22, 'K22'],
+    // the arrowhead at the point
+    [439, 4, 253, 19, 'K19'], [445, 3, 255, 14, 'K14'], [450, 3, 256, 12, 'K12'],
+    [454, 2, 257, 9, 'K9'], [458, 2, 259, 6, 'K6'],
+    [119.5, 7, 280, 29, 'S17 N12'], [264, 6, 295, 45, 'N20 W25'], [190, 6, 300, 48, 'N20 W28'],
+    [46.5, 7, 311, 23, 'T23'], [221, 6, 323, 94, 'N20 W74'], [104.5, 7, 330, 42, 'S42'],
+    [157.5, 7, 335, 62, 'T25 N37'], [271, 6, 350, 29, 'S29'], [271, 6, 387, 47, 'N20 W27'],
+    [199.5, 7, 403, 44, 'K6 N38'], [74, 6, 425, 33, 'S33'], [177.5, 7, 445, 67, 'T67'],
+    [237.5, 7, 449, 33, 'S33'],
+  ];
+  // the copper needle the lines converge on: from x to x, centre y, thickness
+  const LOGO_NEEDLE = [282, 472, 261.5, 5];
+  const LOGO_CX = 256, LOGO_CY = 261.5, LOGO_R = 256;   // logo px -> mark units
+  const LETTER = { K: 'copper', N: 'navy', T: 'teal', W: 'cream', S: 'silver' };
+  /* Scatter-only bars: they fill out the field mid-page and fade away as the
+     mark forms, so the mark itself stays exactly the logo. */
+  const EXTRA = 110;
+
   const points = [];
   let id = 0;
+  const finishOf = (finish) => {
+    const names = FINISHES[finish];
+    return { finish, sprite: names[Math.floor(rand(id * 8.2) * names.length)], metal: finish === 'copper' || finish === 'copperNavy' };
+  };
 
-  for (let c = 0; c < COLS; c++){
-    const t = c / (COLS - 1);
-    const dense = t < 0.42
-      ? Math.round(1 + rand(c) * 2)
-      : Math.round(3 + (1 - t) * 12);
-    const envelope = t < 0.42
-      ? 0.62 + rand(c + 99) * 0.3
-      : Math.pow(1 - t, 0.85) * 1.06;
-
-    for (let k = 0; k < dense; k++){
+  for (let i = 0; i < EXTRA; i++){
+    id++;
+    const r = rand(id * 5.9);
+    const finish = r < 0.04 ? 'copper' : r < 0.07 ? 'copperNavy'
+      : ['navy', 'teal', 'cream', 'navyCream', 'silver'][Math.floor(rand(id * 6.3) * 5)];
+    points.push({
+      x: (rand(id * 2.1) * 2 - 1) * 0.8, y: (rand(id * 1.3) * 2 - 1) * 0.9,
+      len: 0.05 + rand(id * 4.4) * 0.09, wid: 6 / LOGO_R,
+      ghost: true, flip: rand(id * 9.4) > 0.5 ? 1 : 0, ...finishOf(finish),
+    });
+  }
+  for (const [bx, bw, by, , runs] of LOGO_BARS){
+    let cursor = by;
+    for (const seg of runs.split(' ')){
       id++;
-      const spreadY = (rand(id * 1.3) * 2 - 1) * envelope;
-      const x = -1 + t * 2 + (rand(id * 2.1) - 0.5) * 0.02;
-      const z = (rand(id * 3.7) - 0.5) * (t < 0.42 ? 0.55 : 0.4 * (1 - t) + 0.06);
-      const len = t < 0.42
-        ? 0.05 + rand(id * 4.4) * 0.09
-        : 0.06 + Math.pow(1 - t, 1.1) * 0.3;
-
-      const isCopper = t > 0.9 || rand(id * 5.9) > 0.94;
-      let color;
-      if (isCopper) color = '#C7742D';
-      else {
-        const r = rand(id * 6.3);
-        color = r > 0.72 ? '#B7D6D2' : r > 0.45 ? '#4F8F8E' : r > 0.2 ? '#A6ACB2' : '#F6F3ED';
-      }
-
-      points.push({ x, y: spreadY, z, len, color, alpha: 0.35 + rand(id * 7.1) * 0.6 });
+      const n = parseFloat(seg.slice(1));
+      points.push({
+        x: (bx - LOGO_CX) / LOGO_R, y: (cursor + n * 0.5 - LOGO_CY) / LOGO_R,
+        len: n / LOGO_R, wid: bw / LOGO_R, flip: 0, ...finishOf(LETTER[seg[0]]),
+      });
+      cursor += n;
     }
   }
+  {
+    // last, so it lies across the lines it threads, as in the logo
+    id++;
+    const [x0, x1, cy, t] = LOGO_NEEDLE;
+    points.push({
+      x: ((x0 + x1) * 0.5 - LOGO_CX) / LOGO_R, y: (cy - LOGO_CY) / LOGO_R,
+      len: (x1 - x0) / LOGO_R, wid: t / LOGO_R, flip: 0, horiz: true, ...finishOf('copper'),
+    });
+  }
+  // every bar is fully opaque in the mark; scattered, each keeps its own brightness
+  points.forEach((p, n) => { p.alpha = p.metal ? 0.9 + rand(n * 7.1) * 0.1 : 0.55 + rand(n * 7.1) * 0.4; });
 
   /* ---------- give every particle a seat in the scattered field ----------
      Seats come from the R2 low-discrepancy sequence, lightly jittered, so the
@@ -2036,6 +2234,7 @@ document.getElementById('contact-form').addEventListener('submit', e => {
     p.arcY = (rand(n * 21.6) - 0.5) * 2 * ARC;
     p.slen = 0.03 + rand(n * 11.8) * 0.07;
     p.phase = rand(n * 12.9) * Math.PI * 2;          // desynchronised shimmer
+    p.gper = 8 + rand(n * 22.7) * 7;                 // seconds between its own glints
   });
 
   /* ---------- sizing ---------- */
@@ -2121,6 +2320,7 @@ document.getElementById('contact-form').addEventListener('submit', e => {
   function render(){
     sctx.clearRect(0, 0, W, H);
     if (!W || !H) return;
+    sctx.imageSmoothingQuality = 'high';   // the sprites draw well below their size; low quality skips the highlight
 
     const form = Math.max(heroForm, footForm);
     // which mark the particles are heading for — normally only one is live
@@ -2135,23 +2335,31 @@ document.getElementById('contact-form').addEventListener('submit', e => {
     const scrollY = window.scrollY;
     const M = 40;                     // wrap margin, px
 
-    sctx.lineCap = 'round';
+    // where the passing light is: a tilted edge, x + SLOPE*y = sweepS, moving
+    // from top-left to bottom-right, then resting off-screen until the next pass
+    const reach = W + SWEEP_SLOPE * H;
+    const soft = SWEEP_SOFT * reach;
+    const pass = (clock % SWEEP_PERIOD) / SWEEP_TIME;
+    const sweepS = lerp(-soft * 2, reach + soft * 2, pass);
 
     for (let i = 0; i < points.length; i++){
       const p = points[i];
+      const sprite = sprites[p.sprite];
+      if (!sprite) continue;
       // this particle's own progress through the transition, offset by its delay
       const e = smoothstep(p.delay, p.delay + 1 - STAGGER, form);
 
       /* --- formed position, projected through the slowly swaying yaw --- */
-      const rx = p.x * cos - p.z * sin;
-      const rz = p.x * sin + p.z * cos;
+      const rx = p.x * cos;
+      const rz = p.x * sin;
       const persp = FOV / (FOV + rz);
       const lxH = hA.cx + rx * hA.scale * persp, lyH = hA.cy + p.y * hA.scale * persp;
       const lxF = fA.cx + rx * fA.scale * persp, lyF = fA.cy + p.y * fA.scale * persp;
       const lx = lerp(lxH, lxF, toFoot), ly = lerp(lyH, lyF, toFoot);
       const lscale = lerp(hA.scale, fA.scale, toFoot);
-      const mask = lerp(boxMask(lxH, hA), boxMask(lxF, fA), toFoot);
-      const depth = Math.min(Math.max((rz + 1.2) / 2.4, 0), 1);
+      // on wide screens the mark has the hero's right half to itself; narrower,
+      // it sits behind the copy and fades out towards the left
+      const mask = W >= 1100 ? 1 : lerp(boxMask(lxH, hA), boxMask(lxF, fA), toFoot);
 
       /* --- scattered position: its seat, drifting, parallaxed by scroll,
              wrapped round the viewport edges --- */
@@ -2169,21 +2377,61 @@ document.getElementById('contact-form').addEventListener('submit', e => {
       const px = lerp(sx, lx, e) + p.arcX * swing;
       const py = lerp(sy, ly, e) + p.arcY * swing;
 
+      // formed, every bar takes its exact size from the logo
       const formedLen = p.len * lscale * persp;
       const looseLen = p.slen * span * 0.46 * (0.7 + p.near * 0.6) * (1 + drive * 0.7);
-      const half = lerp(looseLen, formedLen, e) * 0.5;
+      const bw = lerp(2.6 + p.near * 3.4, Math.max(1.5, p.wid * lscale * persp), e);
+      const bh = Math.max(lerp(looseLen, formedLen, e), bw * lerp(1.6, 1, e));
+      // the needle swings from upright, like every scattered bar, to lying across the lines
+      const ang = p.horiz ? e * Math.PI * 0.5 : 0;
 
-      const shimmer = 0.84 + 0.16 * Math.sin(clock * 0.1 + p.phase);
-      const formedA = p.alpha * (0.42 + (1 - depth) * 0.58) * mask;
+      // scattered, the matte bars breathe; formed, the logo holds solid
+      const shimmer = p.metal ? 1 : lerp(0.84 + 0.16 * Math.sin(clock * 0.1 + p.phase), 1, e);
+      const formedA = p.ghost ? 0 : mask;
       const looseA = p.alpha * SCATTER_ALPHA * (0.45 + p.near * 0.55) * edge;
-      sctx.globalAlpha = lerp(looseA, formedA, e) * shimmer;
-      sctx.strokeStyle = p.color;
-      sctx.lineWidth = lerp(1.1 + p.near * 0.9, Math.max(1.1, 2.5 * persp), e);
-      sctx.beginPath();
-      sctx.moveTo(px, py - half);
-      sctx.lineTo(px, py + half);
-      sctx.stroke();
+      const alpha = lerp(looseA, formedA, e) * shimmer;
+      if (alpha < 0.01) continue;
+
+      // drawn in the bar's own frame: centred on (px, py), long axis down
+      if (ang) sctx.setTransform(dpr * Math.cos(ang), dpr * Math.sin(ang), -dpr * Math.sin(ang), dpr * Math.cos(ang), dpr * px, dpr * py);
+      else sctx.setTransform(dpr, 0, 0, dpr, dpr * px, dpr * py);
+      sctx.globalAlpha = alpha;
+      drawBar(sprite.base[p.flip], 0, -bh * 0.5, bw, bh);
+
+      if (sprite.glint){
+        /* --- light on the copper: the passing sweep, or between passes the
+               bar's own brief glint; whichever is brighter right now --- */
+        let gk = 0, gu = 0.5;
+        if (pass < 1){
+          const d = (px + SWEEP_SLOPE * py - sweepS) / soft;
+          gk = Math.exp(-d * d);
+          // where the light's edge crosses this bar, 0 at its top end .. 1 at its bottom
+          const ax = -Math.sin(ang), ay = Math.cos(ang);
+          const t0 = (px - ax * bh * 0.5) + SWEEP_SLOPE * (py - ay * bh * 0.5);
+          gu = (sweepS - t0) / (bh * (ax + SWEEP_SLOPE * ay));
+        }
+        const own = ((clock + p.phase * 10) % p.gper) / GLINT_RUN;
+        if (own < 1 && Math.sin(Math.PI * own) * 0.8 > gk){
+          gk = Math.sin(Math.PI * own) * 0.8;
+          gu = lerp(GLINT_FROM, GLINT_TO, own);
+        }
+        if (gk >= 0.02){
+          let f = Math.round((Math.min(Math.max(gu, GLINT_FROM), GLINT_TO) - GLINT_FROM)
+                             / (GLINT_TO - GLINT_FROM) * (GLINT_FRAMES - 1));
+          if (p.flip) f = GLINT_FRAMES - 1 - f;   // flipped frames hold the band mirrored
+          sctx.globalCompositeOperation = 'lighter';
+          sctx.globalAlpha = alpha * gk;
+          drawBar(sprite.glint[p.flip][f], 0, -bh * 0.5, bw, bh);
+          if (gu > 0 && gu < 1){
+            const rad = Math.max(bw, 3) * 3.2;
+            sctx.globalAlpha = alpha * gk * 0.55 * Math.sin(Math.PI * gu);
+            sctx.drawImage(bloom, -rad, -bh * 0.5 + gu * bh - rad, rad * 2, rad * 2);
+          }
+          sctx.globalCompositeOperation = 'source-over';
+        }
+      }
     }
+    sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     sctx.globalAlpha = 1;
   }
 
@@ -2212,6 +2460,7 @@ document.getElementById('contact-form').addEventListener('submit', e => {
 
   resize();
   window.addEventListener('resize', resize);
+  spritesReady.then(render);
 
   if (reduced){
     // no autonomous motion: snap to the scroll state and redraw only on scroll
