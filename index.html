@@ -3,13 +3,43 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Complexant Partners LLC — Safely Adapting to Innovation</title>
+<!-- cx-seo -->
+<title>Quality &amp; Regulatory Compliance Consultancy | Complexant Partners</title>
 <meta name="description" content="Complexant Partners guides regulated life sciences companies in closing gaps, turning complexity into competency and competency into clarity." />
+<link rel="canonical" href="https://complexantpartners.com/" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Complexant Partners" />
+<meta property="og:title" content="Quality &amp; Regulatory Compliance Consultancy | Complexant Partners" />
+<meta property="og:description" content="Complexant Partners guides regulated life sciences companies in closing gaps, turning complexity into competency and competency into clarity." />
+<meta property="og:url" content="https://complexantpartners.com/" />
+<meta property="og:image" content="https://complexantpartners.com/assets/signal.png" />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Quality &amp; Regulatory Compliance Consultancy | Complexant Partners" />
+<meta name="twitter:description" content="Complexant Partners guides regulated life sciences companies in closing gaps, turning complexity into competency and competency into clarity." />
+<meta name="twitter:image" content="https://complexantpartners.com/assets/signal.png" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Complexant Partners",
+  "legalName": "Complexant Partners LLC",
+  "url": "https://complexantpartners.com/",
+  "logo": "https://complexantpartners.com/assets/signal.png",
+  "email": "info@complexantpartners.com",
+  "slogan": "Safely adapting innovation",
+  "description": "Complexant Partners guides regulated life sciences companies in closing gaps, turning complexity into competency and competency into clarity."
+}
+</script>
+<!-- /cx-seo -->
 <link rel="icon" href="assets/signal.png" type="image/png" />
 
+<!-- cx-shell:head -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/cx-shell.css" />
+<script src="assets/js/cx-shell.js" defer></script>
+<!-- /cx-shell:head -->
 
 <script>document.documentElement.classList.add('js');</script>
 <script src="https://cdn.tailwindcss.com"></script>
@@ -22,89 +52,26 @@
 
 <style>
 /* ============================================================
-   COMPLEXANT PARTNERS — design tokens
-   Every color traces to the approved schema:
-   Complexant Blue #235A74 · Muted Teal #4F8F8E · Pale Teal #B7D6D2
-   Warm Ivory #F6F3ED · Copper #C7742D · Charcoal #2B2F33 · Fog Gray #A6ACB2
-   Surfaces are color-mix blends between two approved values only.
+   COMPLEXANT PARTNERS — home page
+   Design tokens, header, footer, menus, search and buttons live in
+   assets/css/cx-shell.css. This sheet holds the home sections only.
    ============================================================ */
 :root{
-  --blue:#235A74;
-  --teal:#4F8F8E;
-  --pale:#B7D6D2;
-  --ivory:#F6F3ED;
-  --copper:#C7742D;
-  /* Deep navy base. Reads as dark blue, never neutral black — it keeps a blue
-     cast even at its darkest so the whole field stays in the brand's hue.
-     Darkened a second time from #03111e per request; every other dark surface
-     (--surface-*, --dark-rad-bg) mixes off this token, so this one edit
-     cascades through the whole page. */
-  --charcoal:#020b14;
-  --fog:#A6ACB2;
-
-  /* Layered dark surfaces: base -> elevated -> floating */
-  --surface-0: var(--charcoal);
-  --surface-1: color-mix(in srgb, var(--blue) 14%, var(--charcoal) 86%);
-  --surface-2: color-mix(in srgb, var(--blue) 26%, var(--charcoal) 74%);
-  --surface-3: color-mix(in srgb, var(--blue) 40%, var(--charcoal) 60%);
-  --hairline: color-mix(in srgb, var(--fog) 26%, transparent);
-  --hairline-strong: color-mix(in srgb, var(--fog) 46%, transparent);
-
-  /* Dark radial field. Three stacked radials over the navy base instead of one
-     wash: a contained blue glow behind the helix lane, a low teal lift off the
-     opposite corner, and a wide centre bloom that keeps the middle from going
-     flat. Everything falls back to deep navy, never black. */
-  --dark-rad-bg:
-    radial-gradient(58% 44% at 80% -4%,
-      color-mix(in srgb, var(--blue) 58%, transparent) 0%,
-      color-mix(in srgb, var(--blue) 22%, transparent) 44%,
-      transparent 76%),
-    radial-gradient(78% 62% at 4% 100%,
-      color-mix(in srgb, var(--teal) 13%, transparent) 0%,
-      transparent 64%),
-    radial-gradient(130% 110% at 52% 44%,
-      color-mix(in srgb, var(--blue) 9%, transparent) 0%,
-      transparent 72%),
-    var(--charcoal);
-
-  --text-primary: var(--ivory);
-  --text-secondary: color-mix(in srgb, var(--ivory) 74%, var(--charcoal) 26%);
-  --text-muted: var(--fog);
-
-  /* Desktop sizes per spec: H1 80px, H2 60px, H3 40px, H4 32px. Kept fluid
-     (clamp) rather than fixed — a flat 80px H1 would overflow a phone width —
-     scaling the mobile-end minimum by the same ratio each level already used,
-     so the fluid curve's shape is preserved, just resized to the new target. */
-  --h1: clamp(2.17rem, 1.26rem + 4vw, 5rem);
-  --h2: clamp(1.875rem, 1.37rem + 2.25vw, 3.75rem);
-  --h3: clamp(1.36rem, 1.09rem + 1.18vw, 2.5rem);
-  --h4: clamp(1.5rem, 1.39rem + 0.51vw, 2rem);
-  --text-l: clamp(1rem, 0.95rem + 0.24vw, 1.25rem);
-  --text-m: 1.125rem;   /* 18px — the paragraph spec */
-  --text-s: 0.875rem;
-  --text-xs: 0.75rem;
-
-  --lh-heading:1.12;
-  --lh-body:1.6;
-  --ls-heading:-0.02em;
-  --ls-body:0.01em;
-  --ls-caps:0.18em;
-
-  --sect-pad-f: clamp(60px, 3rem + 3.6vw, 120px);
-  --sect-pad-h: clamp(44px, 2.4rem + 3vw, 100px);
-  /* Widened ~30% across the curve (was 20px / 0.5rem+5.4vw / 120px) — this one
-     token drives left/right margins for the header, hero, and every section,
-     so bumping it gives the whole page more breathing room at once. */
-  --gutter: clamp(28px, 0.65rem + 7vw, 160px);
-
-  /* Right-hand lane reserved for the DNA spine. Collapses on narrow screens,
-     where the helix drops back to a faint full-width backdrop instead. */
+  /* Right-hand lane reserved for the Signal mark in the hero. Collapses on
+     narrow screens, where the mark drops back behind the copy. */
   --lane: 0px;
 
-  --ease: cubic-bezier(0.65, 0, 0.35, 1);
-  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-  --speed: 0.4s;
-
+  /* Home type scale. One H1 (the hero), every section title an H2 at the
+     same size, H3 for titles inside a section, H4 for small card titles.
+     Each step is clearly smaller than the one above it. Overrides the
+     shell's defaults for this page only. */
+  --h1: clamp(2.75rem, 1.4rem + 5vw, 6rem);
+  --h2: clamp(2.1rem, 1.35rem + 2.9vw, 4.25rem);
+  --h3: clamp(1.55rem, 1.2rem + 1.25vw, 2.5rem);
+  --h4: clamp(1.3rem, 1.1rem + 0.6vw, 1.75rem);
+  /* paragraphs: a section's lead paragraph, and running copy in cards */
+  --text-lede: clamp(1.15rem, 1rem + 0.45vw, 1.4rem);
+  --text-body: clamp(1.05rem, 0.98rem + 0.3vw, 1.25rem);
   color-scheme: dark;
 }
 
@@ -115,7 +82,7 @@ body{
   margin:0;
   background: var(--charcoal);
   color: var(--text-primary);
-  font-family:'Poppins', system-ui, sans-serif;
+  font-family:var(--sans);
   font-weight:400;
   font-size: var(--text-m);
   line-height: var(--lh-body);
@@ -125,16 +92,17 @@ body{
   overflow-x:hidden;
 }
 h1,h2,h3,h4,.display{
-  font-family:'Bodoni Moda', Georgia, serif;
-  font-weight:400;
+  font-family:var(--display);
+  font-weight:500;
   line-height: var(--lh-heading);
   letter-spacing: var(--ls-heading);
   margin:0;
   color: var(--ivory);
 }
-h1{ font-size:var(--h1); }
-h2{ font-size:var(--h2); }
+h1{ font-size:var(--h1); letter-spacing:-0.03em; }
+h2{ font-size:var(--h2); letter-spacing:-0.03em; line-height:1.08; }
 h3{ font-size:var(--h3); }
+h4{ font-size:var(--h4); }
 p{ margin:0; }
 a{ color:inherit; text-decoration:none; }
 ul{ margin:0; padding:0; list-style:none; }
@@ -156,16 +124,15 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .skip-link:focus{ left:16px; top:16px; }
 
 /* ---------- continuous background field ----------
-   One fixed backdrop for the whole document instead of per-section fills, so the
-   DNA layer behind the content reads as part of the page rather than being
-   chopped up by opaque section blocks. */
+   One fixed backdrop for the whole document instead of per-section fills, so
+   the particle layer behind the content reads as part of the page. */
 .page-backdrop{
   position:fixed; inset:0; z-index:-3;
   background:var(--dark-rad-bg);
   pointer-events:none;
 }
-/* Fine grain. A gradient this dark and this wide bands badly on 8-bit displays;
-   a low-opacity noise layer dithers the ramps and gives the field some tooth. */
+/* Fine grain. A gradient this dark and this wide bands badly on 8-bit
+   displays; a low-opacity noise layer dithers the ramps. */
 .page-backdrop::after{
   content:"";
   position:absolute; inset:0;
@@ -180,8 +147,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .section{
   position:relative;
   padding-left:var(--gutter);
-  /* The right lane is open now: sections use symmetric gutters so content
-     centres in the viewport. The hero still reads --lane on its own. */
   padding-right:var(--gutter);
   padding-top:var(--sect-pad-f);
   padding-bottom:var(--sect-pad-f);
@@ -200,304 +165,20 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   color:var(--pale);
 }
 .lede{
-  font-size:var(--text-m);
-  line-height:var(--lh-body);
+  font-size:var(--text-lede);
+  line-height:1.6;
   color:var(--ivory);
 }
 
-/* Metallic copper — mixes of approved Copper with approved Ivory / Charcoal only */
-.copper-metal{
-  background:linear-gradient(100deg,
-    color-mix(in srgb, var(--copper) 55%, var(--charcoal) 45%) 0%,
-    var(--copper) 18%,
-    color-mix(in srgb, var(--copper) 35%, var(--ivory) 65%) 32%,
-    color-mix(in srgb, var(--copper) 12%, var(--ivory) 88%) 38%,
-    color-mix(in srgb, var(--copper) 35%, var(--ivory) 65%) 44%,
-    var(--copper) 58%,
-    color-mix(in srgb, var(--copper) 55%, var(--charcoal) 45%) 72%,
-    var(--copper) 86%,
-    color-mix(in srgb, var(--copper) 30%, var(--ivory) 70%) 100%);
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-}
-
-/* ---------- buttons ---------- */
-.btn{
+/* ---------- card surface ---------- */
+/* Size, spacing and behaviour come from a modifier: .card--pillar (the
+   What-we-do rail). The closing panel's surface lives in cx-shell.css. */
+.card{
   position:relative;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
-  padding:17px 32px;
-  border-radius:999px;
-  font-size:var(--text-s);
-  font-weight:500;
-  letter-spacing:0.1em;
-  text-transform:uppercase;
-  border:1px solid var(--hairline-strong);
-  color:var(--ivory);
-  background:transparent;
-  cursor:pointer;
-  transition:transform var(--speed) var(--ease-out), opacity var(--speed) var(--ease-out);
-  overflow:hidden;
-}
-.btn .btn-bg{
-  position:absolute; inset:0; border-radius:999px;
-  background:var(--ivory);
-  transform:scaleX(0); transform-origin:left center;
-  transition:transform 0.5s var(--ease);
-  z-index:0;
-}
-.btn > span{ position:relative; z-index:1; }
-.btn:hover, .btn:focus-visible{ transform:translateY(-2px); }
-.btn:hover .btn-bg, .btn:focus-visible .btn-bg{ transform:scaleX(1); }
-.btn:hover > span, .btn:focus-visible > span{ color:var(--charcoal); }
-.btn:active{ transform:translateY(0); }
-.btn > span{ transition:color var(--speed) var(--ease); }
-
-/* Copper button — the single apex action */
-.btn-copper{ border-color:color-mix(in srgb, var(--copper) 70%, transparent); }
-.btn-copper .btn-bg{
-  background:linear-gradient(100deg,
-    color-mix(in srgb, var(--copper) 62%, var(--charcoal) 38%) 0%,
-    var(--copper) 30%,
-    color-mix(in srgb, var(--copper) 40%, var(--ivory) 60%) 50%,
-    var(--copper) 72%,
-    color-mix(in srgb, var(--copper) 62%, var(--charcoal) 38%) 100%);
-  transform:scaleX(1);
-}
-.btn-copper > span{ color:var(--ivory); }
-.btn-copper:hover > span, .btn-copper:focus-visible > span{ color:var(--ivory); }
-
-/* ---------- header ---------- */
-.site-header{
-  position:fixed; top:0; left:0; right:0; z-index:100;
-  padding:clamp(18px,2.2vw,34px) var(--gutter);
-  display:flex; align-items:center; justify-content:space-between;
-  pointer-events:none;
-}
-/* content scrolls under the fixed header, so it needs a scrim to stay legible
-   against the logo and menu */
-.site-header::before{
-  content:"";
-  position:absolute; inset:0; z-index:-1;
-  background:linear-gradient(180deg,
-    color-mix(in srgb, var(--charcoal) 92%, transparent) 0%,
-    color-mix(in srgb, var(--charcoal) 62%, transparent) 55%,
-    transparent 100%);
-  opacity:0;
-  transition:opacity 0.4s var(--ease);
-  pointer-events:none;
-}
-.site-header.is-stuck::before{ opacity:1; }
-.site-header > *{ pointer-events:auto; }
-
-/* ---------- horizontal header nav (desktop/tablet) ----------
-   Hidden below 900px — the same breakpoint the overlay's own grid already
-   uses — where the hamburger + full-screen overlay takes over instead. */
-.header-nav{ display:none; }
-@media (min-width:900px){
-  .header-nav{
-    display:flex; align-items:center;
-    gap:clamp(20px,2vw,40px);
-  }
-}
-.header-nav a{
-  font-size:var(--text-xs);
-  letter-spacing:var(--ls-caps);
-  text-transform:uppercase;
-  font-weight:500;
-  color:var(--fog);
-  transition:color var(--speed) var(--ease);
-}
-.header-nav a:hover, .header-nav a:focus-visible{ color:var(--ivory); }
-
-/* ---------- services dropdown ----------
-   Opens on hover and :focus-within so keyboard users get it too; the script
-   adds a click toggle for touch and Escape to close. Each service carries its
-   pillar icon from assets/icons. */
-.nav-services{ position:relative; }
-.nav-services > button{
-  display:inline-flex; align-items:center; gap:7px;
-  padding:0; border:0; background:none; cursor:pointer;
-  font-family:inherit;
-  font-size:var(--text-xs);
-  letter-spacing:var(--ls-caps);
-  text-transform:uppercase;
-  font-weight:500;
-  color:var(--fog);
-  transition:color var(--speed) var(--ease);
-}
-.nav-services > button:hover, .nav-services > button:focus-visible,
-.nav-services:hover > button, .nav-services.is-open > button{ color:var(--ivory); }
-.nav-services > button:active{ opacity:0.7; }
-.nav-caret{ width:9px; height:9px; transition:transform var(--speed) var(--ease-out); }
-.nav-services:hover .nav-caret,
-.nav-services:focus-within:not(.is-dismissed) .nav-caret,
-.nav-services.is-open .nav-caret{ transform:rotate(180deg); }
-.services-menu{
-  position:absolute; top:calc(100% + 18px); left:50%;
-  width:400px; padding:10px;
-  display:grid; gap:2px;
-  border-radius:18px;
+  border-radius:16px;
   border:1px solid var(--hairline);
-  background:color-mix(in srgb, var(--surface-2) 88%, transparent);
-  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
-  box-shadow:
-    0 30px 60px -24px color-mix(in srgb, var(--charcoal) 90%, transparent),
-    0 10px 30px -12px color-mix(in srgb, var(--blue) 60%, transparent);
-  opacity:0; visibility:hidden;
-  transform:translate(-50%, 8px);
-  transition:opacity 0.3s var(--ease), transform 0.4s var(--ease-out), visibility 0.3s;
+  background:linear-gradient(158deg, var(--surface-2) 0%, var(--surface-1) 100%);
 }
-/* hover bridge across the gap between the button and the panel */
-.services-menu::before{ content:""; position:absolute; left:0; right:0; top:-20px; height:20px; }
-.nav-services:hover .services-menu,
-.nav-services:focus-within:not(.is-dismissed) .services-menu,
-.nav-services.is-open .services-menu{
-  opacity:1; visibility:visible; transform:translate(-50%, 0);
-}
-.header-nav .services-menu a{
-  display:grid; grid-template-columns:44px 1fr auto; gap:14px; align-items:center;
-  padding:12px 14px; border-radius:12px;
-  font-size:var(--text-s); letter-spacing:normal; text-transform:none;
-  color:var(--ivory);
-  transition:background-color var(--speed) var(--ease), transform var(--speed) var(--ease-out);
-}
-.header-nav .services-menu a:hover, .header-nav .services-menu a:focus-visible{
-  background:color-mix(in srgb, var(--teal) 14%, transparent);
-  transform:translateX(3px);
-}
-.header-nav .services-menu a:active{ transform:translateX(1px); }
-.services-menu img{ width:40px; height:20px; }
-.services-menu strong{ display:block; font-family:'Bodoni Moda',serif; font-weight:400; font-size:1.1rem; line-height:1.25; }
-.services-menu small{ display:block; font-size:12px; line-height:1.5; color:var(--fog); }
-.services-menu em{
-  align-self:start;
-  padding:4px 10px; border-radius:999px;
-  border:1px dashed var(--hairline-strong);
-  font-style:normal; font-size:10px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase;
-  color:var(--fog); white-space:nowrap;
-}
-
-.header-actions{ display:flex; align-items:center; gap:clamp(10px,1.5vw,18px); }
-/* the header's own CTA sits at a slightly tighter scale than the full-size
-   .btn used in page content, so it doesn't blow out the header's height */
-.header-actions .btn{ padding:15px 24px; font-size:var(--text-xs); }
-.header-actions .btn > span{ white-space:nowrap; }
-
-/* Phone-width header: measured that brand + CTA + hamburger stop fitting
-   below ~500px, so under that the secondary wordmark drops and the hamburger
-   becomes an icon-only circle — logo + CTA + tap target still all fit on
-   one row instead of overlapping. */
-@media (max-width:560px){
-  .brand-sub, .brand-llc{ display:none; }
-  .site-header{ padding-left:16px; padding-right:16px; }
-  .header-actions{ gap:6px; }
-  .header-actions .btn{ padding:13px 16px; }
-}
-
-.brand{ display:flex; align-items:center; gap:14px; }
-.brand img{ width:38px; height:38px; object-fit:contain; }
-.brand-type{ display:flex; align-items:baseline; gap:9px; line-height:1; }
-.brand-name{
-  font-family:'Bodoni Moda', serif;
-  font-size:clamp(15px,1.25vw,20px);
-  letter-spacing:0.06em;
-  color:var(--ivory);
-}
-.brand-sub{
-  font-size:clamp(8px,0.62vw,10px);
-  letter-spacing:0.3em;
-  font-weight:500;
-  color:var(--pale);
-}
-.brand-llc{
-  font-size:clamp(7px,0.5vw,8px);
-  letter-spacing:0.24em;
-  color:var(--fog);
-}
-
-.menu-btn{
-  display:inline-flex; align-items:center; gap:12px;
-  padding:11px 22px 11px 18px;
-  border-radius:999px;
-  border:1px solid var(--hairline-strong);
-  background:color-mix(in srgb, var(--charcoal) 55%, transparent);
-  backdrop-filter:blur(10px);
-  color:var(--ivory);
-  font-size:var(--text-s);
-  font-weight:500;
-  letter-spacing:0.04em;
-  cursor:pointer;
-  transition:transform var(--speed) var(--ease-out), opacity var(--speed) var(--ease-out);
-}
-.menu-btn:hover, .menu-btn:focus-visible{ transform:translateY(-2px); }
-@media (min-width:900px){
-  /* every link this button reaches is now visible inline in .header-nav, so
-     the drawer it used to open is redundant at this width. Placed after the
-     unconditional display rule above so it wins the cascade tie here. */
-  .menu-btn{ display:none; }
-}
-@media (max-width:560px){
-  /* icon-only circular tap target — matches the ~500px point measured above
-     where the "Menu" label's width is what was pushing the hamburger off the
-     edge of the viewport. aria-label (set in JS) keeps it accessible. */
-  .menu-btn{
-    padding:0; width:44px; height:44px;
-    justify-content:center;
-  }
-  #menu-btn-label{ display:none; }
-}
-.menu-glyph{ display:flex; flex-direction:column; gap:3px; }
-.menu-glyph i{
-  display:block; width:14px; height:1.5px; background:var(--ivory);
-  transition:transform var(--speed) var(--ease), opacity var(--speed) var(--ease);
-}
-.menu-open .menu-glyph i:nth-child(1){ transform:translateY(4.5px) rotate(45deg); }
-.menu-open .menu-glyph i:nth-child(2){ opacity:0; }
-.menu-open .menu-glyph i:nth-child(3){ transform:translateY(-4.5px) rotate(-45deg); }
-
-/* ---------- menu overlay ---------- */
-.overlay{
-  position:fixed; inset:0; z-index:99;
-  background:var(--dark-rad-bg);
-  display:grid;
-  grid-template-columns:1fr;
-  /* safe: with the services list the menu can outgrow a short screen, and
-     plain centring would push its top out of reach */
-  align-content:safe center;
-  overflow-y:auto;
-  padding:clamp(90px,12vh,150px) var(--gutter) var(--sect-pad-h);
-  opacity:0; visibility:hidden;
-  transform:translateY(-12px);
-  transition:opacity 0.45s var(--ease), transform 0.45s var(--ease), visibility 0.45s;
-}
-.overlay.is-open{ opacity:1; visibility:visible; transform:translateY(0); }
-.overlay-grid{ max-width:1600px; margin:0 auto; width:100%; display:grid; gap:clamp(40px,6vw,90px); grid-template-columns:1fr; }
-@media (min-width:900px){ .overlay-grid{ grid-template-columns:1.15fr 0.85fr; align-items:start; } }
-.overlay-nav a{
-  display:block;
-  font-family:'Bodoni Moda', serif;
-  /* deliberately restrained — not oversized */
-  font-size:clamp(1.5rem, 1.1rem + 1.3vw, 2.25rem);
-  letter-spacing:-0.01em;
-  padding:11px 0;
-  border-bottom:1px solid var(--hairline);
-  color:var(--ivory);
-  transition:color var(--speed) var(--ease), transform var(--speed) var(--ease-out);
-}
-.overlay-nav a:hover, .overlay-nav a:focus-visible{ color:var(--ivory); transform:translateX(10px); }
-.overlay-label{ margin:22px 0 4px; }
-.overlay-sub a{
-  display:flex; align-items:center; gap:14px;
-  font-size:clamp(1.1rem, 0.95rem + 0.6vw, 1.4rem);
-  padding:9px 0 9px 4px;
-  color:var(--text-secondary);
-}
-.overlay-sub img{ width:34px; height:17px; flex:none; }
-.overlay-meta{ display:grid; gap:26px; align-content:start; }
 
 /* ---------- hero ---------- */
 .hero{
@@ -511,10 +192,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 
 /* ---------- the continuous particle field ----------
    The Signal particles form the logo in the hero, scatter across the whole
-   viewport for the body of the page, and regroup into the logo in the footer.
-   The canvas covers the full viewport; the hero mark's left-edge fade (formerly
-   a CSS mask on a right-hand box) is applied per particle in the script so it
-   can let go as the mark comes apart. */
+   viewport for the body of the page, and regroup into the logo in the footer. */
 .spine{
   position:fixed;
   inset:0;
@@ -526,9 +204,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   position:absolute; inset:0;
   width:100%; height:100%;
   z-index:0;
-  /* drawn at full strength with normal blending: screen would wash out the
-     shading that makes the bars read as solid, and the copper as metal.
-     Readability over copy is handled in the script (SCATTER_ALPHA). */
 }
 @media (max-width:1099px){
   .spine{ opacity:0.5; }
@@ -536,21 +211,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .hero, .section{ z-index:1; }
 .hero-inner{ max-width:1600px; margin:0 auto; width:100%; display:flex; flex-direction:column; justify-content:space-between; flex:1; gap:clamp(40px,7vh,90px); }
 .hero h1{ max-width:15ch; }
-/* Single left-aligned column at every width — this used to split into a
-   1fr/46% grid past 1000px that pushed the lede+button into the right-hand
-   column; now it sits under the H1 the way it already did on narrow screens. */
 .hero-foot{
   display:grid;
   grid-template-columns:1fr;
   gap:28px;
   justify-items:start;
 }
-/* justify-items:start — a grid container's items default to stretch, which
-   was forcing the button to fill the full 56ch track (~630px) instead of
-   hugging its own text like every other button on the page. The lede
-   paragraph still wraps the same as before: it's long enough to use most of
-   the track width regardless, it just isn't forced to any more. */
-.hero-foot-block{ position:relative; display:grid; gap:26px; max-width:56ch; justify-items:start; }
+.hero-foot-block{ position:relative; display:grid; gap:28px; max-width:56ch; justify-items:start; }
 .hero-foot-block > *{ position:relative; z-index:1; }
 /* soft scrim keeps the copy readable over the signal field */
 .hero-foot-block::before{
@@ -563,6 +230,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     transparent 68%);
 }
 .hero .lede{ color:var(--ivory); }
+.hero .lede strong{ font-weight:500; color:var(--ivory); }
+.hero-actions{ display:flex; flex-wrap:wrap; align-items:center; gap:12px; }
+.hero-actions .btn > span{ white-space:nowrap; }
+@media (max-width:520px){
+  .hero-actions .btn{ flex:1 1 100%; padding:16px 20px; font-size:var(--text-xs); }
+}
 .hero-modalities{
   display:flex; flex-wrap:wrap; gap:10px clamp(18px,2.6vw,44px);
   padding-top:clamp(20px,2.4vw,34px);
@@ -573,10 +246,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   color:var(--fog);
 }
 
-/* ---------- generic dark section ---------- */
-/* Sections are transparent so the backdrop and the DNA spine run behind them
-   uninterrupted. Section rhythm comes from very low-opacity tints instead of
-   the solid fills that used to break the page into blocks. */
+/* ---------- section surfaces ---------- */
+/* Sections are transparent so the backdrop and the particles run behind them
+   uninterrupted. Rhythm comes from very low-opacity tints. */
 .dark-section{ background:transparent; }
 .dark-grad{
   background:linear-gradient(180deg,
@@ -585,135 +257,230 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     transparent 100%);
 }
 
-/* ---------- critical questions ---------- */
-.cluster-layout{
-  display:grid; gap:clamp(32px,3.6vw,56px);
-  grid-template-columns:1fr;
-  align-items:center;
-  justify-items:center;
+/* ---------- our motto ---------- */
+.motto{
+  max-width:1280px; margin:0 auto;
+  display:grid; justify-items:center; gap:clamp(20px,2.2vw,30px);
+  text-align:center;
 }
-@media (min-width:1100px){
-  .cluster-questions{ max-width:820px; }
+.motto-line{
+  display:flex; flex-wrap:wrap; justify-content:center; align-items:baseline;
+  gap:clamp(14px,3vw,48px);
+  color:var(--ivory);
 }
-/* width:100% — .cluster-layout centres its items, which would otherwise shrink
-   this block to its content and collapse the two lists into one column */
-.cluster-questions{ margin:0 auto; text-align:center; width:100%; max-width:1000px; }
-.cluster-questions h2{ margin-left:auto; margin-right:auto; }
-/* one list on each side of a centre rule; the button sits centred beneath */
-.cluster-questions .q-grid{ grid-template-columns:1fr; text-align:left; }
-.cluster-questions .q-group:first-child{ margin-top:clamp(24px,2.4vw,36px); }
-@media (min-width:760px){
-  .cluster-questions .q-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:0; }
-  .cluster-questions .q-group{ margin-top:clamp(24px,2.4vw,36px); padding:0 clamp(24px,3.4vw,56px); }
-  .cluster-questions .q-group:first-child{ padding-left:0; }
-  .cluster-questions .q-group:last-child{ padding-right:0; border-left:1px solid var(--hairline); }
+/* the copper point between the words, the same metal as the buttons */
+.motto-dot{
+  width:10px; height:10px; border-radius:50%; align-self:center;
+  background:linear-gradient(145deg,
+    color-mix(in srgb, var(--copper) 40%, var(--ivory) 60%) 0%,
+    var(--copper) 50%,
+    color-mix(in srgb, var(--copper) 70%, var(--charcoal) 30%) 100%);
+  box-shadow:0 0 12px color-mix(in srgb, var(--copper) 45%, transparent);
 }
-.cluster-questions .btn-wrap{ display:flex; justify-content:center; }
+.motto-lede{ max-width:52ch; color:var(--text-secondary); }
+/* narrow screens: one word per line, the dots become the rhythm between them */
+@media (max-width:520px){
+  .motto-line{ flex-direction:column; align-items:center; gap:10px; }
+}
 
-/* The two audience lists sit side by side. auto-fit rather than a viewport
-   breakpoint, so the split is driven by whether two readable columns actually
-   fit in the container — they collapse back to one whenever they don't. */
-.q-grid{
-  display:grid;
-  /* min() on the floor so the track can still shrink under 320px on a phone
-     narrower than that — a bare minmax(320px,…) would overflow the container */
-  grid-template-columns:repeat(auto-fit, minmax(min(320px, 100%), 1fr));
-  gap:0 clamp(28px,3vw,56px);
-  align-items:start;
-}
-.q-group{ margin-top:clamp(28px,3vw,44px); }
-.q-label{
-  font-size:var(--text-xs); letter-spacing:var(--ls-caps);
-  text-transform:uppercase; color:var(--pale); font-weight:500;
-  margin-bottom:14px;
-}
-.q-list li{
-  display:grid; grid-template-columns:26px 1fr; gap:4px;
-  padding:5px 0;
-  color:var(--text-secondary);
-  font-size:var(--text-s);
-}
-.q-list li span{ color:var(--teal); }
+/* ---------- why we exist ---------- */
+/* wide measures on purpose: the title sits on two rows and the paragraph
+   runs across the section instead of leaving the right half empty */
+.why-head h2{ max-width:34ch; margin-top:18px; }
+.why-head .lede{ max-width:78ch; margin-top:clamp(22px,2.4vw,34px); color:var(--text-secondary); }
 
-/* ---------- stats ---------- */
-/* Copy on the left; the numbers and the button sit beside it on the right. */
-.stats-layout{
+/* ---------- what we do: the pillar cards ----------
+   Stacked, fully open cards by default (narrow screens, or no script). From
+   1000px the script turns them into a rail of separate cards: the open card
+   is --open-w wide, the rest --closed-w, with --card-gap between them.
+   Intentional, scoped exception to the "animate only transform and opacity"
+   rule: real gaps and independent rounded corners between sliding cards need
+   an actual width change (a scaleX fake would squish the card's own text,
+   icon and button and warp its border-radius). Position (transform) and size
+   (width) animate on the same curve so the gap between cards holds steady
+   mid-switch. */
+.pillars-head{ display:grid; gap:28px; align-items:end; grid-template-columns:1fr; }
+@media (min-width:900px){ .pillars-head{ grid-template-columns:minmax(0,1fr) auto; } }
+/* two rows on wide screens, broken after the first sentence in the markup */
+.pillars-head h2{ max-width:none; margin-top:18px; }
+.pillars-head .lede{ max-width:56ch; margin-top:clamp(22px,2.4vw,30px); color:var(--text-secondary); }
+.pillars-head .btn{ justify-self:start; padding:20px 40px; font-size:0.95rem; }
+
+.pillar-rail{
+  --pillar-pad:clamp(22px,2vw,32px);
+  --card-gap:14px;   /* read by the script as a computed style: keep it a plain px value */
+  position:relative;
+  display:grid; gap:var(--card-gap);
+  margin-top:clamp(36px,4vw,60px);
+}
+.card--pillar{
+  overflow:hidden;
+  padding:clamp(24px,2.4vw,34px) var(--pillar-pad);
+  box-shadow:0 24px 50px -34px color-mix(in srgb, var(--blue) 80%, transparent);
+  transition:border-color var(--speed) var(--ease);
+}
+/* soft glow inside the open card */
+.pillar::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(80% 70% at 18% 0%, color-mix(in srgb, var(--blue) 42%, transparent) 0%, transparent 70%),
+    radial-gradient(60% 50% at 90% 100%, color-mix(in srgb, var(--teal) 10%, transparent) 0%, transparent 70%);
+  opacity:0;
+  transition:opacity 0.6s var(--ease);
+}
+.pillar > *{ position:relative; }
+.pillar-head{
+  display:flex; align-items:center; gap:16px 18px; flex-wrap:wrap;
+  width:100%; padding:0; border:0; background:none;
+  color:inherit; font:inherit; text-align:left;
+  cursor:default;
+}
+.pillar-num{ font-family:var(--display); font-weight:500; font-size:var(--text-l); letter-spacing:0.06em; color:var(--copper); }
+/* the pillar icons are 80x46 */
+.pillar-icon{ width:56px; height:32px; }
+.pillar-name{
+  font-family:var(--display); font-weight:500;
+  font-size:clamp(1.6rem, 1.2rem + 0.75vw, 2.1rem); line-height:1.12; letter-spacing:-0.01em;
+  color:var(--ivory);
+}
+.pillar-body{ display:grid; gap:12px; margin-top:16px; max-width:64ch; }
+.pillar-line{
+  font-family:var(--display); font-weight:500; font-style:italic;
+  font-size:clamp(1.25rem, 1.1rem + 0.45vw, 1.55rem); line-height:1.3;
+  color:var(--pale);
+}
+.pillar-text{ color:var(--text-secondary); font-size:clamp(1rem, 0.95rem + 0.2vw, 1.15rem); line-height:1.55; }
+.pillar-foot{ display:flex; flex-wrap:wrap; align-items:center; gap:12px 18px; margin-top:6px; }
+.pillar-foot .soon-tag{ align-self:center; }
+/* card-sized button: the shared component one step down, as .header-actions .btn does */
+.pillar-foot .btn{ padding:13px 22px; font-size:var(--text-xs); }
+@media (max-width:520px){ .pillar-foot .btn{ flex:1 1 100%; } }
+
+@media (min-width:1000px){
+  .pillar-rail.is-live{ display:block; height:var(--rail-h, 520px); }
+  .pillar-rail.is-live{ --pillar-pad:clamp(20px,1.6vw,26px); }
+  .pillar-rail.is-live .pillar{
+    position:absolute; top:0; left:0;
+    height:100%;
+    width:var(--w, var(--open-w));
+    padding:clamp(24px,2vw,32px) var(--pillar-pad);
+    transform:translateX(var(--x, 0px));
+    transition:transform 0.85s var(--ease-out), width 0.85s var(--ease-out), border-color var(--speed) var(--ease);
+  }
+  .pillar-rail.is-live .pillar.is-open{ border-color:color-mix(in srgb, var(--teal) 55%, transparent); }
+  .pillar-rail.is-live .pillar.is-open::before{ opacity:1; }
+  /* number and icon share the top row, the name sits under them */
+  .pillar-rail.is-live .pillar-head{
+    align-items:center; gap:12px 14px;
+    width:calc(var(--closed-w) - var(--pillar-pad) * 2 - 2px);
+    cursor:pointer;
+  }
+  .pillar-rail.is-live .pillar-name{ flex-basis:100%; color:var(--text-secondary); transition:color var(--speed) var(--ease); }
+  /* the open card is wide enough for its name on one row */
+  .pillar-rail.is-live .pillar.is-open .pillar-name{ white-space:nowrap; }
+  .pillar-rail.is-live .pillar-num{ color:var(--fog); transition:color var(--speed) var(--ease); }
+  .pillar-rail.is-live .pillar-icon{ opacity:0.6; transition:opacity var(--speed) var(--ease); }
+  .pillar-rail.is-live .pillar-head:hover .pillar-name,
+  .pillar-rail.is-live .pillar.is-open .pillar-name{ color:var(--ivory); }
+  .pillar-rail.is-live .pillar.is-open .pillar-num{ color:var(--copper); }
+  .pillar-rail.is-live .pillar-head:hover .pillar-icon,
+  .pillar-rail.is-live .pillar.is-open .pillar-icon{ opacity:1; }
+  .pillar-rail.is-live .pillar-head:active .pillar-name{ opacity:0.75; }
+  .pillar-rail.is-live .pillar-body{
+    width:calc(var(--open-w) - var(--pillar-pad) * 2 - 2px);
+    max-width:none;
+    margin-top:18px;
+    opacity:0; visibility:hidden;
+    transform:translateY(12px);
+    transition:opacity 0.3s var(--ease), transform 0.45s var(--ease-out), visibility 0s linear 0.3s;
+  }
+  .pillar-rail.is-live .pillar.is-open .pillar-body{
+    opacity:1; visibility:visible;
+    transform:translateY(0);
+    transition:opacity 0.5s var(--ease) 0.2s, transform 0.7s var(--ease-out) 0.2s, visibility 0s;
+  }
+  .pillar-rail.is-live .pillar-text{ max-width:60ch; }
+}
+.pillar-rail.no-anim .pillar, .pillar-rail.no-anim .pillar::before, .pillar-rail.no-anim .pillar-body{ transition:none !important; }
+
+/* ---------- practice and numbers ---------- */
+.practice-layout{
   display:grid; grid-template-columns:1fr;
-  gap:clamp(36px,5vw,80px);
+  gap:clamp(40px,5vw,96px);
   align-items:center;
-  max-width:1200px;
 }
-@media (min-width:900px){
-  .stats-layout{ grid-template-columns:minmax(0,1.1fr) minmax(0,0.9fr); }
+/* the copy column takes the room; the numbers sit in a narrower column at
+   the right edge, so the title fits on two rows beside them */
+@media (min-width:1000px){
+  .practice-layout{ grid-template-columns:minmax(0,1fr) clamp(320px, 28vw, 420px); gap:clamp(40px,4vw,80px); }
 }
-.stats-copy{ display:grid; gap:clamp(24px,2.6vw,38px); }
-.stats-copy .lede{ max-width:52ch; }
-.stats-side{ display:grid; gap:clamp(28px,3vw,44px); justify-items:start; }
-.stat-row{ display:grid; gap:0; width:100%; }
-.stat{ padding:clamp(18px,2vw,28px) 0; border-top:1px solid var(--hairline); }
-.stat:last-child{ border-bottom:1px solid var(--hairline); }
-.stat a{ grid-template-columns:minmax(0,5.5ch) 1fr; align-items:baseline; column-gap:clamp(18px,2.4vw,32px); }
-@media (min-width:900px){ .stat a{ grid-template-columns:minmax(0,6ch) 1fr; } }
-.stat a{ display:grid; row-gap:6px; transition:transform var(--speed) var(--ease-out); }
-.stat a:hover, .stat a:focus-visible{ transform:translateY(-3px); }
+.practice-copy{ display:grid; gap:clamp(24px,2.6vw,36px); }
+.practice-copy h2{ max-width:none; }
+.practice-copy .lede{ max-width:56ch; color:var(--text-secondary); }
+.practice-side{ display:grid; gap:clamp(28px,3vw,44px); justify-items:start; }
+/* four rows: the number on the left, its label beside it */
+.stat-grid{
+  display:grid; grid-template-columns:1fr;
+  width:100%;
+  border-top:1px solid var(--hairline);
+}
+.stat{
+  display:grid; grid-template-columns:clamp(104px,9vw,150px) 1fr; align-items:baseline;
+  column-gap:clamp(18px,2.4vw,40px);
+  padding:clamp(16px,1.8vw,26px) 0;
+  border-bottom:1px solid var(--hairline);
+}
 .stat-num{
-  font-family:'Bodoni Moda',serif;
-  font-size:var(--h3);
+  font-family:var(--display); font-weight:500;
+  font-size:clamp(2.8rem, 2rem + 2.4vw, 4.4rem);
   color:var(--ivory);
   line-height:1;
+  transition:transform var(--speed) var(--ease-out);
 }
+.stat-num .count{ font-variant-numeric:tabular-nums; }
 .stat-num .plus{ color:var(--fog); }
 .stat-label{
-  font-size:var(--text-xs); letter-spacing:0.12em; text-transform:uppercase;
+  font-size:clamp(0.8rem, 0.74rem + 0.22vw, 0.95rem); letter-spacing:0.14em; text-transform:uppercase;
   color:var(--fog);
+  transition:color var(--speed) var(--ease);
 }
-.stat a:hover .stat-label, .stat a:focus-visible .stat-label{ color:var(--pale); }
+.stat:hover .stat-num, .stat:focus-visible .stat-num{ transform:translateY(-3px); }
+.stat:hover .stat-label, .stat:focus-visible .stat-label{ color:var(--pale); }
+.stat:active .stat-num{ transform:translateY(-1px); }
+/* the section's one call to action, a size up from the default button */
+.practice-side .btn{ padding:21px 44px; font-size:1rem; }
 
-/* ---------- difference cards ---------- */
-.card-grid{
-  display:grid; gap:clamp(14px,1.6vw,22px);
-  grid-template-columns:1fr;
-  margin:clamp(28px,3vw,44px) auto 0;
-  max-width:1180px;
+/* the four reasons under the paragraph: two rows of two, no boxes, a
+   hairline between them. Stacked on phones. */
+.reasons{
+  display:grid; grid-template-columns:1fr;
+  margin-top:clamp(8px,1vw,14px);
+  border-top:1px solid var(--hairline);
 }
-#approach h2{ text-align:center; margin-left:auto; margin-right:auto; }
-@media (min-width:820px){ .card-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
-.card{
-  position:relative;
-  padding:clamp(24px,2.4vw,38px);
-  border-radius:16px;
-  border:1px solid var(--hairline);
-  background:linear-gradient(158deg, var(--surface-2) 0%, var(--surface-1) 100%);
-  overflow:hidden;
-  transition:transform var(--speed) var(--ease-out), border-color var(--speed) var(--ease);
+.reasons li{ padding:clamp(18px,1.8vw,26px) 0; border-bottom:1px solid var(--hairline); }
+.reasons h3{ font-size:clamp(1.2rem, 1.05rem + 0.5vw, 1.5rem); line-height:1.2; letter-spacing:-0.01em; }
+.reasons p{ margin-top:8px; font-size:var(--text-s); line-height:1.55; color:var(--text-secondary); }
+@media (min-width:640px){
+  .reasons{ grid-template-columns:repeat(2, minmax(0,1fr)); }
+  .reasons li:nth-child(odd){ padding-right:clamp(20px,2.4vw,40px); }
+  .reasons li:nth-child(even){ padding-left:clamp(20px,2.4vw,40px); border-left:1px solid var(--hairline); }
 }
-.card::after{
-  content:""; position:absolute; inset:0; border-radius:16px;
-  background:linear-gradient(158deg,
-    color-mix(in srgb, var(--blue) 30%, transparent) 0%,
-    transparent 60%);
-  box-shadow:0 0 0 1px color-mix(in srgb, var(--teal) 92%, transparent),
-             0 26px 60px -22px color-mix(in srgb, var(--blue) 95%, transparent),
-             0 4px 14px -6px color-mix(in srgb, var(--charcoal) 90%, transparent);
-  opacity:0; transition:opacity var(--speed) var(--ease); pointer-events:none;
-}
-.card:hover, .card:focus-within{ transform:translateY(-6px); }
-.card:hover::after, .card:focus-within::after{ opacity:1; }
-.card-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
-.card h3{ font-size:var(--h4); max-width:12ch; }
-.card p{ margin-top:18px; color:var(--ivory); font-size:var(--text-m); }
-.card-icon{ flex:none; width:56px; height:56px; opacity:0.95; }
 
-/* ---------- breadth grid ---------- */
+/* ---------- where we work: breadth grid ---------- */
 .breadth-wrap{ margin-top:clamp(28px,3.2vw,48px); }
 .breadth-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(148px, 1fr));
-  gap:clamp(8px,0.9vw,14px);
+  --cols:2;
+  --gap:clamp(8px,0.9vw,14px);
+  display:flex; flex-wrap:wrap; justify-content:center;
+  gap:var(--gap);
   max-width:1400px; margin:0 auto;
 }
+@media (min-width:600px){ .breadth-grid{ --cols:3; } }
+@media (min-width:900px){ .breadth-grid{ --cols:4; } }
+@media (min-width:1200px){ .breadth-grid{ --cols:6; } }
 .breadth-cell{
   position:relative;
+  flex:0 0 calc((100% - var(--gap) * (var(--cols) - 1)) / var(--cols));
   min-height:clamp(84px,8vw,118px);
   border-radius:14px;
   border:1px solid var(--hairline);
@@ -723,6 +490,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   text-align:center;
   color:var(--text-secondary);
   font-size:var(--text-s);
+  line-height:1.4;
   cursor:default;
   transition:transform var(--speed) var(--ease-out), border-color var(--speed) var(--ease), color var(--speed) var(--ease);
 }
@@ -745,42 +513,26 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .cell-glyph{ width:26px; height:14px; opacity:0.55; transition:opacity var(--speed) var(--ease); }
 .breadth-cell:hover .cell-glyph{ opacity:1; }
 
-/* ---------- process path ---------- */
-/* This section reclaims most of its reserved DNA lane, so the connector has
-   room to sweep between the cards instead of threading a 12px gap between
-   two columns. */
-@media (min-width:1100px){ #process{ --lane: 6vw; } }
-
+/* ---------- how we partner: process path ---------- */
 .path-wrap{ position:relative; margin-top:clamp(32px,4vw,56px); }
 .path-svg{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
-/* The drawn portion glows; drop-shadow only paints the stroke that is actually
-   rendered, so the glow grows with the line instead of hanging in empty space. */
+/* The drawn portion glows; drop-shadow only paints the stroke that is
+   actually rendered, so the glow grows with the line. */
 #path-progress{
   filter:
     drop-shadow(0 0 3px color-mix(in srgb, var(--copper) 85%, transparent))
     drop-shadow(0 0 12px color-mix(in srgb, var(--copper) 45%, transparent));
 }
 .path-steps{ position:relative; display:grid; gap:clamp(28px,4vw,64px); }
-/* Below the map breakpoint the connector collapses to a vertical rail down the
-   left, so the cards are inset to clear it. The JS centres the rail on half
-   this padding, which keeps the gutter width defined in one place — here. */
+/* Below the map breakpoint the connector collapses to a vertical rail down
+   the left, so the cards are inset to clear it. */
 @media (max-width:899px){
   .path-steps{ padding-left:clamp(54px, 15vw, 76px); }
 }
 @media (min-width:900px){
-  /* Each card gets its OWN row and alternates sides. The cards used to pair up
-     two-to-a-row, which left the connector nowhere to go — a left card's right
-     edge and a right card's left edge were 12px apart, so the "path" came out
-     as a stubby vertical stroke. One card per row gives every segment a full
-     row of vertical travel and most of the container of horizontal travel. */
-  /* Deliberately a SINGLE column: that is what puts each card on its own row.
-     A two-column grid re-pairs them two-to-a-row through auto-placement even
-     with grid-column set, which is what flattened the connector before. Sides
-     alternate by pushing every second card right with an auto margin, which
-     also keeps this generic — add a fifth step and it still alternates. */
+  /* one card per row, alternating sides, so every segment of the path gets a
+     full row of vertical travel */
   .path-steps{ grid-template-columns:1fr; }
-  /* narrow enough to leave a real channel between the two sides for the line
-     to sweep through — at full width the cards nearly touch and the S flattens */
   .path-steps .step{ max-width:min(460px, 38%); }
   .path-steps .step:nth-child(even){ margin-left:auto; }
 }
@@ -796,18 +548,13 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 }
 .step:hover{ border-color:var(--hairline-strong); }
 .step-index{
-  font-family:'Bodoni Moda',serif; font-size:var(--text-s);
+  font-family:var(--display); font-size:var(--text-s);
   color:var(--copper); letter-spacing:0.08em;
 }
-/* Once the script has built the numbered nodes on the line, the in-card
-   numeral is a duplicate — hide it then, and only then, so a page where the
-   script never runs keeps its numbering exactly where it is today. */
+/* once the script has built the numbered nodes on the line, the in-card
+   numeral is a duplicate */
 .path-wrap.has-nodes .step-index{ display:none; }
 
-/* ---------- map nodes ----------
-   Absolutely positioned onto the connector at the coordinates the path is
-   built from. The SVG viewBox is set 1:1 with this wrapper's pixel box, so
-   path coordinates and CSS pixel offsets are the same numbers. */
 .step-node{
   position:absolute;
   display:grid; place-items:center;
@@ -818,8 +565,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   border:1px solid var(--hairline-strong);
   background:color-mix(in srgb, var(--charcoal) 82%, transparent);
   backdrop-filter:blur(4px);
-  font-family:'Bodoni Moda',serif;
-  font-size:calc(var(--node-size) * 0.34);
+  font-family:var(--display);
+  font-weight:500;
+  font-size:calc(var(--node-size) * 0.36);
   line-height:1;
   color:var(--fog);
   pointer-events:none;
@@ -827,14 +575,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
              box-shadow 0.6s var(--ease-out), background 0.6s var(--ease-out);
 }
 .path-wrap{ --node-size:clamp(44px, 4vw, 64px); }
-/* Reached: the same metallic copper sweep the buttons and wordmark use, so the
-   lit nodes read as the brand's copper rather than a flat orange. */
 .step-node.is-reached{
   color:var(--ivory);
   border-color:color-mix(in srgb, var(--copper) 70%, transparent);
   background:
     linear-gradient(145deg,
-      color-mix(in srgb, var(--copper) 92%, #F2C79A 8%) 0%,
+      color-mix(in srgb, var(--copper) 92%, var(--ivory) 8%) 0%,
       var(--copper) 46%,
       color-mix(in srgb, var(--copper) 74%, var(--charcoal) 26%) 100%);
   box-shadow:
@@ -842,8 +588,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     0 6px 26px -6px color-mix(in srgb, var(--copper) 60%, transparent);
 }
 
-/* Steps ahead of the line sit back until it reaches them. Cumulative: once
-   reached a card stays lit, so an earlier step can still be re-read. */
+/* steps ahead of the line sit back until it reaches them */
 .js .path-wrap.has-nodes .step{
   opacity:0.32;
   filter:saturate(0.55);
@@ -851,169 +596,31 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
              border-color var(--speed) var(--ease);
 }
 .js .path-wrap.has-nodes .step.is-reached{ opacity:1; filter:none; }
-.step h3{ font-size:var(--h4); margin-top:10px; }
-/* :not(.step-index) — .step-index ("01", "02"...) is also a bare <p> inside
-   .step, and this selector's higher specificity would otherwise win over its
-   own copper/small-size rule above and flatten the numeral to body-copy style */
-.step p:not(.step-index){ margin-top:12px; color:var(--ivory); font-size:var(--text-m); }
+.step h3{ font-size:var(--h3); margin-top:10px; }
+.step p:not(.step-index){ margin-top:14px; color:var(--ivory); font-size:var(--text-body); line-height:1.55; }
 
-.pilot-quote{
-  margin-top:clamp(40px,5vw,72px);
+.pilot{
+  margin:clamp(56px,7vw,104px) auto 0;
   text-align:center;
-  max-width:30ch;
-  margin-left:auto; margin-right:auto;
+  max-width:880px;
 }
-.pilot-quote blockquote{
-  font-family:'Bodoni Moda',serif;
-  font-size:var(--h3);
-  line-height:1.24;
-  letter-spacing:var(--ls-heading);
-  margin:0;
+/* a subtitle for the section: between the H2 and an H3 in size */
+.pilot blockquote{
+  font-family:var(--display);
+  font-weight:500;
+  font-size:clamp(2rem, 1.35rem + 2.3vw, 3.4rem);
+  line-height:1.15;
+  letter-spacing:-0.025em;
+  margin:0 auto;
 }
-.pilot-note{ margin-top:22px; color:var(--ivory); font-size:var(--text-m); max-width:46ch; margin-left:auto; margin-right:auto; }
+.pilot-note{ margin-top:clamp(18px,2vw,26px); color:var(--ivory); font-size:var(--text-lede); }
+.pilot-text{ margin-top:clamp(16px,1.8vw,22px); color:var(--text-secondary); font-size:var(--text-lede); line-height:1.6; }
 
-/* ---------- team ---------- */
-.team-grid{
-  display:grid; gap:clamp(20px,2.4vw,36px);
-  grid-template-columns:1fr;
-  margin:clamp(28px,3vw,44px) auto 0;
-  max-width:900px;
-}
-#team .inner{ text-align:center; }
-#team h2, #team .lede{ margin-left:auto; margin-right:auto; }
-.member{ text-align:center; }
-.member .bio-more{ text-align:left; display:none; }
-.member .bio-more.is-open{ display:inline-block; }
-@media (min-width:620px){ .team-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
-/* keep the portrait from ballooning when the grid is a single column */
-@media (max-width:619px){ .member{ max-width:400px; } }
-.member{ transition:opacity 0.45s var(--ease); }
-/* focusing one member greys the other — requested behaviour */
-.team-grid.has-focus .member{ opacity:0.38; }
-.team-grid.has-focus .member.is-focused{ opacity:1; }
-.member-photo{
-  position:relative; border-radius:16px; overflow:hidden;
-  border:1px solid var(--hairline);
-  aspect-ratio:4/5;
-}
-.member-photo img{
-  width:100%; height:100%; object-fit:cover;
-  filter:grayscale(1) contrast(1.05);
-  transition:filter 0.6s var(--ease), transform 0.9s var(--ease-out);
-}
-.member:hover .member-photo img, .member:focus-within .member-photo img{
-  filter:grayscale(0);
-  transform:scale(1.03);
-}
-.member-photo .tint{
-  position:absolute; inset:0;
-  background:linear-gradient(to top, color-mix(in srgb, var(--charcoal) 78%, transparent) 0%, transparent 55%);
-}
-.member-photo .duo{
-  position:absolute; inset:0;
-  background:var(--blue);
-  mix-blend-mode:multiply;
-  opacity:0.34;
-  transition:opacity 0.6s var(--ease);
-}
-.member:hover .member-photo .duo, .member:focus-within .member-photo .duo{ opacity:0.12; }
-.member h3{ font-size:var(--h4); margin-top:20px; }
-.member-role{ color:var(--teal); font-size:var(--text-s); font-weight:500; margin-top:4px; }
-.member-bio{ color:var(--ivory); font-size:var(--text-m); margin-top:14px; }
-.bio-toggle{
-  margin-top:16px;
-  display:inline-flex; align-items:center; gap:9px;
-  background:none; border:none; cursor:pointer; padding:0;
-  color:var(--ivory);
-  font-size:var(--text-xs); letter-spacing:0.12em; text-transform:uppercase; font-weight:500;
-  transition:transform var(--speed) var(--ease-out);
-}
-.bio-toggle:hover, .bio-toggle:focus-visible{ transform:translateX(4px); }
-.bio-toggle .chev{ width:12px; height:12px; stroke:var(--copper); transition:transform var(--speed) var(--ease); }
-.bio-toggle[aria-expanded="true"] .chev{ transform:rotate(90deg); }
-.bio-more{ display:none; margin-top:14px; color:var(--text-secondary); font-size:var(--text-s); border-left:1px solid var(--hairline); padding-left:16px; }
-.bio-more.is-open{ display:block; }
-
-/* ---------- contact ---------- */
-/* Stacked and centred: intro and details first, form below. */
-.contact-layout{ display:grid; gap:clamp(28px,3vw,44px); grid-template-columns:1fr; max-width:820px; text-align:center; }
-.contact-layout h2, .contact-layout .lede{ margin-left:auto; margin-right:auto; }
-.contact-layout form{ text-align:left; }
-.contact-layout form > div:last-of-type, .contact-layout form > p{ text-align:center; }
-.field{ display:grid; gap:9px; }
-.field label{
-  font-size:var(--text-xs); letter-spacing:0.12em; text-transform:uppercase;
-  color:var(--fog); font-weight:500;
-}
-.field input, .field textarea{
-  width:100%;
-  /* Fog Gray field wells clearly denote where to enter information */
-  background:color-mix(in srgb, var(--fog) 14%, transparent);
-  border:1px solid color-mix(in srgb, var(--fog) 34%, transparent);
-  border-radius:10px;
-  padding:14px 16px;
-  color:var(--ivory);
-  font-family:'Poppins',sans-serif;
-  font-size:var(--text-s);
-  transition:border-color var(--speed) var(--ease), background-color var(--speed) var(--ease);
-}
-.field input::placeholder, .field textarea::placeholder{ color:color-mix(in srgb, var(--fog) 78%, transparent); }
-.field input:hover, .field textarea:hover{ border-color:color-mix(in srgb, var(--fog) 55%, transparent); }
-.field input:focus, .field textarea:focus{
-  outline:none;
-  border-color:var(--teal);
-  background:color-mix(in srgb, var(--fog) 20%, transparent);
-}
-.field textarea{ resize:vertical; min-height:118px; }
-.form-grid{ display:grid; gap:20px; grid-template-columns:1fr; }
-@media (min-width:640px){ .form-grid.two{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
-.contact-detail{ display:grid; gap:6px; }
-.contact-detail a{ transition:color var(--speed) var(--ease); }
-.contact-detail a:hover, .contact-detail a:focus-visible{ color:var(--copper); }
-
-/* ---------- footer ---------- */
-/* Sits above the particle canvas, with a translucent fill so the Signal can
-   regroup behind it. */
-.site-footer{
-  position:relative; z-index:1;
-  background:linear-gradient(180deg,
-    transparent 78%,
-    color-mix(in srgb, var(--charcoal) 40%, transparent) 100%);
-  padding:var(--sect-pad-f) var(--gutter) clamp(28px,3vw,44px);
-  border-top:1px solid var(--hairline);
-}
-.footer-grid{
-  max-width:1600px; margin:0 auto;
-  display:grid; gap:clamp(36px,4vw,70px);
-  grid-template-columns:1fr;
-}
-/* --foot-mark is the left region kept clear for the reformed Signal; the script
-   reads this padding to place and size the mark, and the copy sits to its right. */
-@media (min-width:900px){
-  .footer-grid{ grid-template-columns:1.4fr 1fr; padding-left:var(--foot-mark); }
-  .footer-bottom{ padding-left:var(--foot-mark); }
-}
-:root{ --foot-mark:clamp(300px, 32vw, 520px); }
-/* a soft charcoal halo lifts the copy off the reformed Signal without boxing it out */
-.footer-grid p, .footer-links a, .footer-bottom{
-  text-shadow:0 0 14px var(--charcoal), 0 0 5px var(--charcoal);
-}
-.footer-links a{ display:block; padding:9px 0; font-size:var(--text-s); letter-spacing:0.1em; text-transform:uppercase; color:var(--text-secondary); transition:color var(--speed) var(--ease), transform var(--speed) var(--ease-out); }
-.footer-links a:hover, .footer-links a:focus-visible{ color:var(--ivory); transform:translateX(5px); }
-.footer-bottom{
-  max-width:1600px; margin:clamp(44px,5vw,80px) auto 0;
-  padding-top:26px; border-top:1px solid var(--hairline);
-  display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between;
-  font-size:var(--text-xs); letter-spacing:0.1em; text-transform:uppercase; color:var(--fog);
-}
 
 /* ---------- reveal on scroll ---------- */
 /* Scoped to .js so content stays visible if the script never runs. */
 .js .reveal{ opacity:0; transform:translateY(22px); transition:opacity 0.75s var(--ease-out), transform 0.75s var(--ease-out); }
 .js .reveal.is-visible{ opacity:1; transform:translateY(0); }
-/* .step no longer gets a one-shot reveal here — the process-path controller
-   owns step opacity continuously (dim until the line reaches it, and back
-   again on the way up). Two systems writing the same property would fight. */
 
 @media (prefers-reduced-motion: reduce){
   html{ scroll-behavior:auto; }
@@ -1032,87 +639,110 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   <canvas id="signal-canvas"></canvas>
 </div>
 
-<!-- ============ HEADER ============ -->
+<!-- cx-shell:header -->
 <header class="site-header">
-  <a href="#top" class="brand" aria-label="Complexant Partners LLC — home">
-    <img src="assets/signal.png" alt="" />
-    <span class="brand-type">
-      <span class="brand-name">COMPLE<span class="copper-metal">X</span>ANT</span>
-      <span class="brand-sub">PARTNERS</span>
-      <span class="brand-llc">LLC</span>
-    </span>
-  </a>
+  <a href="index.html" class="brand" aria-label="Complexant Partners LLC, home"><img src="assets/signal.png" alt="" width="38" height="38" /><span class="brand-type"><span class="brand-name">COMPLE<span class="copper-metal">X</span>ANT</span><span class="brand-sub">PARTNERS</span><span class="brand-llc">LLC</span></span></a>
 
   <nav class="header-nav" aria-label="Primary">
-    <a href="#approach">Approach</a>
+    <a class="nav-link" href="approach.html">Approach</a>
     <div class="nav-services">
-      <button type="button" aria-expanded="false" aria-controls="services-menu">
+      <button type="button" class="nav-link" aria-expanded="false" aria-controls="services-menu">
         Services
         <svg class="nav-caret" viewBox="0 0 12 8" fill="none" aria-hidden="true"><path d="M1 1.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       </button>
       <div class="services-menu" id="services-menu">
         <a href="regulatory-risk.html">
+          <span class="svc-num">01</span>
           <img src="assets/icons/pillar-01-regulatory-risk.svg" alt="" width="40" height="20" />
-          <span><strong>Regulatory Risk</strong><small>Find where the exposure actually is</small></span>
+          <span><strong>Regulatory Risk</strong><small>Find out where the exposure actually is.</small></span>
         </a>
         <a href="sandbox.html">
+          <span class="svc-num">02</span>
           <img src="assets/icons/pillar-02-sandbox.svg" alt="" width="40" height="20" />
-          <span><strong>Sandbox</strong><small>Prove it before it touches production</small></span>
-          <em>Coming soon</em>
+          <span><strong>Sandbox</strong><small>Prove it before it touches production.</small></span><em class="soon-tag">Coming soon</em>
         </a>
         <a href="implementation.html">
+          <span class="svc-num">03</span>
           <img src="assets/icons/pillar-03-implementation.svg" alt="" width="40" height="20" />
-          <span><strong>Implementation</strong><small>Put it in place and make it hold up</small></span>
+          <span><strong>Implementation</strong><small>Put it in place and make it hold up.</small></span>
         </a>
         <a href="monitoring.html">
+          <span class="svc-num">04</span>
           <img src="assets/icons/pillar-04-monitoring.svg" alt="" width="40" height="20" />
-          <span><strong>Monitoring</strong><small>Keep it qualified as it changes</small></span>
+          <span><strong>Monitoring</strong><small>Watch it over time and plan for change.</small></span>
         </a>
       </div>
     </div>
-    <a href="#breadth">Where We Work</a>
-    <a href="#team">Team</a>
+    <a class="nav-link" href="who-we-serve.html">Who We Serve</a>
+    <a class="nav-link" href="about.html">About</a>
+    <a class="nav-link" href="insights.html">Insights</a>
   </nav>
 
   <div class="header-actions">
-    <a class="btn" href="#contact">
+    <button class="icon-btn" id="search-btn" type="button" aria-expanded="false" aria-controls="search-panel" aria-label="Search the site">
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" stroke="currentColor" stroke-width="1.6"/><path d="M13 13l4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+    <a class="btn" href="contact.html">
       <span class="btn-bg"></span>
       <span>Let&rsquo;s Talk</span>
     </a>
-    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="overlay" aria-label="Open menu">
+    <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="overlay" aria-label="Open menu">
       <span class="menu-glyph" aria-hidden="true"><i></i><i></i><i></i></span>
-      <span id="menu-btn-label">Menu</span>
+      <span class="menu-label">Menu</span>
     </button>
   </div>
 </header>
 
-<!-- ============ MENU OVERLAY ============ -->
+<div class="search-panel" id="search-panel" role="search">
+  <label class="search-field">
+    <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="8.5" cy="8.5" r="6" stroke="currentColor" stroke-width="1.6"/><path d="M13 13l4.5 4.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    <span class="cx-sr-only">Search pages</span>
+    <input type="search" placeholder="Search pages" autocomplete="off" />
+  </label>
+  <p class="cx-sr-only" role="status" aria-live="polite"></p>
+  <nav class="search-results" aria-label="Pages">
+      <a href="index.html" aria-current="page">Home</a>
+      <a href="approach.html">Approach</a>
+      <a href="regulatory-risk.html">Regulatory Risk</a>
+      <a href="sandbox.html">Sandbox</a>
+      <a href="implementation.html">Implementation</a>
+      <a href="monitoring.html">Monitoring</a>
+      <a href="who-we-serve.html">Who We Serve</a>
+      <a href="about.html">About</a>
+      <a href="insights.html">Insights</a>
+      <a href="contact.html">Let&rsquo;s Talk</a>
+  </nav>
+  <p class="search-empty" hidden>No page matches that. <a href="contact.html">Ask a principal directly &rarr;</a></p>
+</div>
+
 <div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Site menu">
   <div class="overlay-grid">
-    <nav class="overlay-nav" aria-label="Primary">
-      <a href="#approach">Approach</a>
-      <p class="eyebrow overlay-label">Services</p>
+    <nav class="overlay-nav" aria-label="Mobile">
+      <a href="approach.html">Approach</a>
+      <p class="overlay-label">Services</p>
       <div class="overlay-sub">
-        <a href="regulatory-risk.html"><img src="assets/icons/pillar-01-regulatory-risk.svg" alt="" width="40" height="20" />Regulatory Risk</a>
-        <a href="sandbox.html"><img src="assets/icons/pillar-02-sandbox.svg" alt="" width="40" height="20" />Sandbox</a>
-        <a href="implementation.html"><img src="assets/icons/pillar-03-implementation.svg" alt="" width="40" height="20" />Implementation</a>
-        <a href="monitoring.html"><img src="assets/icons/pillar-04-monitoring.svg" alt="" width="40" height="20" />Monitoring</a>
+        <a href="regulatory-risk.html"><span class="svc-num">01</span><img src="assets/icons/pillar-01-regulatory-risk.svg" alt="" width="34" height="17" />Regulatory Risk</a>
+        <a href="sandbox.html"><span class="svc-num">02</span><img src="assets/icons/pillar-02-sandbox.svg" alt="" width="34" height="17" />Sandbox<em class="soon-tag">Coming soon</em></a>
+        <a href="implementation.html"><span class="svc-num">03</span><img src="assets/icons/pillar-03-implementation.svg" alt="" width="34" height="17" />Implementation</a>
+        <a href="monitoring.html"><span class="svc-num">04</span><img src="assets/icons/pillar-04-monitoring.svg" alt="" width="34" height="17" />Monitoring</a>
       </div>
-      <a href="#breadth">Where We Work</a>
-      <a href="#team">Team</a>
+      <a href="who-we-serve.html">Who We Serve</a>
+      <a href="about.html">About</a>
+      <a href="insights.html">Insights</a>
+      <div class="overlay-cta">
+        <a class="btn btn-copper" href="contact.html">
+          <span class="btn-bg"></span>
+          <span>Let&rsquo;s Talk</span>
+        </a>
+      </div>
     </nav>
     <div class="overlay-meta">
-      <div>
-        <p class="eyebrow" style="margin-bottom:10px;">Complexity · Competency · Clarity</p>
-        <p class="lede" style="max-width:44ch;">Safely adapting to innovation. Intelligence you can trust.</p>
-      </div>
-      <div class="contact-detail" style="font-size:var(--text-s); color:var(--text-secondary);">
-        <a href="mailto:info@complexantpartners.com">info@complexantpartners.com</a>
-        <span>8 The Green, Suite 24683<br />Dover, DE 19901</span>
-      </div>
+      <p class="overlay-motto">Complexity &middot; Competency &middot; Clarity</p>
+      <a class="overlay-mail" href="mailto:info@complexantpartners.com">info@complexantpartners.com</a>
     </div>
   </div>
 </div>
+<!-- /cx-shell:header -->
 
 <main id="main">
 
@@ -1120,18 +750,24 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 <section class="hero" id="top">
   <div class="hero-inner">
     <h1>
-      Safely adapting<br />to innovation.
+      Safely adapting<br />innovation.
     </h1>
 
     <div class="hero-foot">
       <div class="hero-foot-block">
         <p class="lede">
-          We guide regulated life sciences companies in closing gaps &mdash; turning complexity into competency, and competency into clarity. <strong style="font-weight:500;color:var(--ivory);">Intelligence you can trust.</strong>
+          We guide regulated life sciences companies in closing gaps &mdash; turning complexity into competency, and competency into clarity. <strong>Intelligence you can trust.</strong>
         </p>
-        <a class="btn" href="#contact">
-          <span class="btn-bg"></span>
-          <span>Start a Readiness Assessment</span>
-        </a>
+        <div class="hero-actions">
+          <a class="btn btn-copper" href="contact.html">
+            <span class="btn-bg"></span>
+            <span>Start the conversation</span>
+          </a>
+          <a class="btn" href="contact.html?topic=assessment">
+            <span class="btn-bg"></span>
+            <span>Request an assessment</span>
+          </a>
+        </div>
       </div>
     </div>
 
@@ -1141,157 +777,185 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   </div>
 </section>
 
-<!-- ============ CRITICAL QUESTIONS ============ -->
-<section class="section dark-section" id="questions">
-  <div class="inner cluster-layout">
-    <div class="reveal cluster-questions">
-      <h2 style="max-width:14ch;">The Questions You Have to Answer</h2>
-
-      <div class="q-grid">
-        <div class="q-group">
-          <p class="q-label">For the quality leader</p>
-          <ul class="q-list">
-            <li><span>&mdash;</span>Where is our exposure, actually?</li>
-            <li><span>&mdash;</span>Can we prove this does what we say it does?</li>
-            <li><span>&mdash;</span>Will this evidence hold up in an inspection?</li>
-            <li><span>&mdash;</span>How do we adopt without betting the quality system?</li>
-          </ul>
-        </div>
-
-        <div class="q-group">
-          <p class="q-label">For the gatekeepers</p>
-          <ul class="q-list">
-            <li><span>&mdash;</span>What does this cost, predictably?</li>
-            <li><span>&mdash;</span>How much inspection exposure are we carrying?</li>
-            <li><span>&mdash;</span>Does this have an end, or is it a science project?</li>
-            <li><span>&mdash;</span>Who answers when a regulator asks?</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="btn-wrap" style="margin-top:clamp(28px,3vw,40px);">
-        <a class="btn" href="#contact">
-          <span class="btn-bg"></span>
-          <span>Start a Conversation</span>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ STATS ============ -->
-<section class="section dark-grad" id="practice">
-  <div class="inner stats-layout">
-    <div class="stats-copy reveal">
-      <h2 style="max-width:13ch;">A Practice Built on Evidence</h2>
-      <p class="lede">
-        Complexant Partners is a boutique practice with roughly sixty years of combined experience in the exact roles our clients hold. Personal involvement from both principals, not a bench of juniors &mdash; and the ability to say yes to fast-moving innovation and still be able to prove it.
-      </p>
-    </div>
-
-    <div class="stats-side reveal">
-      <div class="stat-row" id="stat-row">
-        <div class="stat">
-          <a href="#team">
-            <span class="stat-num"><span class="count" data-target="60">0</span><span class="plus">+</span></span>
-            <span class="stat-label">Years combined experience</span>
-          </a>
-        </div>
-        <div class="stat">
-          <a href="#team">
-            <span class="stat-num"><span class="count" data-target="2">0</span></span>
-            <span class="stat-label">Principals on every engagement</span>
-          </a>
-        </div>
-        <div class="stat">
-          <a href="approach.html#journey">
-            <span class="stat-num"><span class="count" data-target="4">0</span></span>
-            <span class="stat-label">Pillars, end to end</span>
-          </a>
-        </div>
-      </div>
-
-      <div>
-        <a class="btn" href="#team">
-          <span class="btn-bg"></span>
-          <span>Meet the Principals</span>
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============ WHY WE'RE DIFFERENT ============ -->
-<section class="section dark-section" id="approach">
+<!-- ============ OUR MOTTO ============ -->
+<section class="section dark-section" id="motto">
   <div class="inner">
-    <h2 class="reveal" style="max-width:16ch;">Why We&rsquo;re Different</h2>
+    <div class="motto reveal">
+      <p class="eyebrow">Our motto</p>
+      <h2 class="motto-line"><span>Complexity</span><span class="motto-dot" aria-hidden="true"></span><span>Competency</span><span class="motto-dot" aria-hidden="true"></span><span>Clarity</span></h2>
+      <p class="lede motto-lede">We take what is complex, build the competency to handle it, and leave you with the clarity to prove it.</p>
+    </div>
+  </div>
+</section>
 
-    <div class="card-grid">
-      <article class="card reveal">
-        <div class="card-head">
-          <h3>In the Seat, Not Beside It</h3>
-          <svg class="card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
-            <g stroke="#4F8F8E" stroke-width="1.6" stroke-linecap="round">
-              <path d="M8 22v12M16 16v24M24 12v32M32 18v20M40 24v8M48 27v2"/>
-            </g>
-            <circle cx="48" cy="28" r="3" fill="#C7742D"/>
-          </svg>
+<!-- ============ WHY WE EXIST ============ -->
+<section class="section dark-section" id="why">
+  <div class="inner">
+    <div class="why-head reveal">
+      <p class="eyebrow">Why we exist</p>
+      <h2>Regulated operations are evolving faster than the confidence to trust them.</h2>
+      <p class="lede">Every new tool, model and expectation arrives faster than the governance built to hold it. Teams are told to adopt or fall behind, then left to answer for it alone &mdash; in front of an inspector who will ask exactly one question: who approved this, and on what evidence?</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHAT WE DO ============ -->
+<section class="section dark-grad" id="pillars">
+  <div class="inner">
+    <div class="pillars-head">
+      <div class="reveal">
+        <p class="eyebrow">What we do</p>
+        <h2>More than a QA consulting.<br />Four Pillars. Start with any one.</h2>
+        <p class="lede">Each pillar stands on its own. Start where your need is today, and add the others when they help.</p>
+      </div>
+      <a class="btn reveal" href="approach.html">
+        <span class="btn-bg"></span>
+        <span>Our full approach</span>
+      </a>
+    </div>
+
+    <div class="pillar-rail reveal" id="pillar-rail">
+      <article class="pillar card card--pillar is-open">
+        <button class="pillar-head" type="button" aria-expanded="true" aria-controls="pillar-body-1">
+          <span class="pillar-num">01</span>
+          <img class="pillar-icon" src="assets/icons/pillar-01-regulatory-risk.svg" alt="" width="56" height="32" />
+          <span class="pillar-name">Regulatory Risk</span>
+        </button>
+        <div class="pillar-body" id="pillar-body-1">
+          <p class="pillar-line">Find out where the exposure actually is.</p>
+          <p class="pillar-text">Your current state, assessed against today&rsquo;s requirements, every gap ranked by risk.</p>
+          <div class="pillar-foot">
+            <a class="btn" href="regulatory-risk.html">
+              <span class="btn-bg"></span>
+              <span>Explore Regulatory Risk</span>
+            </a>
+          </div>
         </div>
-        <p>We have held the roles our clients hold, and we answer &ldquo;who approved this, and on what evidence?&rdquo; the way people who have had to answer it do.</p>
       </article>
 
-      <article class="card reveal">
-        <div class="card-head">
-          <h3>Principals, Not a Bench</h3>
-          <svg class="card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
-            <g stroke="#4F8F8E" stroke-width="1.6" stroke-linecap="round">
-              <path d="M14 18v20M22 14v28"/>
-              <path d="M34 14v28M42 18v20"/>
-            </g>
-            <circle cx="28" cy="28" r="3" fill="#C7742D"/>
-          </svg>
+      <article class="pillar card card--pillar is-open">
+        <button class="pillar-head" type="button" aria-expanded="true" aria-controls="pillar-body-2">
+          <span class="pillar-num">02</span>
+          <img class="pillar-icon" src="assets/icons/pillar-02-sandbox.svg" alt="" width="56" height="32" />
+          <span class="pillar-name">Sandbox</span>
+        </button>
+        <div class="pillar-body" id="pillar-body-2">
+          <p class="pillar-line">Prove it before it touches production.</p>
+          <p class="pillar-text">A safe place to test an innovation and its risk before it reaches your systems.</p>
+          <div class="pillar-foot">
+            <span class="soon-tag">Coming soon</span>
+            <a class="btn" href="sandbox.html">
+              <span class="btn-bg"></span>
+              <span>Explore Sandbox</span>
+            </a>
+          </div>
         </div>
-        <p>Both founders stay on the engagement from first call through evidence delivery. No handoff to juniors once the work begins.</p>
       </article>
 
-      <article class="card reveal">
-        <div class="card-head">
-          <h3>Evidence That Survives</h3>
-          <svg class="card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
-            <rect x="10" y="12" width="36" height="32" rx="5" stroke="#4F8F8E" stroke-width="1.6" stroke-dasharray="4 4"/>
-            <g stroke="#4F8F8E" stroke-width="1.6" stroke-linecap="round">
-              <path d="M20 22v12M28 18v20M36 24v8"/>
-            </g>
-            <circle cx="28" cy="28" r="2.6" fill="#C7742D"/>
-          </svg>
+      <article class="pillar card card--pillar is-open">
+        <button class="pillar-head" type="button" aria-expanded="true" aria-controls="pillar-body-3">
+          <span class="pillar-num">03</span>
+          <img class="pillar-icon" src="assets/icons/pillar-03-implementation.svg" alt="" width="56" height="32" />
+          <span class="pillar-name">Implementation</span>
+        </button>
+        <div class="pillar-body" id="pillar-body-3">
+          <p class="pillar-line">Put it in place and make it hold up.</p>
+          <p class="pillar-text">Change plans, SOPs and training, with evidence that every change holds up.</p>
+          <div class="pillar-foot">
+            <a class="btn" href="implementation.html">
+              <span class="btn-bg"></span>
+              <span>Explore Implementation</span>
+            </a>
+          </div>
         </div>
-        <p>Governance, validation strategy, and documentation built to hold up under inspection &mdash; not just to close a finding.</p>
       </article>
 
-      <article class="card reveal">
-        <div class="card-head">
-          <h3>Phase-Appropriate, Always</h3>
-          <svg class="card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
-            <g stroke="#4F8F8E" stroke-width="1.6" stroke-linecap="round">
-              <path d="M8 26v4M17 22v12M26 17v22M35 21v14M44 25v6"/>
-            </g>
-            <circle cx="50" cy="28" r="2.6" fill="#C7742D"/>
-          </svg>
+      <article class="pillar card card--pillar is-open">
+        <button class="pillar-head" type="button" aria-expanded="true" aria-controls="pillar-body-4">
+          <span class="pillar-num">04</span>
+          <img class="pillar-icon" src="assets/icons/pillar-04-monitoring.svg" alt="" width="56" height="32" />
+          <span class="pillar-name">Monitoring</span>
+        </button>
+        <div class="pillar-body" id="pillar-body-4">
+          <p class="pillar-line">Watch it over time and keep improving.</p>
+          <p class="pillar-text">Ongoing tracking of regulatory risk, compliance and drift as things evolve.</p>
+          <div class="pillar-foot">
+            <a class="btn" href="monitoring.html">
+              <span class="btn-bg"></span>
+              <span>Explore Monitoring</span>
+            </a>
+          </div>
         </div>
-        <p>Fit-for-purpose for where you actually are &mdash; paper-based systems through predictive analytics. Adopt, then adapt.</p>
       </article>
     </div>
   </div>
 </section>
 
-<!-- ============ BREADTH ============ -->
-<section class="section dark-grad" id="breadth">
+<!-- ============ PRACTICE AND NUMBERS ============ -->
+<section class="section dark-section" id="practice">
+  <div class="inner">
+  <div class="practice-layout">
+    <div class="practice-copy reveal">
+      <h2>A boutique practice built by<br />people who have held your role.</h2>
+      <p class="lede">
+        Roughly sixty years of combined experience in the exact roles our clients hold, and the ability to say yes to fast-moving innovation and still prove it.
+      </p>
+      <ul class="reasons">
+        <li>
+          <h3>In the seat, not beside it.</h3>
+          <p>We&rsquo;ve run the systems ourselves.</p>
+        </li>
+        <li>
+          <h3>Principals, not a bench.</h3>
+          <p>Both founders, every engagement.</p>
+        </li>
+        <li>
+          <h3>Evidence that survives.</h3>
+          <p>Built for the inspector&rsquo;s first question.</p>
+        </li>
+        <li>
+          <h3>Phase-appropriate, always.</h3>
+          <p>Fit-for-purpose, never a science project.</p>
+        </li>
+      </ul>
+    </div>
+
+    <div class="practice-side reveal">
+      <div class="stat-grid" id="stat-grid">
+        <a class="stat" href="about.html#team">
+          <span class="stat-num"><span class="count" data-target="60">0</span><span class="plus">+</span></span>
+          <span class="stat-label">Years of combined experience</span>
+        </a>
+        <a class="stat" href="about.html#team">
+          <span class="stat-num"><span class="count" data-target="2">0</span></span>
+          <span class="stat-label">Principals on every engagement</span>
+        </a>
+        <a class="stat" href="approach.html">
+          <span class="stat-num"><span class="count" data-target="4">0</span></span>
+          <span class="stat-label">Pillars of support</span>
+        </a>
+        <a class="stat" href="who-we-serve.html">
+          <span class="stat-num"><span class="count" data-target="5">0</span></span>
+          <span class="stat-label">Regulated sectors served</span>
+        </a>
+      </div>
+
+      <a class="btn" href="about.html#team">
+        <span class="btn-bg"></span>
+        <span>Meet the principals</span>
+      </a>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- ============ WHERE WE WORK ============ -->
+<section class="section dark-section" id="breadth">
   <div class="inner" style="text-align:center;">
     <h2 class="reveal" style="max-width:14ch;margin:0 auto;">Where We Work</h2>
     <p class="lede reveal" style="max-width:60ch;margin:22px auto 0;">
       Regulated modalities and the systems that carry them &mdash; from paper-based quality systems through automation and AI.
     </p>
-    <p class="eyebrow reveal" style="margin-top:26px;">Hover to explore</p>
 
     <div class="breadth-wrap reveal">
       <div class="breadth-grid" id="breadth-grid">
@@ -1317,18 +981,25 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
         <div class="breadth-cell">Documentation &amp; Evidence</div>
         <div class="breadth-cell">Risk Ranking</div>
         <div class="breadth-cell">Supplier Oversight</div>
-        <div class="breadth-cell">Training &amp; Competency</div>
+        <div class="breadth-cell">Competency Assessments</div>
+        <div class="breadth-cell">Quality Assurance</div>
+        <div class="breadth-cell">Compliance Assessment</div>
+        <div class="breadth-cell">Change Management</div>
+        <div class="breadth-cell">SOPs &amp; Training</div>
+        <div class="breadth-cell">Remediation</div>
+        <div class="breadth-cell">Continuous Improvement</div>
+        <div class="breadth-cell">Regulatory Risk Assessment</div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============ HOW WE PARTNER ============ -->
-<section class="section dark-section" id="process">
+<section class="section dark-grad" id="process">
   <div class="inner" style="text-align:center;">
     <h2 class="reveal" style="max-width:16ch;margin:0 auto;">How We Partner</h2>
     <p class="lede reveal" style="max-width:58ch;margin:22px auto 0;">
-      Most relationships begin with a fixed-scope, fixed-fee readiness assessment. From there, the work moves in sequence.
+      Every relationship begins with a conversation. A typical engagement then looks like this, and you can join at whichever step fits.
     </p>
 
     <div class="path-wrap">
@@ -1340,184 +1011,90 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
       <div class="path-steps" style="text-align:left;">
         <article class="step">
           <p class="step-index">01</p>
-          <h3>Readiness Assessment</h3>
-          <p>Fixed scope, fixed fee. We inventory the innovation use cases in play, classify them against GxP, and rank the risk by system and data type.</p>
+          <h3>A First Conversation</h3>
+          <p>Tell us what is changing and where you need clarity. Both principals listen, and we say plainly whether and how we can help.</p>
         </article>
         <article class="step">
           <p class="step-index">02</p>
-          <h3>Gap Snapshot &amp; Roadmap</h3>
-          <p>A clear read on where exposure actually lives, with a phase-appropriate roadmap you can take to the people who sign off on spend.</p>
+          <h3>Assessment &amp; Roadmap</h3>
+          <p>A defined-scope assessment of your current state against today&rsquo;s requirements, the gaps it finds, and a roadmap you can take to the people who sign off on spend.</p>
         </article>
         <article class="step">
           <p class="step-index">03</p>
-          <h3>Implementation &amp; Evidence</h3>
-          <p>Governance frameworks, validation strategy, and the documentation trail &mdash; built so the evidence stands on its own in an inspection.</p>
+          <h3>Implementation &amp; Governance</h3>
+          <p>Change plans, SOPs, training and risk tracking, so every change is consistent, compliant and safe, with documented evidence of completion.</p>
         </article>
         <article class="step">
           <p class="step-index">04</p>
-          <h3>Monitoring &amp; Change</h3>
-          <p>Performance and drift monitoring, periodic review, and change planning, so the system stays qualified as it evolves.</p>
+          <h3>Monitoring &amp; Improvement</h3>
+          <p>Ongoing monitoring of regulatory risk, compliance and process drift, with continuous improvement as requirements and the innovation evolve.</p>
         </article>
       </div>
     </div>
 
-    <div class="pilot-quote reveal">
+    <div class="pilot reveal">
       <blockquote>&ldquo;You stay pilot in command.&rdquo;</blockquote>
-      <p class="pilot-note">You decide and you fly &mdash; we guide, advise, verify, and equip.</p>
+      <p class="pilot-note">You decide and you fly; we guide, advise, verify, and equip.</p>
+      <p class="pilot-text">We are not an AI company, and we don&rsquo;t sell you a platform. We are quality and regulatory practitioners. We help you adopt innovation, including AI and automation, then adapt it to your phase, your systems, and your inspectors. We are just as fluent in the quality and regulatory work that has nothing to do with AI.</p>
     </div>
-  </div>
-</section>
-
-<!-- ============ TEAM ============ -->
-<section class="section dark-grad" id="team">
-  <div class="inner">
-    <h2 class="reveal" style="max-width:16ch;">Two Principals, Personally</h2>
-    <p class="lede reveal" style="max-width:56ch;margin-top:22px;">
-      Alexandra Pieper and Anthony Davis founded Complexant Partners as equal partners. Both are on every engagement.
-    </p>
-
-    <div class="team-grid" id="team-grid">
-      <article class="member" tabindex="0">
-        <div class="member-photo">
-          <img src="https://placehold.co/800x1000/235A74/F6F3ED?text=Lexie+Pieper" alt="Portrait placeholder for Alexandra Pieper" />
-          <span class="duo"></span>
-          <span class="tint"></span>
-        </div>
-        <h3>Alexandra &ldquo;Lexie&rdquo; Pieper</h3>
-        <p class="member-role">Co-Founder &amp; Partner</p>
-        <p class="member-bio">Co-founder and equal partner, working across quality, regulatory, and validation for regulated life sciences companies.</p>
-        <button class="bio-toggle" aria-expanded="false" aria-controls="bio-lexie">
-          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
-          Full bio
-        </button>
-        <div class="bio-more" id="bio-lexie">
-          <p>Full biography and CV are part of the launch content package and will be published here.</p>
-          <p style="margin-top:10px;"><a href="mailto:lexiepieper@complexantpartners.com" style="color:var(--pale);">lexiepieper@complexantpartners.com</a></p>
-        </div>
-      </article>
-
-      <article class="member" tabindex="0">
-        <div class="member-photo">
-          <img src="https://placehold.co/800x1000/235A74/F6F3ED?text=Anthony+Davis" alt="Portrait placeholder for Anthony Davis" />
-          <span class="duo"></span>
-          <span class="tint"></span>
-        </div>
-        <h3>Anthony Davis</h3>
-        <p class="member-role">Co-Founder &amp; Partner</p>
-        <p class="member-bio">Co-founder and equal partner, working across quality, regulatory, and validation for regulated life sciences companies.</p>
-        <button class="bio-toggle" aria-expanded="false" aria-controls="bio-anthony">
-          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
-          Full bio
-        </button>
-        <div class="bio-more" id="bio-anthony">
-          <p>Full biography and CV are part of the launch content package and will be published here.</p>
-          <p style="margin-top:10px;"><a href="mailto:anthonydavis@complexantpartners.com" style="color:var(--pale);">anthonydavis@complexantpartners.com</a></p>
-        </div>
-      </article>
-    </div>
-  </div>
-</section>
-
-<!-- ============ CONTACT ============ -->
-<section class="section dark-section" id="contact">
-  <div class="inner contact-layout">
-    <div class="reveal">
-      <h2 style="max-width:14ch;">Bring Us What You Can&rsquo;t Yet Prove</h2>
-      <p class="lede" style="margin-top:22px;max-width:44ch;">
-        Start with a fixed-scope, fixed-fee readiness assessment &mdash; or just tell us what is keeping the question open.
-      </p>
-    </div>
-
-    <form id="contact-form" class="reveal" style="display:grid;gap:20px;">
-      <div class="form-grid two">
-        <div class="field">
-          <label for="name">Name</label>
-          <input id="name" name="name" type="text" required placeholder="Your name" />
-        </div>
-        <div class="field">
-          <label for="email">Email</label>
-          <input id="email" name="email" type="email" required placeholder="you@company.com" />
-        </div>
-      </div>
-      <div class="form-grid two">
-        <div class="field">
-          <label for="company">Company</label>
-          <input id="company" name="company" type="text" placeholder="Company name" />
-        </div>
-        <div class="field">
-          <label for="role">Role</label>
-          <input id="role" name="role" type="text" placeholder="Head of Quality, CTO…" />
-        </div>
-      </div>
-      <div class="field">
-        <label for="message">What are you trying to prove?</label>
-        <textarea id="message" name="message" required placeholder="Tell us where the question is open."></textarea>
-      </div>
-      <div style="margin-top:6px;">
-        <button class="btn btn-copper" type="submit">
-          <span class="btn-bg"></span>
-          <span>Send to Complexant Partners</span>
-        </button>
-      </div>
-      <p style="font-size:var(--text-xs);color:var(--fog);">Opens your email client, addressed to info@complexantpartners.com.</p>
-    </form>
   </div>
 </section>
 
 </main>
 
-<!-- ============ FOOTER ============ -->
-<footer class="site-footer">
-  <div class="footer-grid">
-    <div>
-      <div class="brand" style="margin-bottom:26px;">
-        <img src="assets/signal.png" alt="" />
-        <span class="brand-type">
-          <span class="brand-name">COMPLE<span class="copper-metal">X</span>ANT</span>
-          <span class="brand-sub">PARTNERS</span>
-          <span class="brand-llc">LLC</span>
-        </span>
-      </div>
-      <p style="font-family:'Bodoni Moda',serif;font-size:var(--text-l);">
-        <a href="mailto:info@complexantpartners.com">info@complexantpartners.com</a>
-      </p>
-      <p class="eyebrow" style="margin-top:18px;color:var(--fog);">Complexity · Competency · Clarity</p>
-      <div style="margin-top:34px;">
-      <p class="stat-label" style="margin-bottom:14px;">Entity</p>
-      <p style="color:var(--text-secondary);font-size:var(--text-s);">
-        Complexant Partners LLC<br />
-        Delaware limited liability company<br />
-        8 The Green, Suite 24683<br />Dover, DE 19901
-      </p>
-      </div>
+<!-- cx-shell:footer -->
+<section class="footer-cta" id="start" aria-labelledby="start-title">
+  <div class="panel-surface start-panel reveal">
+    <div class="start-copy">
+      <h2 id="start-title">Not sure where to start?</h2>
+      <p>Most conversations begin with one question: where is our exposure? We can help you answer it.</p>
     </div>
-
-    <div>
-      <nav class="footer-links" aria-label="Footer">
-        <a href="#approach">Approach</a>
-        <a href="approach.html#journey">Services</a>
-        <a href="#breadth">Where We Work</a>
-        <a href="#team">Team</a>
-      </nav>
-      <a class="btn" href="#contact" style="margin-top:22px;">
+    <div class="start-actions">
+      <a class="btn btn-copper" href="contact.html">
         <span class="btn-bg"></span>
-        <span>Let&rsquo;s Talk</span>
+        <span>Start the conversation</span>
+      </a>
+      <a class="btn" href="contact.html?topic=assessment">
+        <span class="btn-bg"></span>
+        <span>Request an assessment</span>
       </a>
     </div>
+  </div>
+</section>
 
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a href="index.html" class="brand" aria-label="Complexant Partners LLC, home"><span class="brand-type"><span class="brand-name">COMPLE<span class="copper-metal">X</span>ANT</span><span class="brand-sub">PARTNERS</span><span class="brand-llc">LLC</span></span></a>
+      <p class="footer-motto">Complexity &middot; Competency &middot; Clarity</p>
+      <p><a class="footer-mail" href="mailto:info@complexantpartners.com">info@complexantpartners.com</a></p>
+    </div>
+
+    <nav class="footer-links" aria-label="Footer">
+        <a href="approach.html">Approach</a>
+        <a href="approach.html#journey">Services</a>
+        <a href="who-we-serve.html">Who We Serve</a>
+        <a href="about.html">About</a>
+        <a href="insights.html">Insights</a>
+    </nav>
+
+    <div class="footer-location">
+      <p>Based in Massachusetts<br />Working with clients worldwide<br />On site when the work calls for it</p>
+    </div>
   </div>
 
   <div class="footer-bottom">
     <span>&copy; 2026 Complexant Partners LLC</span>
-    <span>Safely adapting to innovation</span>
+    <span>Safely adapting innovation</span>
   </div>
 </footer>
+<!-- /cx-shell:footer -->
 
-<script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.25/dist/lenis.min.js"></script>
 <script>
 /* ============================================================
-   Lenis smooth scroll — gives the scrubbed helix a weighted, continuous
-   feel instead of stepping frame to frame on each wheel tick.
+   Lenis smooth scroll — gives the particle field a weighted,
+   continuous feel instead of stepping on each wheel tick.
    ============================================================ */
 (function(){
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
@@ -1544,105 +1121,113 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 })();
 
 /* ============================================================
-   Menu overlay
+   Pillar cards — one card open at a time from 1000px.
+   Regulatory Risk rests open; hovering, focusing or clicking another
+   opens it; leaving the rail returns to Regulatory Risk. Arrow keys
+   move between pillars. The cards sit side by side with a fixed gap
+   (--card-gap): the open one is openW wide, the rest closedW. Each is
+   placed with transform and sized with width on the same curve, so the
+   gaps hold steady while they switch.
    ============================================================ */
 (function(){
-  const btn = document.getElementById('menu-btn');
-  const overlay = document.getElementById('overlay');
-  const label = document.getElementById('menu-btn-label');
-  let open = false;
+  const rail = document.getElementById('pillar-rail');
+  if (!rail) return;
+  const pillars = [...rail.querySelectorAll('.pillar')];
+  const heads = pillars.map(p => p.querySelector('.pillar-head'));
+  const REST = 0;                                 // Regulatory Risk
+  const wide = window.matchMedia('(min-width:1000px)');
+  // narrowest open card that still fits its copy and button; short of it, stack
+  const MIN_OPEN = 340;
+  let open = REST, closedW = 0, openW = 0, gap = 0, live = false;
 
-  function setOpen(next){
-    open = next;
-    btn.setAttribute('aria-expanded', String(open));
-    btn.classList.toggle('menu-open', open);
-    overlay.classList.toggle('is-open', open);
-    label.textContent = open ? 'Close' : 'Menu';
-    // the visible label is hidden below 560px in favour of an icon-only
-    // button, so keep an explicit accessible name in sync with it too
-    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    document.body.style.overflow = open ? 'hidden' : '';
+  function place(){
+    const step = closedW + gap;   // a closed card plus the gap after it
+    pillars.forEach((p, i) => {
+      const on = i === open;
+      p.classList.toggle('is-open', on);
+      heads[i].setAttribute('aria-expanded', String(on));
+      if (!live) return;
+      const x = i <= open ? i * step : openW + gap + (i - 1) * step;
+      p.style.setProperty('--x', x + 'px');
+      p.style.setProperty('--w', (on ? openW : closedW) + 'px');
+    });
   }
-  btn.addEventListener('click', () => setOpen(!open));
-  overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && open) setOpen(false); });
-})();
 
-/* ============================================================
-   Header scrim once the page has scrolled off the hero
-   ============================================================ */
-(function(){
-  const header = document.querySelector('.site-header');
-  if (!header) return;
-  const update = () => header.classList.toggle('is-stuck', window.scrollY > 80);
-  update();
-  window.addEventListener('scroll', update, { passive: true });
-})();
+  function layout(){
+    // a layout pass (load, resize, fonts) snaps into place; only switching
+    // pillars animates
+    rail.classList.add('no-anim');
+    requestAnimationFrame(() => requestAnimationFrame(() => rail.classList.remove('no-anim')));
+    const n = pillars.length;
+    const w = rail.clientWidth;
+    gap = parseFloat(getComputedStyle(rail).getPropertyValue('--card-gap')) || 0;
+    // wide enough for the longest one-word name ("Implementation") at its larger size
+    closedW = Math.round(Math.min(270, Math.max(220, w * 0.19)));
+    openW = w - (closedW + gap) * (n - 1);
+    live = wide.matches && openW >= MIN_OPEN;
+    rail.classList.toggle('is-live', live);
+    if (!live){
+      // stacked: every card open, nothing to switch
+      pillars.forEach((p, i) => {
+        p.classList.add('is-open');
+        p.style.removeProperty('--x');
+        p.style.removeProperty('--w');
+        heads[i].setAttribute('aria-expanded', 'true');
+        heads[i].tabIndex = -1;
+      });
+      return;
+    }
+    rail.style.setProperty('--closed-w', closedW + 'px');
+    rail.style.setProperty('--open-w', openW + 'px');
+    heads.forEach(h => { h.tabIndex = 0; });
+    // the rail is as tall as the tallest pillar when open
+    let h = 0;
+    pillars.forEach(p => {
+      p.style.height = 'auto';
+      h = Math.max(h, p.offsetHeight);
+      p.style.height = '';
+    });
+    rail.style.setProperty('--rail-h', Math.ceil(h) + 'px');
+    place();
+  }
 
-/* ============================================================
-   Services dropdown — opens on hover and :focus-within in CSS;
-   the button adds a click toggle for touch, Escape closes it
-   ============================================================ */
-(function(){
-  const wrap = document.querySelector('.nav-services');
-  if (!wrap) return;
-  const btn = wrap.querySelector('button');
-  const set = open => { wrap.classList.toggle('is-open', open); btn.setAttribute('aria-expanded', String(open)); };
-  btn.addEventListener('click', () => set(!wrap.classList.contains('is-open')));
-  wrap.addEventListener('mouseenter', () => btn.setAttribute('aria-expanded', 'true'));
-  wrap.addEventListener('mouseleave', () => set(false));
-  wrap.addEventListener('focusin', () => wrap.classList.remove('is-dismissed'));
-  wrap.addEventListener('focusout', e => { if (!wrap.contains(e.relatedTarget)) set(false); });
-  wrap.addEventListener('keydown', e => {
-    if (e.key === 'Escape'){ set(false); wrap.classList.add('is-dismissed'); btn.focus(); }
-  });
-})();
+  function show(i){
+    if (!live || i === open) return;
+    open = i;
+    place();
+  }
 
-/* ============================================================
-   Team — focusing one principal greys the other
-   ============================================================ */
-(function(){
-  const grid = document.getElementById('team-grid');
-  const members = [...grid.querySelectorAll('.member')];
-
-  members.forEach(m => {
-    const on = () => {
-      grid.classList.add('has-focus');
-      members.forEach(x => x.classList.toggle('is-focused', x === m));
-    };
-    const off = () => {
-      grid.classList.remove('has-focus');
-      members.forEach(x => x.classList.remove('is-focused'));
-    };
-    m.addEventListener('mouseenter', on);
-    m.addEventListener('mouseleave', off);
-    m.addEventListener('focusin', on);
-    m.addEventListener('focusout', off);
-  });
-
-  document.querySelectorAll('.bio-toggle').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const panel = document.getElementById(btn.getAttribute('aria-controls'));
-      const isOpen = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', String(!isOpen));
-      panel.classList.toggle('is-open', !isOpen);
+  pillars.forEach((p, i) => {
+    p.addEventListener('mouseenter', () => show(i));
+    heads[i].addEventListener('focus', () => show(i));
+    heads[i].addEventListener('click', () => show(i));
+    heads[i].addEventListener('keydown', e => {
+      if (!live) return;
+      const n = pillars.length;
+      let next = null;
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (i + 1) % n;
+      else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = (i - 1 + n) % n;
+      else if (e.key === 'Home') next = 0;
+      else if (e.key === 'End') next = n - 1;
+      if (next === null) return;
+      e.preventDefault();
+      heads[next].focus();
     });
   });
-})();
+  // back to Regulatory Risk once the pointer leaves, unless the keyboard is still inside
+  rail.addEventListener('mouseleave', () => {
+    if (!rail.contains(document.activeElement)) show(REST);
+  });
+  rail.addEventListener('focusout', e => {
+    if (!rail.contains(e.relatedTarget) && !rail.matches(':hover')) show(REST);
+  });
 
-/* ============================================================
-   Contact form -> mailto
-   ============================================================ */
-document.getElementById('contact-form').addEventListener('submit', e => {
-  e.preventDefault();
-  const v = id => document.getElementById(id).value;
-  const subject = encodeURIComponent('Website inquiry from ' + v('name'));
-  const body = encodeURIComponent(
-    'Name: ' + v('name') + '\nEmail: ' + v('email') + '\nCompany: ' + v('company') +
-    '\nRole: ' + v('role') + '\n\n' + v('message')
-  );
-  window.location.href = 'mailto:info@complexantpartners.com?subject=' + subject + '&body=' + body;
-});
+  layout();
+  window.addEventListener('resize', layout);
+  window.addEventListener('load', layout);
+  // the rail's height depends on the real faces, so re-measure once they are in
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+})();
 
 /* ============================================================
    Reveal on scroll + count-up stats + process path
@@ -1660,28 +1245,33 @@ document.getElementById('contact-form').addEventListener('submit', e => {
   }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
   document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
 
-  // (The .step cards are no longer revealed by an observer — the process-path
-  //  controller below drives their lit/dim state from scroll progress.)
-
-  // Count-up stats
-  const counters = [...document.querySelectorAll('.count')];
-  const statObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-      statObserver.unobserve(entry.target);
-      const target = parseInt(entry.target.dataset.target, 10);
-      if (reduced) { entry.target.textContent = target; return; }
-      const dur = 1400, start = performance.now();
+  // Count-up stats: a crescendo down the four rows. Once the block is in
+  // view each number climbs from zero, starting a beat after the one above.
+  const statGrid = document.getElementById('stat-grid');
+  const counters = statGrid ? [...statGrid.querySelectorAll('.count')] : [];
+  const countUp = (el, delay) => {
+    const target = parseInt(el.dataset.target, 10);
+    if (reduced) { el.textContent = target; return; }
+    const dur = 1700;
+    setTimeout(() => {
+      const start = performance.now();
       const tick = now => {
         const p = Math.min((now - start) / dur, 1);
         const eased = 1 - Math.pow(1 - p, 3);
-        entry.target.textContent = Math.round(target * eased);
+        el.textContent = Math.round(target * eased);
         if (p < 1) requestAnimationFrame(tick);
       };
       requestAnimationFrame(tick);
-    });
-  }, { threshold: 0.6 });
-  counters.forEach(c => statObserver.observe(c));
+    }, delay);
+  };
+  if (statGrid) {
+    const statObserver = new IntersectionObserver((entries) => {
+      if (!entries.some(e => e.isIntersecting)) return;
+      statObserver.disconnect();
+      counters.forEach((el, i) => countUp(el, i * 260));
+    }, { threshold: 0.35 });
+    statObserver.observe(statGrid);
+  }
 
   // Process path: threaded through the actual step positions, drawn on scroll
   const svg = document.getElementById('path-svg');
@@ -1696,9 +1286,8 @@ document.getElementById('contact-form').addEventListener('submit', e => {
     let nodeAt = [];       // each node's distance along the path, in px
     let reached = [];      // current lit/dim state, so we only touch the DOM on change
 
-    // One disc per step, carrying the numeral the card used to show. Built here
-    // rather than in the markup so that a page whose script never runs keeps
-    // its in-card numbering instead of losing the numbers altogether.
+    // One disc per step, carrying the numeral the card used to show. Built
+    // here so a page whose script never runs keeps its in-card numbering.
     function makeNodes(){
       steps.forEach(step => {
         const el = document.createElement('span');
@@ -1713,11 +1302,8 @@ document.getElementById('contact-form').addEventListener('submit', e => {
       wrap.classList.add('has-nodes');
     }
 
-    // Cubic segments with VERTICAL tangents at every waypoint: the curve leaves
-    // and arrives travelling downward and does its horizontal sweep in between.
-    // That gives one clean S per segment with no cusps and no doubling back,
-    // whatever the cards reflow to — unlike a Catmull-Rom through the same
-    // points, which overshoots into hooks when the x-jumps get large.
+    // Cubic segments with vertical tangents at every waypoint: one clean S
+    // per segment with no cusps, whatever the cards reflow to.
     function sweepPath(pts){
       if (pts.length < 2) return '';
       let d = 'M' + pts[0].x + ',' + pts[0].y;
@@ -1734,12 +1320,9 @@ document.getElementById('contact-form').addEventListener('submit', e => {
       if (!wrapRect.width || !wrapRect.height) return;
       svg.setAttribute('viewBox', '0 0 ' + wrapRect.width + ' ' + wrapRect.height);
 
-      // Below 900px the cards are a single column and a sweeping map makes no
-      // sense, so every waypoint collapses onto one x and the same machinery
-      // draws a straight rail down the left with the nodes threaded on it.
+      // Below 900px the cards are a single column, so every waypoint
+      // collapses onto one x and the path becomes a straight rail.
       const wide = window.matchMedia('(min-width:900px)').matches;
-      // centre of the gutter the stylesheet reserves for the rail, so the
-      // nodes always sit clear of the cards rather than on top of their text
       const stepsEl = wrap.querySelector('.path-steps');
       const railX = (parseFloat(getComputedStyle(stepsEl).paddingLeft) || 36) / 2;
       const mid = wrapRect.width / 2;
@@ -1762,9 +1345,7 @@ document.getElementById('contact-form').addEventListener('submit', e => {
       len = progress.getTotalLength();
       progress.style.strokeDasharray = len;
 
-      // Where each waypoint falls along the drawn length. Walking the path once
-      // and keeping the closest sample is more robust than assuming the segment
-      // boundaries land on round fractions of the total.
+      // where each waypoint falls along the drawn length
       const SAMPLES = 400;
       nodeAt = pts.map(() => 0);
       const best = pts.map(() => Infinity);
@@ -1799,8 +1380,7 @@ document.getElementById('contact-form').addEventListener('submit', e => {
       const vh = window.innerHeight;
       const p = Math.min(Math.max((vh * 0.85 - r.top) / (r.height + vh * 0.3), 0), 1);
       progress.style.strokeDashoffset = len * (1 - p);
-      // Cumulative, and reversible: a step lights when the drawn end passes its
-      // node and goes back to dim if you scroll up past it again.
+      // cumulative and reversible: a step lights when the drawn end passes it
       const drawn = len * p;
       for (let i = 0; i < steps.length; i++) setReached(i, drawn >= nodeAt[i]);
     }
@@ -1808,7 +1388,6 @@ document.getElementById('contact-form').addEventListener('submit', e => {
     makeNodes();
 
     if (reduced) {
-      // No scrubbing: show the whole path and every step, immediately.
       build();
       progress.style.strokeDashoffset = 0;
       steps.forEach((_, i) => setReached(i, true));
@@ -1817,8 +1396,8 @@ document.getElementById('contact-form').addEventListener('submit', e => {
       window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', build);
       window.addEventListener('load', build);
-      // Node positions depend on measured card heights, so re-measure once the
-      // real faces are in — Bodoni swapping in changes the cards' heights.
+      // node positions depend on measured card heights, so re-measure once
+      // the real faces are in
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
     }
   }
@@ -1861,7 +1440,8 @@ document.getElementById('contact-form').addEventListener('submit', e => {
   const DRIFT = 0.010;          // free drift of a scattered particle, viewport per second
   const PARALLAX_NEAR = 0.34;   // scattered field's scroll parallax, near particles...
   const PARALLAX_FAR  = 0.08;   // ...and far ones
-  const SCATTER_ALPHA = 0.38;   // scattered brightness relative to formed, keeps copy readable
+  const SCATTER_ALPHA = 0.22;   // scattered brightness relative to formed: a quiet background, not a feature
+  const SCATTER_KEEP = 0.35;    // share of the mark's own bars still visible once scattered; the rest fade out
   const YAW = 0;                // the formed mark rests square on, exactly as the logo is drawn
   const YAW_SWING = 0.12;       // and turns gently either side of that
   // the light that passes over the field and catches the copper
@@ -2047,7 +1627,8 @@ document.getElementById('contact-form').addEventListener('submit', e => {
       done();
     };
     img.onerror = done;
-    img.src = SPRITE_DIR + name + '.png';
+    // the single-file export (tools/build-standalone.py) embeds the sprites
+    img.src = (window.CX_SPRITES && window.CX_SPRITES[name]) || SPRITE_DIR + name + '.png';
   })));
 
   /* A bar at any size without stretching its rounded ends: the two caps are
@@ -2098,7 +1679,7 @@ document.getElementById('contact-form').addEventListener('submit', e => {
   const LETTER = { K: 'copper', N: 'navy', T: 'teal', W: 'cream', S: 'silver' };
   /* Scatter-only bars: they fill out the field mid-page and fade away as the
      mark forms, so the mark itself stays exactly the logo. */
-  const EXTRA = 110;
+  const EXTRA = 40;
 
   const points = [];
   let id = 0;
@@ -2141,6 +1722,9 @@ document.getElementById('contact-form').addEventListener('submit', e => {
   }
   // every bar is fully opaque in the mark; scattered, each keeps its own brightness
   points.forEach((p, n) => { p.alpha = p.metal ? 0.9 + rand(n * 7.1) * 0.1 : 0.55 + rand(n * 7.1) * 0.4; });
+  // the scattered field shows every scatter-only bar but only some of the mark's own;
+  // the others fade as they leave the mark and return as it forms again
+  points.forEach((p, n) => { p.loose = p.ghost || rand(n * 23.9) < SCATTER_KEEP ? 1 : 0; });
 
   /* ---------- give every particle a seat in the scattered field ----------
      Seats come from the R2 low-discrepancy sequence, lightly jittered, so the
@@ -2184,13 +1768,13 @@ document.getElementById('contact-form').addEventListener('submit', e => {
     return {
       cx: W - box + box * 0.44,
       cy: H * 0.5 - Math.min(window.scrollY, heroH) * 0.22,   // lifts gently with the hero
-      scale: Math.min(box, H) * 0.46,
+      scale: Math.min(box, H) * 0.38,   // kept modest so the mark sits beside the copy, not over it
       right: W, box,
     };
   }
   /* The footer mark sits in the left region the footer grid reserves for it
      (its padding-left), tail on the left and the tapered point aimed right at
-     the contact column — it reads as an arrow towards "Let's talk". Sized from
+     the footer's links and location. Sized from
      that region so the mark and the copy beside it can't drift apart. */
   function footerAnchor(){
     const r = footer.getBoundingClientRect();
@@ -2312,7 +1896,7 @@ document.getElementById('contact-form').addEventListener('submit', e => {
       // scattered, the matte bars breathe; formed, the logo holds solid
       const shimmer = p.metal ? 1 : lerp(0.84 + 0.16 * Math.sin(clock * 0.1 + p.phase), 1, e);
       const formedA = p.ghost ? 0 : mask;
-      const looseA = p.alpha * SCATTER_ALPHA * (0.45 + p.near * 0.55) * edge;
+      const looseA = p.alpha * SCATTER_ALPHA * (0.45 + p.near * 0.55) * edge * p.loose;
       const alpha = lerp(looseA, formedA, e) * shimmer;
       if (alpha < 0.01) continue;
 

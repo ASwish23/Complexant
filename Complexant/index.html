@@ -1,0 +1,2407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Complexant Partners LLC — Safely Adapting to Innovation</title>
+<meta name="description" content="Complexant Partners guides regulated life sciences companies in closing gaps, turning complexity into competency and competency into clarity." />
+<link rel="icon" href="assets/signal.png" type="image/png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+<script>document.documentElement.classList.add('js');</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  // Preflight off: this page ships its own base/reset below, and Tailwind's
+  // CDN styles are injected after it, so preflight would win and flatten
+  // every heading back to 16px.
+  tailwind.config = { corePlugins: { preflight: false } };
+</script>
+
+<style>
+/* ============================================================
+   COMPLEXANT PARTNERS — design tokens
+   Every color traces to the approved schema:
+   Complexant Blue #235A74 · Muted Teal #4F8F8E · Pale Teal #B7D6D2
+   Warm Ivory #F6F3ED · Copper #C7742D · Charcoal #2B2F33 · Fog Gray #A6ACB2
+   Surfaces are color-mix blends between two approved values only.
+   ============================================================ */
+:root{
+  --blue:#235A74;
+  --teal:#4F8F8E;
+  --pale:#B7D6D2;
+  --ivory:#F6F3ED;
+  --copper:#C7742D;
+  /* Deep navy base. Reads as dark blue, never neutral black — it keeps a blue
+     cast even at its darkest so the whole field stays in the brand's hue.
+     Darkened a second time from #03111e per request; every other dark surface
+     (--surface-*, --dark-rad-bg) mixes off this token, so this one edit
+     cascades through the whole page. */
+  --charcoal:#020b14;
+  --fog:#A6ACB2;
+
+  /* Layered dark surfaces: base -> elevated -> floating */
+  --surface-0: var(--charcoal);
+  --surface-1: color-mix(in srgb, var(--blue) 14%, var(--charcoal) 86%);
+  --surface-2: color-mix(in srgb, var(--blue) 26%, var(--charcoal) 74%);
+  --surface-3: color-mix(in srgb, var(--blue) 40%, var(--charcoal) 60%);
+  --hairline: color-mix(in srgb, var(--fog) 26%, transparent);
+  --hairline-strong: color-mix(in srgb, var(--fog) 46%, transparent);
+
+  /* Dark radial field. Three stacked radials over the navy base instead of one
+     wash: a contained blue glow behind the helix lane, a low teal lift off the
+     opposite corner, and a wide centre bloom that keeps the middle from going
+     flat. Everything falls back to deep navy, never black. */
+  --dark-rad-bg:
+    radial-gradient(58% 44% at 80% -4%,
+      color-mix(in srgb, var(--blue) 58%, transparent) 0%,
+      color-mix(in srgb, var(--blue) 22%, transparent) 44%,
+      transparent 76%),
+    radial-gradient(78% 62% at 4% 100%,
+      color-mix(in srgb, var(--teal) 13%, transparent) 0%,
+      transparent 64%),
+    radial-gradient(130% 110% at 52% 44%,
+      color-mix(in srgb, var(--blue) 9%, transparent) 0%,
+      transparent 72%),
+    var(--charcoal);
+
+  --text-primary: var(--ivory);
+  --text-secondary: color-mix(in srgb, var(--ivory) 74%, var(--charcoal) 26%);
+  --text-muted: var(--fog);
+
+  /* Desktop sizes per spec: H1 80px, H2 60px, H3 40px, H4 32px. Kept fluid
+     (clamp) rather than fixed — a flat 80px H1 would overflow a phone width —
+     scaling the mobile-end minimum by the same ratio each level already used,
+     so the fluid curve's shape is preserved, just resized to the new target. */
+  --h1: clamp(2.17rem, 1.26rem + 4vw, 5rem);
+  --h2: clamp(1.875rem, 1.37rem + 2.25vw, 3.75rem);
+  --h3: clamp(1.36rem, 1.09rem + 1.18vw, 2.5rem);
+  --h4: clamp(1.5rem, 1.39rem + 0.51vw, 2rem);
+  --text-l: clamp(1rem, 0.95rem + 0.24vw, 1.25rem);
+  --text-m: 1.125rem;   /* 18px — the paragraph spec */
+  --text-s: 0.875rem;
+  --text-xs: 0.75rem;
+
+  --lh-heading:1.12;
+  --lh-body:1.6;
+  --ls-heading:-0.02em;
+  --ls-body:0.01em;
+  --ls-caps:0.18em;
+
+  --sect-pad-f: clamp(60px, 3rem + 3.6vw, 120px);
+  --sect-pad-h: clamp(44px, 2.4rem + 3vw, 100px);
+  /* Widened ~30% across the curve (was 20px / 0.5rem+5.4vw / 120px) — this one
+     token drives left/right margins for the header, hero, and every section,
+     so bumping it gives the whole page more breathing room at once. */
+  --gutter: clamp(28px, 0.65rem + 7vw, 160px);
+
+  /* Right-hand lane reserved for the DNA spine. Collapses on narrow screens,
+     where the helix drops back to a faint full-width backdrop instead. */
+  --lane: 0px;
+
+  --ease: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --speed: 0.4s;
+
+  color-scheme: dark;
+}
+
+*{ box-sizing:border-box; }
+/* no scroll-behavior:smooth — Lenis owns smoothing and the two fight each other */
+html{ -webkit-text-size-adjust:100%; }
+body{
+  margin:0;
+  background: var(--charcoal);
+  color: var(--text-primary);
+  font-family:'Poppins', system-ui, sans-serif;
+  font-weight:400;
+  font-size: var(--text-m);
+  line-height: var(--lh-body);
+  letter-spacing: var(--ls-body);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+h1,h2,h3,h4,.display{
+  font-family:'Bodoni Moda', Georgia, serif;
+  font-weight:400;
+  line-height: var(--lh-heading);
+  letter-spacing: var(--ls-heading);
+  margin:0;
+  color: var(--ivory);
+}
+h1{ font-size:var(--h1); }
+h2{ font-size:var(--h2); }
+h3{ font-size:var(--h3); }
+p{ margin:0; }
+a{ color:inherit; text-decoration:none; }
+ul{ margin:0; padding:0; list-style:none; }
+img{ max-width:100%; display:block; }
+
+::selection{ background: var(--blue); color: var(--ivory); }
+
+a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex]:focus-visible{
+  outline:2px solid var(--copper);
+  outline-offset:3px;
+  border-radius:2px;
+}
+
+.skip-link{
+  position:absolute; left:-9999px; top:0; z-index:200;
+  background:var(--ivory); color:var(--charcoal);
+  padding:12px 20px; font-size:var(--text-s); font-weight:500;
+}
+.skip-link:focus{ left:16px; top:16px; }
+
+/* ---------- continuous background field ----------
+   One fixed backdrop for the whole document instead of per-section fills, so the
+   DNA layer behind the content reads as part of the page rather than being
+   chopped up by opaque section blocks. */
+.page-backdrop{
+  position:fixed; inset:0; z-index:-3;
+  background:var(--dark-rad-bg);
+  pointer-events:none;
+}
+/* Fine grain. A gradient this dark and this wide bands badly on 8-bit displays;
+   a low-opacity noise layer dithers the ramps and gives the field some tooth. */
+.page-backdrop::after{
+  content:"";
+  position:absolute; inset:0;
+  pointer-events:none;
+  opacity:0.05;
+  mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='160' height='160' filter='url(%23n)'/></svg>");
+  background-size:160px 160px;
+}
+
+/* ---------- layout ---------- */
+.section{
+  position:relative;
+  padding-left:var(--gutter);
+  /* The right lane is open now: sections use symmetric gutters so content
+     centres in the viewport. The hero still reads --lane on its own. */
+  padding-right:var(--gutter);
+  padding-top:var(--sect-pad-f);
+  padding-bottom:var(--sect-pad-f);
+}
+.inner{ max-width:1600px; margin:0 auto; width:100%; }
+
+@media (min-width:1100px){
+  :root{ --lane: 34vw; }
+}
+
+.eyebrow{
+  font-size:var(--text-xs);
+  letter-spacing:var(--ls-caps);
+  text-transform:uppercase;
+  font-weight:500;
+  color:var(--pale);
+}
+.lede{
+  font-size:var(--text-m);
+  line-height:var(--lh-body);
+  color:var(--ivory);
+}
+
+/* Metallic copper — mixes of approved Copper with approved Ivory / Charcoal only */
+.copper-metal{
+  background:linear-gradient(100deg,
+    color-mix(in srgb, var(--copper) 55%, var(--charcoal) 45%) 0%,
+    var(--copper) 18%,
+    color-mix(in srgb, var(--copper) 35%, var(--ivory) 65%) 32%,
+    color-mix(in srgb, var(--copper) 12%, var(--ivory) 88%) 38%,
+    color-mix(in srgb, var(--copper) 35%, var(--ivory) 65%) 44%,
+    var(--copper) 58%,
+    color-mix(in srgb, var(--copper) 55%, var(--charcoal) 45%) 72%,
+    var(--copper) 86%,
+    color-mix(in srgb, var(--copper) 30%, var(--ivory) 70%) 100%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+/* ---------- buttons ---------- */
+.btn{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:17px 32px;
+  border-radius:999px;
+  font-size:var(--text-s);
+  font-weight:500;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  border:1px solid var(--hairline-strong);
+  color:var(--ivory);
+  background:transparent;
+  cursor:pointer;
+  transition:transform var(--speed) var(--ease-out), opacity var(--speed) var(--ease-out);
+  overflow:hidden;
+}
+.btn .btn-bg{
+  position:absolute; inset:0; border-radius:999px;
+  background:var(--ivory);
+  transform:scaleX(0); transform-origin:left center;
+  transition:transform 0.5s var(--ease);
+  z-index:0;
+}
+.btn > span{ position:relative; z-index:1; }
+.btn:hover, .btn:focus-visible{ transform:translateY(-2px); }
+.btn:hover .btn-bg, .btn:focus-visible .btn-bg{ transform:scaleX(1); }
+.btn:hover > span, .btn:focus-visible > span{ color:var(--charcoal); }
+.btn:active{ transform:translateY(0); }
+.btn > span{ transition:color var(--speed) var(--ease); }
+
+/* Copper button — the single apex action */
+.btn-copper{ border-color:color-mix(in srgb, var(--copper) 70%, transparent); }
+.btn-copper .btn-bg{
+  background:linear-gradient(100deg,
+    color-mix(in srgb, var(--copper) 62%, var(--charcoal) 38%) 0%,
+    var(--copper) 30%,
+    color-mix(in srgb, var(--copper) 40%, var(--ivory) 60%) 50%,
+    var(--copper) 72%,
+    color-mix(in srgb, var(--copper) 62%, var(--charcoal) 38%) 100%);
+  transform:scaleX(1);
+}
+.btn-copper > span{ color:var(--ivory); }
+.btn-copper:hover > span, .btn-copper:focus-visible > span{ color:var(--ivory); }
+
+/* ---------- header ---------- */
+.site-header{
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  padding:clamp(18px,2.2vw,34px) var(--gutter);
+  display:flex; align-items:center; justify-content:space-between;
+  pointer-events:none;
+}
+/* content scrolls under the fixed header, so it needs a scrim to stay legible
+   against the logo and menu */
+.site-header::before{
+  content:"";
+  position:absolute; inset:0; z-index:-1;
+  background:linear-gradient(180deg,
+    color-mix(in srgb, var(--charcoal) 92%, transparent) 0%,
+    color-mix(in srgb, var(--charcoal) 62%, transparent) 55%,
+    transparent 100%);
+  opacity:0;
+  transition:opacity 0.4s var(--ease);
+  pointer-events:none;
+}
+.site-header.is-stuck::before{ opacity:1; }
+.site-header > *{ pointer-events:auto; }
+
+/* ---------- horizontal header nav (desktop/tablet) ----------
+   Hidden below 900px — the same breakpoint the overlay's own grid already
+   uses — where the hamburger + full-screen overlay takes over instead. */
+.header-nav{ display:none; }
+@media (min-width:900px){
+  .header-nav{
+    display:flex; align-items:center;
+    gap:clamp(20px,2vw,40px);
+  }
+}
+.header-nav a{
+  font-size:var(--text-xs);
+  letter-spacing:var(--ls-caps);
+  text-transform:uppercase;
+  font-weight:500;
+  color:var(--fog);
+  transition:color var(--speed) var(--ease);
+}
+.header-nav a:hover, .header-nav a:focus-visible{ color:var(--ivory); }
+
+/* ---------- services dropdown ----------
+   Opens on hover and :focus-within so keyboard users get it too; the script
+   adds a click toggle for touch and Escape to close. Each service carries its
+   pillar icon from assets/icons. */
+.nav-services{ position:relative; }
+.nav-services > button{
+  display:inline-flex; align-items:center; gap:7px;
+  padding:0; border:0; background:none; cursor:pointer;
+  font-family:inherit;
+  font-size:var(--text-xs);
+  letter-spacing:var(--ls-caps);
+  text-transform:uppercase;
+  font-weight:500;
+  color:var(--fog);
+  transition:color var(--speed) var(--ease);
+}
+.nav-services > button:hover, .nav-services > button:focus-visible,
+.nav-services:hover > button, .nav-services.is-open > button{ color:var(--ivory); }
+.nav-services > button:active{ opacity:0.7; }
+.nav-caret{ width:9px; height:9px; transition:transform var(--speed) var(--ease-out); }
+.nav-services:hover .nav-caret,
+.nav-services:focus-within:not(.is-dismissed) .nav-caret,
+.nav-services.is-open .nav-caret{ transform:rotate(180deg); }
+.services-menu{
+  position:absolute; top:calc(100% + 18px); left:50%;
+  width:400px; padding:10px;
+  display:grid; gap:2px;
+  border-radius:18px;
+  border:1px solid var(--hairline);
+  background:color-mix(in srgb, var(--surface-2) 88%, transparent);
+  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+  box-shadow:
+    0 30px 60px -24px color-mix(in srgb, var(--charcoal) 90%, transparent),
+    0 10px 30px -12px color-mix(in srgb, var(--blue) 60%, transparent);
+  opacity:0; visibility:hidden;
+  transform:translate(-50%, 8px);
+  transition:opacity 0.3s var(--ease), transform 0.4s var(--ease-out), visibility 0.3s;
+}
+/* hover bridge across the gap between the button and the panel */
+.services-menu::before{ content:""; position:absolute; left:0; right:0; top:-20px; height:20px; }
+.nav-services:hover .services-menu,
+.nav-services:focus-within:not(.is-dismissed) .services-menu,
+.nav-services.is-open .services-menu{
+  opacity:1; visibility:visible; transform:translate(-50%, 0);
+}
+.header-nav .services-menu a{
+  display:grid; grid-template-columns:44px 1fr auto; gap:14px; align-items:center;
+  padding:12px 14px; border-radius:12px;
+  font-size:var(--text-s); letter-spacing:normal; text-transform:none;
+  color:var(--ivory);
+  transition:background-color var(--speed) var(--ease), transform var(--speed) var(--ease-out);
+}
+.header-nav .services-menu a:hover, .header-nav .services-menu a:focus-visible{
+  background:color-mix(in srgb, var(--teal) 14%, transparent);
+  transform:translateX(3px);
+}
+.header-nav .services-menu a:active{ transform:translateX(1px); }
+.services-menu img{ width:40px; height:20px; }
+.services-menu strong{ display:block; font-family:'Bodoni Moda',serif; font-weight:400; font-size:1.1rem; line-height:1.25; }
+.services-menu small{ display:block; font-size:12px; line-height:1.5; color:var(--fog); }
+.services-menu em{
+  align-self:start;
+  padding:4px 10px; border-radius:999px;
+  border:1px dashed var(--hairline-strong);
+  font-style:normal; font-size:10px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase;
+  color:var(--fog); white-space:nowrap;
+}
+
+.header-actions{ display:flex; align-items:center; gap:clamp(10px,1.5vw,18px); }
+/* the header's own CTA sits at a slightly tighter scale than the full-size
+   .btn used in page content, so it doesn't blow out the header's height */
+.header-actions .btn{ padding:15px 24px; font-size:var(--text-xs); }
+.header-actions .btn > span{ white-space:nowrap; }
+
+/* Phone-width header: measured that brand + CTA + hamburger stop fitting
+   below ~500px, so under that the secondary wordmark drops and the hamburger
+   becomes an icon-only circle — logo + CTA + tap target still all fit on
+   one row instead of overlapping. */
+@media (max-width:560px){
+  .brand-sub, .brand-llc{ display:none; }
+  .site-header{ padding-left:16px; padding-right:16px; }
+  .header-actions{ gap:6px; }
+  .header-actions .btn{ padding:13px 16px; }
+}
+
+.brand{ display:flex; align-items:center; gap:14px; }
+.brand img{ width:38px; height:38px; object-fit:contain; }
+.brand-type{ display:flex; align-items:baseline; gap:9px; line-height:1; }
+.brand-name{
+  font-family:'Bodoni Moda', serif;
+  font-size:clamp(15px,1.25vw,20px);
+  letter-spacing:0.06em;
+  color:var(--ivory);
+}
+.brand-sub{
+  font-size:clamp(8px,0.62vw,10px);
+  letter-spacing:0.3em;
+  font-weight:500;
+  color:var(--pale);
+}
+.brand-llc{
+  font-size:clamp(7px,0.5vw,8px);
+  letter-spacing:0.24em;
+  color:var(--fog);
+}
+
+.menu-btn{
+  display:inline-flex; align-items:center; gap:12px;
+  padding:11px 22px 11px 18px;
+  border-radius:999px;
+  border:1px solid var(--hairline-strong);
+  background:color-mix(in srgb, var(--charcoal) 55%, transparent);
+  backdrop-filter:blur(10px);
+  color:var(--ivory);
+  font-size:var(--text-s);
+  font-weight:500;
+  letter-spacing:0.04em;
+  cursor:pointer;
+  transition:transform var(--speed) var(--ease-out), opacity var(--speed) var(--ease-out);
+}
+.menu-btn:hover, .menu-btn:focus-visible{ transform:translateY(-2px); }
+@media (min-width:900px){
+  /* every link this button reaches is now visible inline in .header-nav, so
+     the drawer it used to open is redundant at this width. Placed after the
+     unconditional display rule above so it wins the cascade tie here. */
+  .menu-btn{ display:none; }
+}
+@media (max-width:560px){
+  /* icon-only circular tap target — matches the ~500px point measured above
+     where the "Menu" label's width is what was pushing the hamburger off the
+     edge of the viewport. aria-label (set in JS) keeps it accessible. */
+  .menu-btn{
+    padding:0; width:44px; height:44px;
+    justify-content:center;
+  }
+  #menu-btn-label{ display:none; }
+}
+.menu-glyph{ display:flex; flex-direction:column; gap:3px; }
+.menu-glyph i{
+  display:block; width:14px; height:1.5px; background:var(--ivory);
+  transition:transform var(--speed) var(--ease), opacity var(--speed) var(--ease);
+}
+.menu-open .menu-glyph i:nth-child(1){ transform:translateY(4.5px) rotate(45deg); }
+.menu-open .menu-glyph i:nth-child(2){ opacity:0; }
+.menu-open .menu-glyph i:nth-child(3){ transform:translateY(-4.5px) rotate(-45deg); }
+
+/* ---------- menu overlay ---------- */
+.overlay{
+  position:fixed; inset:0; z-index:99;
+  background:var(--dark-rad-bg);
+  display:grid;
+  grid-template-columns:1fr;
+  /* safe: with the services list the menu can outgrow a short screen, and
+     plain centring would push its top out of reach */
+  align-content:safe center;
+  overflow-y:auto;
+  padding:clamp(90px,12vh,150px) var(--gutter) var(--sect-pad-h);
+  opacity:0; visibility:hidden;
+  transform:translateY(-12px);
+  transition:opacity 0.45s var(--ease), transform 0.45s var(--ease), visibility 0.45s;
+}
+.overlay.is-open{ opacity:1; visibility:visible; transform:translateY(0); }
+.overlay-grid{ max-width:1600px; margin:0 auto; width:100%; display:grid; gap:clamp(40px,6vw,90px); grid-template-columns:1fr; }
+@media (min-width:900px){ .overlay-grid{ grid-template-columns:1.15fr 0.85fr; align-items:start; } }
+.overlay-nav a{
+  display:block;
+  font-family:'Bodoni Moda', serif;
+  /* deliberately restrained — not oversized */
+  font-size:clamp(1.5rem, 1.1rem + 1.3vw, 2.25rem);
+  letter-spacing:-0.01em;
+  padding:11px 0;
+  border-bottom:1px solid var(--hairline);
+  color:var(--ivory);
+  transition:color var(--speed) var(--ease), transform var(--speed) var(--ease-out);
+}
+.overlay-nav a:hover, .overlay-nav a:focus-visible{ color:var(--ivory); transform:translateX(10px); }
+.overlay-label{ margin:22px 0 4px; }
+.overlay-sub a{
+  display:flex; align-items:center; gap:14px;
+  font-size:clamp(1.1rem, 0.95rem + 0.6vw, 1.4rem);
+  padding:9px 0 9px 4px;
+  color:var(--text-secondary);
+}
+.overlay-sub img{ width:34px; height:17px; flex:none; }
+.overlay-meta{ display:grid; gap:26px; align-content:start; }
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;
+  min-height:100vh;
+  min-height:100svh;
+  background:transparent;
+  padding:clamp(120px,17vh,200px) max(var(--gutter), var(--lane)) clamp(48px,15vh,140px) var(--gutter);
+  display:flex; flex-direction:column; justify-content:space-between;
+}
+
+/* ---------- the continuous particle field ----------
+   The Signal particles form the logo in the hero, scatter across the whole
+   viewport for the body of the page, and regroup into the logo in the footer.
+   The canvas covers the full viewport; the hero mark's left-edge fade (formerly
+   a CSS mask on a right-hand box) is applied per particle in the script so it
+   can let go as the mark comes apart. */
+.spine{
+  position:fixed;
+  inset:0;
+  width:100vw; height:100vh; height:100svh;
+  pointer-events:none;
+  z-index:0;
+}
+#signal-canvas{
+  position:absolute; inset:0;
+  width:100%; height:100%;
+  z-index:0;
+  /* drawn at full strength with normal blending: screen would wash out the
+     shading that makes the bars read as solid, and the copper as metal.
+     Readability over copy is handled in the script (SCATTER_ALPHA). */
+}
+@media (max-width:1099px){
+  .spine{ opacity:0.5; }
+}
+.hero, .section{ z-index:1; }
+.hero-inner{ max-width:1600px; margin:0 auto; width:100%; display:flex; flex-direction:column; justify-content:space-between; flex:1; gap:clamp(40px,7vh,90px); }
+.hero h1{ max-width:15ch; }
+/* Single left-aligned column at every width — this used to split into a
+   1fr/46% grid past 1000px that pushed the lede+button into the right-hand
+   column; now it sits under the H1 the way it already did on narrow screens. */
+.hero-foot{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:28px;
+  justify-items:start;
+}
+/* justify-items:start — a grid container's items default to stretch, which
+   was forcing the button to fill the full 56ch track (~630px) instead of
+   hugging its own text like every other button on the page. The lede
+   paragraph still wraps the same as before: it's long enough to use most of
+   the track width regardless, it just isn't forced to any more. */
+.hero-foot-block{ position:relative; display:grid; gap:26px; max-width:56ch; justify-items:start; }
+.hero-foot-block > *{ position:relative; z-index:1; }
+/* soft scrim keeps the copy readable over the signal field */
+.hero-foot-block::before{
+  content:"";
+  position:absolute; inset:-70px -90px;
+  z-index:0; pointer-events:none;
+  background:radial-gradient(58% 62% at 50% 48%,
+    color-mix(in srgb, var(--charcoal) 88%, transparent) 0%,
+    color-mix(in srgb, var(--charcoal) 60%, transparent) 42%,
+    transparent 68%);
+}
+.hero .lede{ color:var(--ivory); }
+.hero-modalities{
+  display:flex; flex-wrap:wrap; gap:10px clamp(18px,2.6vw,44px);
+  padding-top:clamp(20px,2.4vw,34px);
+  border-top:1px solid var(--hairline);
+  font-size:var(--text-xs);
+  letter-spacing:var(--ls-caps);
+  text-transform:uppercase;
+  color:var(--fog);
+}
+
+/* ---------- generic dark section ---------- */
+/* Sections are transparent so the backdrop and the DNA spine run behind them
+   uninterrupted. Section rhythm comes from very low-opacity tints instead of
+   the solid fills that used to break the page into blocks. */
+.dark-section{ background:transparent; }
+.dark-grad{
+  background:linear-gradient(180deg,
+    color-mix(in srgb, var(--blue) 12%, transparent) 0%,
+    color-mix(in srgb, var(--blue) 4%, transparent) 55%,
+    transparent 100%);
+}
+
+/* ---------- critical questions ---------- */
+.cluster-layout{
+  display:grid; gap:clamp(32px,3.6vw,56px);
+  grid-template-columns:1fr;
+  align-items:center;
+  justify-items:center;
+}
+@media (min-width:1100px){
+  .cluster-questions{ max-width:820px; }
+}
+/* width:100% — .cluster-layout centres its items, which would otherwise shrink
+   this block to its content and collapse the two lists into one column */
+.cluster-questions{ margin:0 auto; text-align:center; width:100%; max-width:1000px; }
+.cluster-questions h2{ margin-left:auto; margin-right:auto; }
+/* one list on each side of a centre rule; the button sits centred beneath */
+.cluster-questions .q-grid{ grid-template-columns:1fr; text-align:left; }
+.cluster-questions .q-group:first-child{ margin-top:clamp(24px,2.4vw,36px); }
+@media (min-width:760px){
+  .cluster-questions .q-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); gap:0; }
+  .cluster-questions .q-group{ margin-top:clamp(24px,2.4vw,36px); padding:0 clamp(24px,3.4vw,56px); }
+  .cluster-questions .q-group:first-child{ padding-left:0; }
+  .cluster-questions .q-group:last-child{ padding-right:0; border-left:1px solid var(--hairline); }
+}
+.cluster-questions .btn-wrap{ display:flex; justify-content:center; }
+
+/* The two audience lists sit side by side. auto-fit rather than a viewport
+   breakpoint, so the split is driven by whether two readable columns actually
+   fit in the container — they collapse back to one whenever they don't. */
+.q-grid{
+  display:grid;
+  /* min() on the floor so the track can still shrink under 320px on a phone
+     narrower than that — a bare minmax(320px,…) would overflow the container */
+  grid-template-columns:repeat(auto-fit, minmax(min(320px, 100%), 1fr));
+  gap:0 clamp(28px,3vw,56px);
+  align-items:start;
+}
+.q-group{ margin-top:clamp(28px,3vw,44px); }
+.q-label{
+  font-size:var(--text-xs); letter-spacing:var(--ls-caps);
+  text-transform:uppercase; color:var(--pale); font-weight:500;
+  margin-bottom:14px;
+}
+.q-list li{
+  display:grid; grid-template-columns:26px 1fr; gap:4px;
+  padding:5px 0;
+  color:var(--text-secondary);
+  font-size:var(--text-s);
+}
+.q-list li span{ color:var(--teal); }
+
+/* ---------- stats ---------- */
+/* Copy on the left; the numbers and the button sit beside it on the right. */
+.stats-layout{
+  display:grid; grid-template-columns:1fr;
+  gap:clamp(36px,5vw,80px);
+  align-items:center;
+  max-width:1200px;
+}
+@media (min-width:900px){
+  .stats-layout{ grid-template-columns:minmax(0,1.1fr) minmax(0,0.9fr); }
+}
+.stats-copy{ display:grid; gap:clamp(24px,2.6vw,38px); }
+.stats-copy .lede{ max-width:52ch; }
+.stats-side{ display:grid; gap:clamp(28px,3vw,44px); justify-items:start; }
+.stat-row{ display:grid; gap:0; width:100%; }
+.stat{ padding:clamp(18px,2vw,28px) 0; border-top:1px solid var(--hairline); }
+.stat:last-child{ border-bottom:1px solid var(--hairline); }
+.stat a{ grid-template-columns:minmax(0,5.5ch) 1fr; align-items:baseline; column-gap:clamp(18px,2.4vw,32px); }
+@media (min-width:900px){ .stat a{ grid-template-columns:minmax(0,6ch) 1fr; } }
+.stat a{ display:grid; row-gap:6px; transition:transform var(--speed) var(--ease-out); }
+.stat a:hover, .stat a:focus-visible{ transform:translateY(-3px); }
+.stat-num{
+  font-family:'Bodoni Moda',serif;
+  font-size:var(--h3);
+  color:var(--ivory);
+  line-height:1;
+}
+.stat-num .plus{ color:var(--fog); }
+.stat-label{
+  font-size:var(--text-xs); letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--fog);
+}
+.stat a:hover .stat-label, .stat a:focus-visible .stat-label{ color:var(--pale); }
+
+/* ---------- difference cards ---------- */
+.card-grid{
+  display:grid; gap:clamp(14px,1.6vw,22px);
+  grid-template-columns:1fr;
+  margin:clamp(28px,3vw,44px) auto 0;
+  max-width:1180px;
+}
+#approach h2{ text-align:center; margin-left:auto; margin-right:auto; }
+@media (min-width:820px){ .card-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+.card{
+  position:relative;
+  padding:clamp(24px,2.4vw,38px);
+  border-radius:16px;
+  border:1px solid var(--hairline);
+  background:linear-gradient(158deg, var(--surface-2) 0%, var(--surface-1) 100%);
+  overflow:hidden;
+  transition:transform var(--speed) var(--ease-out), border-color var(--speed) var(--ease);
+}
+.card::after{
+  content:""; position:absolute; inset:0; border-radius:16px;
+  background:linear-gradient(158deg,
+    color-mix(in srgb, var(--blue) 30%, transparent) 0%,
+    transparent 60%);
+  box-shadow:0 0 0 1px color-mix(in srgb, var(--teal) 92%, transparent),
+             0 26px 60px -22px color-mix(in srgb, var(--blue) 95%, transparent),
+             0 4px 14px -6px color-mix(in srgb, var(--charcoal) 90%, transparent);
+  opacity:0; transition:opacity var(--speed) var(--ease); pointer-events:none;
+}
+.card:hover, .card:focus-within{ transform:translateY(-6px); }
+.card:hover::after, .card:focus-within::after{ opacity:1; }
+.card-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:20px; }
+.card h3{ font-size:var(--h4); max-width:12ch; }
+.card p{ margin-top:18px; color:var(--ivory); font-size:var(--text-m); }
+.card-icon{ flex:none; width:56px; height:56px; opacity:0.95; }
+
+/* ---------- breadth grid ---------- */
+.breadth-wrap{ margin-top:clamp(28px,3.2vw,48px); }
+.breadth-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(148px, 1fr));
+  gap:clamp(8px,0.9vw,14px);
+  max-width:1400px; margin:0 auto;
+}
+.breadth-cell{
+  position:relative;
+  min-height:clamp(84px,8vw,118px);
+  border-radius:14px;
+  border:1px solid var(--hairline);
+  background:var(--surface-1);
+  padding:14px;
+  display:grid; align-content:center; justify-items:center; gap:8px;
+  text-align:center;
+  color:var(--text-secondary);
+  font-size:var(--text-s);
+  cursor:default;
+  transition:transform var(--speed) var(--ease-out), border-color var(--speed) var(--ease), color var(--speed) var(--ease);
+}
+.breadth-cell:nth-child(even){ transform:translateY(clamp(8px,1.1vw,18px)); }
+.breadth-cell:hover{ transform:translateY(-5px); border-color:var(--hairline-strong); color:var(--ivory); }
+.breadth-cell:nth-child(even):hover{ transform:translateY(clamp(3px,0.6vw,13px)); }
+.breadth-cell.is-anchor{
+  background:linear-gradient(158deg,
+    color-mix(in srgb, var(--blue) 72%, var(--charcoal) 28%) 0%,
+    color-mix(in srgb, var(--blue) 34%, var(--charcoal) 66%) 100%);
+  border-color:color-mix(in srgb, var(--teal) 75%, transparent);
+  box-shadow:0 10px 34px -14px color-mix(in srgb, var(--blue) 90%, transparent);
+  color:var(--ivory);
+  font-weight:600;
+  letter-spacing:0.09em;
+  text-transform:uppercase;
+  font-size:var(--text-xs);
+}
+.breadth-cell.is-anchor .cell-glyph{ opacity:1; }
+.cell-glyph{ width:26px; height:14px; opacity:0.55; transition:opacity var(--speed) var(--ease); }
+.breadth-cell:hover .cell-glyph{ opacity:1; }
+
+/* ---------- process path ---------- */
+/* This section reclaims most of its reserved DNA lane, so the connector has
+   room to sweep between the cards instead of threading a 12px gap between
+   two columns. */
+@media (min-width:1100px){ #process{ --lane: 6vw; } }
+
+.path-wrap{ position:relative; margin-top:clamp(32px,4vw,56px); }
+.path-svg{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+/* The drawn portion glows; drop-shadow only paints the stroke that is actually
+   rendered, so the glow grows with the line instead of hanging in empty space. */
+#path-progress{
+  filter:
+    drop-shadow(0 0 3px color-mix(in srgb, var(--copper) 85%, transparent))
+    drop-shadow(0 0 12px color-mix(in srgb, var(--copper) 45%, transparent));
+}
+.path-steps{ position:relative; display:grid; gap:clamp(28px,4vw,64px); }
+/* Below the map breakpoint the connector collapses to a vertical rail down the
+   left, so the cards are inset to clear it. The JS centres the rail on half
+   this padding, which keeps the gutter width defined in one place — here. */
+@media (max-width:899px){
+  .path-steps{ padding-left:clamp(54px, 15vw, 76px); }
+}
+@media (min-width:900px){
+  /* Each card gets its OWN row and alternates sides. The cards used to pair up
+     two-to-a-row, which left the connector nowhere to go — a left card's right
+     edge and a right card's left edge were 12px apart, so the "path" came out
+     as a stubby vertical stroke. One card per row gives every segment a full
+     row of vertical travel and most of the container of horizontal travel. */
+  /* Deliberately a SINGLE column: that is what puts each card on its own row.
+     A two-column grid re-pairs them two-to-a-row through auto-placement even
+     with grid-column set, which is what flattened the connector before. Sides
+     alternate by pushing every second card right with an auto margin, which
+     also keeps this generic — add a fifth step and it still alternates. */
+  .path-steps{ grid-template-columns:1fr; }
+  /* narrow enough to leave a real channel between the two sides for the line
+     to sweep through — at full width the cards nearly touch and the S flattens */
+  .path-steps .step{ max-width:min(460px, 38%); }
+  .path-steps .step:nth-child(even){ margin-left:auto; }
+}
+.step{
+  position:relative;
+  padding:clamp(22px,2.2vw,34px);
+  border-radius:16px;
+  border:1px solid var(--hairline);
+  background:color-mix(in srgb, var(--surface-1) 80%, transparent);
+  backdrop-filter:blur(4px);
+  transition:opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out), border-color var(--speed) var(--ease);
+  max-width:520px;
+}
+.step:hover{ border-color:var(--hairline-strong); }
+.step-index{
+  font-family:'Bodoni Moda',serif; font-size:var(--text-s);
+  color:var(--copper); letter-spacing:0.08em;
+}
+/* Once the script has built the numbered nodes on the line, the in-card
+   numeral is a duplicate — hide it then, and only then, so a page where the
+   script never runs keeps its numbering exactly where it is today. */
+.path-wrap.has-nodes .step-index{ display:none; }
+
+/* ---------- map nodes ----------
+   Absolutely positioned onto the connector at the coordinates the path is
+   built from. The SVG viewBox is set 1:1 with this wrapper's pixel box, so
+   path coordinates and CSS pixel offsets are the same numbers. */
+.step-node{
+  position:absolute;
+  display:grid; place-items:center;
+  width:var(--node-size); height:var(--node-size);
+  margin-left:calc(var(--node-size) / -2);
+  margin-top:calc(var(--node-size) / -2);
+  border-radius:50%;
+  border:1px solid var(--hairline-strong);
+  background:color-mix(in srgb, var(--charcoal) 82%, transparent);
+  backdrop-filter:blur(4px);
+  font-family:'Bodoni Moda',serif;
+  font-size:calc(var(--node-size) * 0.34);
+  line-height:1;
+  color:var(--fog);
+  pointer-events:none;
+  transition:color var(--speed) var(--ease), border-color var(--speed) var(--ease),
+             box-shadow 0.6s var(--ease-out), background 0.6s var(--ease-out);
+}
+.path-wrap{ --node-size:clamp(44px, 4vw, 64px); }
+/* Reached: the same metallic copper sweep the buttons and wordmark use, so the
+   lit nodes read as the brand's copper rather than a flat orange. */
+.step-node.is-reached{
+  color:var(--ivory);
+  border-color:color-mix(in srgb, var(--copper) 70%, transparent);
+  background:
+    linear-gradient(145deg,
+      color-mix(in srgb, var(--copper) 92%, #F2C79A 8%) 0%,
+      var(--copper) 46%,
+      color-mix(in srgb, var(--copper) 74%, var(--charcoal) 26%) 100%);
+  box-shadow:
+    0 0 0 6px color-mix(in srgb, var(--copper) 12%, transparent),
+    0 6px 26px -6px color-mix(in srgb, var(--copper) 60%, transparent);
+}
+
+/* Steps ahead of the line sit back until it reaches them. Cumulative: once
+   reached a card stays lit, so an earlier step can still be re-read. */
+.js .path-wrap.has-nodes .step{
+  opacity:0.32;
+  filter:saturate(0.55);
+  transition:opacity 0.65s var(--ease-out), filter 0.65s var(--ease-out),
+             border-color var(--speed) var(--ease);
+}
+.js .path-wrap.has-nodes .step.is-reached{ opacity:1; filter:none; }
+.step h3{ font-size:var(--h4); margin-top:10px; }
+/* :not(.step-index) — .step-index ("01", "02"...) is also a bare <p> inside
+   .step, and this selector's higher specificity would otherwise win over its
+   own copper/small-size rule above and flatten the numeral to body-copy style */
+.step p:not(.step-index){ margin-top:12px; color:var(--ivory); font-size:var(--text-m); }
+
+.pilot-quote{
+  margin-top:clamp(40px,5vw,72px);
+  text-align:center;
+  max-width:30ch;
+  margin-left:auto; margin-right:auto;
+}
+.pilot-quote blockquote{
+  font-family:'Bodoni Moda',serif;
+  font-size:var(--h3);
+  line-height:1.24;
+  letter-spacing:var(--ls-heading);
+  margin:0;
+}
+.pilot-note{ margin-top:22px; color:var(--ivory); font-size:var(--text-m); max-width:46ch; margin-left:auto; margin-right:auto; }
+
+/* ---------- team ---------- */
+.team-grid{
+  display:grid; gap:clamp(20px,2.4vw,36px);
+  grid-template-columns:1fr;
+  margin:clamp(28px,3vw,44px) auto 0;
+  max-width:900px;
+}
+#team .inner{ text-align:center; }
+#team h2, #team .lede{ margin-left:auto; margin-right:auto; }
+.member{ text-align:center; }
+.member .bio-more{ text-align:left; display:none; }
+.member .bio-more.is-open{ display:inline-block; }
+@media (min-width:620px){ .team-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+/* keep the portrait from ballooning when the grid is a single column */
+@media (max-width:619px){ .member{ max-width:400px; } }
+.member{ transition:opacity 0.45s var(--ease); }
+/* focusing one member greys the other — requested behaviour */
+.team-grid.has-focus .member{ opacity:0.38; }
+.team-grid.has-focus .member.is-focused{ opacity:1; }
+.member-photo{
+  position:relative; border-radius:16px; overflow:hidden;
+  border:1px solid var(--hairline);
+  aspect-ratio:4/5;
+}
+.member-photo img{
+  width:100%; height:100%; object-fit:cover;
+  filter:grayscale(1) contrast(1.05);
+  transition:filter 0.6s var(--ease), transform 0.9s var(--ease-out);
+}
+.member:hover .member-photo img, .member:focus-within .member-photo img{
+  filter:grayscale(0);
+  transform:scale(1.03);
+}
+.member-photo .tint{
+  position:absolute; inset:0;
+  background:linear-gradient(to top, color-mix(in srgb, var(--charcoal) 78%, transparent) 0%, transparent 55%);
+}
+.member-photo .duo{
+  position:absolute; inset:0;
+  background:var(--blue);
+  mix-blend-mode:multiply;
+  opacity:0.34;
+  transition:opacity 0.6s var(--ease);
+}
+.member:hover .member-photo .duo, .member:focus-within .member-photo .duo{ opacity:0.12; }
+.member h3{ font-size:var(--h4); margin-top:20px; }
+.member-role{ color:var(--teal); font-size:var(--text-s); font-weight:500; margin-top:4px; }
+.member-bio{ color:var(--ivory); font-size:var(--text-m); margin-top:14px; }
+.bio-toggle{
+  margin-top:16px;
+  display:inline-flex; align-items:center; gap:9px;
+  background:none; border:none; cursor:pointer; padding:0;
+  color:var(--ivory);
+  font-size:var(--text-xs); letter-spacing:0.12em; text-transform:uppercase; font-weight:500;
+  transition:transform var(--speed) var(--ease-out);
+}
+.bio-toggle:hover, .bio-toggle:focus-visible{ transform:translateX(4px); }
+.bio-toggle .chev{ width:12px; height:12px; stroke:var(--copper); transition:transform var(--speed) var(--ease); }
+.bio-toggle[aria-expanded="true"] .chev{ transform:rotate(90deg); }
+.bio-more{ display:none; margin-top:14px; color:var(--text-secondary); font-size:var(--text-s); border-left:1px solid var(--hairline); padding-left:16px; }
+.bio-more.is-open{ display:block; }
+
+/* ---------- contact ---------- */
+/* Stacked and centred: intro and details first, form below. */
+.contact-layout{ display:grid; gap:clamp(28px,3vw,44px); grid-template-columns:1fr; max-width:820px; text-align:center; }
+.contact-layout h2, .contact-layout .lede{ margin-left:auto; margin-right:auto; }
+.contact-layout form{ text-align:left; }
+.contact-layout form > div:last-of-type, .contact-layout form > p{ text-align:center; }
+.field{ display:grid; gap:9px; }
+.field label{
+  font-size:var(--text-xs); letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--fog); font-weight:500;
+}
+.field input, .field textarea{
+  width:100%;
+  /* Fog Gray field wells clearly denote where to enter information */
+  background:color-mix(in srgb, var(--fog) 14%, transparent);
+  border:1px solid color-mix(in srgb, var(--fog) 34%, transparent);
+  border-radius:10px;
+  padding:14px 16px;
+  color:var(--ivory);
+  font-family:'Poppins',sans-serif;
+  font-size:var(--text-s);
+  transition:border-color var(--speed) var(--ease), background-color var(--speed) var(--ease);
+}
+.field input::placeholder, .field textarea::placeholder{ color:color-mix(in srgb, var(--fog) 78%, transparent); }
+.field input:hover, .field textarea:hover{ border-color:color-mix(in srgb, var(--fog) 55%, transparent); }
+.field input:focus, .field textarea:focus{
+  outline:none;
+  border-color:var(--teal);
+  background:color-mix(in srgb, var(--fog) 20%, transparent);
+}
+.field textarea{ resize:vertical; min-height:118px; }
+.form-grid{ display:grid; gap:20px; grid-template-columns:1fr; }
+@media (min-width:640px){ .form-grid.two{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+.contact-detail{ display:grid; gap:6px; }
+.contact-detail a{ transition:color var(--speed) var(--ease); }
+.contact-detail a:hover, .contact-detail a:focus-visible{ color:var(--copper); }
+
+/* ---------- footer ---------- */
+/* Sits above the particle canvas, with a translucent fill so the Signal can
+   regroup behind it. */
+.site-footer{
+  position:relative; z-index:1;
+  background:linear-gradient(180deg,
+    transparent 78%,
+    color-mix(in srgb, var(--charcoal) 40%, transparent) 100%);
+  padding:var(--sect-pad-f) var(--gutter) clamp(28px,3vw,44px);
+  border-top:1px solid var(--hairline);
+}
+.footer-grid{
+  max-width:1600px; margin:0 auto;
+  display:grid; gap:clamp(36px,4vw,70px);
+  grid-template-columns:1fr;
+}
+/* --foot-mark is the left region kept clear for the reformed Signal; the script
+   reads this padding to place and size the mark, and the copy sits to its right. */
+@media (min-width:900px){
+  .footer-grid{ grid-template-columns:1.4fr 1fr; padding-left:var(--foot-mark); }
+  .footer-bottom{ padding-left:var(--foot-mark); }
+}
+:root{ --foot-mark:clamp(300px, 32vw, 520px); }
+/* a soft charcoal halo lifts the copy off the reformed Signal without boxing it out */
+.footer-grid p, .footer-links a, .footer-bottom{
+  text-shadow:0 0 14px var(--charcoal), 0 0 5px var(--charcoal);
+}
+.footer-links a{ display:block; padding:9px 0; font-size:var(--text-s); letter-spacing:0.1em; text-transform:uppercase; color:var(--text-secondary); transition:color var(--speed) var(--ease), transform var(--speed) var(--ease-out); }
+.footer-links a:hover, .footer-links a:focus-visible{ color:var(--ivory); transform:translateX(5px); }
+.footer-bottom{
+  max-width:1600px; margin:clamp(44px,5vw,80px) auto 0;
+  padding-top:26px; border-top:1px solid var(--hairline);
+  display:flex; flex-wrap:wrap; gap:16px; justify-content:space-between;
+  font-size:var(--text-xs); letter-spacing:0.1em; text-transform:uppercase; color:var(--fog);
+}
+
+/* ---------- reveal on scroll ---------- */
+/* Scoped to .js so content stays visible if the script never runs. */
+.js .reveal{ opacity:0; transform:translateY(22px); transition:opacity 0.75s var(--ease-out), transform 0.75s var(--ease-out); }
+.js .reveal.is-visible{ opacity:1; transform:translateY(0); }
+/* .step no longer gets a one-shot reveal here — the process-path controller
+   owns step opacity continuously (dim until the line reaches it, and back
+   again on the way up). Two systems writing the same property would fight. */
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *, *::before, *::after{ transition-duration:0.01ms !important; animation-duration:0.01ms !important; }
+  .js .reveal, .js .step{ opacity:1 !important; transform:none !important; }
+  .js .path-wrap.has-nodes .step{ opacity:1 !important; filter:none !important; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="page-backdrop" aria-hidden="true"></div>
+<div class="spine" aria-hidden="true">
+  <canvas id="signal-canvas"></canvas>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <a href="#top" class="brand" aria-label="Complexant Partners LLC — home">
+    <img src="assets/signal.png" alt="" />
+    <span class="brand-type">
+      <span class="brand-name">COMPLE<span class="copper-metal">X</span>ANT</span>
+      <span class="brand-sub">PARTNERS</span>
+      <span class="brand-llc">LLC</span>
+    </span>
+  </a>
+
+  <nav class="header-nav" aria-label="Primary">
+    <a href="#approach">Approach</a>
+    <div class="nav-services">
+      <button type="button" aria-expanded="false" aria-controls="services-menu">
+        Services
+        <svg class="nav-caret" viewBox="0 0 12 8" fill="none" aria-hidden="true"><path d="M1 1.5l5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+      <div class="services-menu" id="services-menu">
+        <a href="regulatory-risk.html">
+          <img src="assets/icons/pillar-01-regulatory-risk.svg" alt="" width="40" height="20" />
+          <span><strong>Regulatory Risk</strong><small>Find where the exposure actually is</small></span>
+        </a>
+        <a href="sandbox.html">
+          <img src="assets/icons/pillar-02-sandbox.svg" alt="" width="40" height="20" />
+          <span><strong>Sandbox</strong><small>Prove it before it touches production</small></span>
+          <em>Coming soon</em>
+        </a>
+        <a href="implementation.html">
+          <img src="assets/icons/pillar-03-implementation.svg" alt="" width="40" height="20" />
+          <span><strong>Implementation</strong><small>Put it in place and make it hold up</small></span>
+        </a>
+        <a href="monitoring.html">
+          <img src="assets/icons/pillar-04-monitoring.svg" alt="" width="40" height="20" />
+          <span><strong>Monitoring</strong><small>Keep it qualified as it changes</small></span>
+        </a>
+      </div>
+    </div>
+    <a href="#breadth">Where We Work</a>
+    <a href="#team">Team</a>
+  </nav>
+
+  <div class="header-actions">
+    <a class="btn" href="#contact">
+      <span class="btn-bg"></span>
+      <span>Let&rsquo;s Talk</span>
+    </a>
+    <button class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="overlay" aria-label="Open menu">
+      <span class="menu-glyph" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span id="menu-btn-label">Menu</span>
+    </button>
+  </div>
+</header>
+
+<!-- ============ MENU OVERLAY ============ -->
+<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-label="Site menu">
+  <div class="overlay-grid">
+    <nav class="overlay-nav" aria-label="Primary">
+      <a href="#approach">Approach</a>
+      <p class="eyebrow overlay-label">Services</p>
+      <div class="overlay-sub">
+        <a href="regulatory-risk.html"><img src="assets/icons/pillar-01-regulatory-risk.svg" alt="" width="40" height="20" />Regulatory Risk</a>
+        <a href="sandbox.html"><img src="assets/icons/pillar-02-sandbox.svg" alt="" width="40" height="20" />Sandbox</a>
+        <a href="implementation.html"><img src="assets/icons/pillar-03-implementation.svg" alt="" width="40" height="20" />Implementation</a>
+        <a href="monitoring.html"><img src="assets/icons/pillar-04-monitoring.svg" alt="" width="40" height="20" />Monitoring</a>
+      </div>
+      <a href="#breadth">Where We Work</a>
+      <a href="#team">Team</a>
+    </nav>
+    <div class="overlay-meta">
+      <div>
+        <p class="eyebrow" style="margin-bottom:10px;">Complexity · Competency · Clarity</p>
+        <p class="lede" style="max-width:44ch;">Safely adapting to innovation. Intelligence you can trust.</p>
+      </div>
+      <div class="contact-detail" style="font-size:var(--text-s); color:var(--text-secondary);">
+        <a href="mailto:info@complexantpartners.com">info@complexantpartners.com</a>
+        <span>8 The Green, Suite 24683<br />Dover, DE 19901</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="hero-inner">
+    <h1>
+      Safely adapting<br />to innovation.
+    </h1>
+
+    <div class="hero-foot">
+      <div class="hero-foot-block">
+        <p class="lede">
+          We guide regulated life sciences companies in closing gaps &mdash; turning complexity into competency, and competency into clarity. <strong style="font-weight:500;color:var(--ivory);">Intelligence you can trust.</strong>
+        </p>
+        <a class="btn" href="#contact">
+          <span class="btn-bg"></span>
+          <span>Start a Readiness Assessment</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-modalities">
+      <span>Pharmaceuticals</span><span>Biologics</span><span>Cell &amp; Gene Therapy</span><span>Medical Devices</span><span>IVD</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CRITICAL QUESTIONS ============ -->
+<section class="section dark-section" id="questions">
+  <div class="inner cluster-layout">
+    <div class="reveal cluster-questions">
+      <h2 style="max-width:14ch;">The Questions You Have to Answer</h2>
+
+      <div class="q-grid">
+        <div class="q-group">
+          <p class="q-label">For the quality leader</p>
+          <ul class="q-list">
+            <li><span>&mdash;</span>Where is our exposure, actually?</li>
+            <li><span>&mdash;</span>Can we prove this does what we say it does?</li>
+            <li><span>&mdash;</span>Will this evidence hold up in an inspection?</li>
+            <li><span>&mdash;</span>How do we adopt without betting the quality system?</li>
+          </ul>
+        </div>
+
+        <div class="q-group">
+          <p class="q-label">For the gatekeepers</p>
+          <ul class="q-list">
+            <li><span>&mdash;</span>What does this cost, predictably?</li>
+            <li><span>&mdash;</span>How much inspection exposure are we carrying?</li>
+            <li><span>&mdash;</span>Does this have an end, or is it a science project?</li>
+            <li><span>&mdash;</span>Who answers when a regulator asks?</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="btn-wrap" style="margin-top:clamp(28px,3vw,40px);">
+        <a class="btn" href="#contact">
+          <span class="btn-bg"></span>
+          <span>Start a Conversation</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="section dark-grad" id="practice">
+  <div class="inner stats-layout">
+    <div class="stats-copy reveal">
+      <h2 style="max-width:13ch;">A Practice Built on Evidence</h2>
+      <p class="lede">
+        Complexant Partners is a boutique practice with roughly sixty years of combined experience in the exact roles our clients hold. Personal involvement from both principals, not a bench of juniors &mdash; and the ability to say yes to fast-moving innovation and still be able to prove it.
+      </p>
+    </div>
+
+    <div class="stats-side reveal">
+      <div class="stat-row" id="stat-row">
+        <div class="stat">
+          <a href="#team">
+            <span class="stat-num"><span class="count" data-target="60">0</span><span class="plus">+</span></span>
+            <span class="stat-label">Years combined experience</span>
+          </a>
+        </div>
+        <div class="stat">
+          <a href="#team">
+            <span class="stat-num"><span class="count" data-target="2">0</span></span>
+            <span class="stat-label">Principals on every engagement</span>
+          </a>
+        </div>
+        <div class="stat">
+          <a href="approach.html#journey">
+            <span class="stat-num"><span class="count" data-target="4">0</span></span>
+            <span class="stat-label">Pillars, end to end</span>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <a class="btn" href="#team">
+          <span class="btn-bg"></span>
+          <span>Meet the Principals</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY WE'RE DIFFERENT ============ -->
+<section class="section dark-section" id="approach">
+  <div class="inner">
+    <h2 class="reveal" style="max-width:16ch;">Why We&rsquo;re Different</h2>
+
+    <div class="card-grid">
+      <article class="card reveal">
+        <div class="card-head">
+          <h3>In the Seat, Not Beside It</h3>
+          <svg class="card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+            <g stroke="#4F8F8E" stroke-width="1.6" stroke-linecap="round">
+              <path d="M8 22v12M16 16v24M24 12v32M32 18v20M40 24v8M48 27v2"/>
+            </g>
+            <circle cx="48" cy="28" r="3" fill="#C7742D"/>
+          </svg>
+        </div>
+        <p>We have held the roles our clients hold, and we answer &ldquo;who approved this, and on what evidence?&rdquo; the way people who have had to answer it do.</p>
+      </article>
+
+      <article class="card reveal">
+        <div class="card-head">
+          <h3>Principals, Not a Bench</h3>
+          <svg class="card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+            <g stroke="#4F8F8E" stroke-width="1.6" stroke-linecap="round">
+              <path d="M14 18v20M22 14v28"/>
+              <path d="M34 14v28M42 18v20"/>
+            </g>
+            <circle cx="28" cy="28" r="3" fill="#C7742D"/>
+          </svg>
+        </div>
+        <p>Both founders stay on the engagement from first call through evidence delivery. No handoff to juniors once the work begins.</p>
+      </article>
+
+      <article class="card reveal">
+        <div class="card-head">
+          <h3>Evidence That Survives</h3>
+          <svg class="card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+            <rect x="10" y="12" width="36" height="32" rx="5" stroke="#4F8F8E" stroke-width="1.6" stroke-dasharray="4 4"/>
+            <g stroke="#4F8F8E" stroke-width="1.6" stroke-linecap="round">
+              <path d="M20 22v12M28 18v20M36 24v8"/>
+            </g>
+            <circle cx="28" cy="28" r="2.6" fill="#C7742D"/>
+          </svg>
+        </div>
+        <p>Governance, validation strategy, and documentation built to hold up under inspection &mdash; not just to close a finding.</p>
+      </article>
+
+      <article class="card reveal">
+        <div class="card-head">
+          <h3>Phase-Appropriate, Always</h3>
+          <svg class="card-icon" viewBox="0 0 56 56" fill="none" aria-hidden="true">
+            <g stroke="#4F8F8E" stroke-width="1.6" stroke-linecap="round">
+              <path d="M8 26v4M17 22v12M26 17v22M35 21v14M44 25v6"/>
+            </g>
+            <circle cx="50" cy="28" r="2.6" fill="#C7742D"/>
+          </svg>
+        </div>
+        <p>Fit-for-purpose for where you actually are &mdash; paper-based systems through predictive analytics. Adopt, then adapt.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BREADTH ============ -->
+<section class="section dark-grad" id="breadth">
+  <div class="inner" style="text-align:center;">
+    <h2 class="reveal" style="max-width:14ch;margin:0 auto;">Where We Work</h2>
+    <p class="lede reveal" style="max-width:60ch;margin:22px auto 0;">
+      Regulated modalities and the systems that carry them &mdash; from paper-based quality systems through automation and AI.
+    </p>
+    <p class="eyebrow reveal" style="margin-top:26px;">Hover to explore</p>
+
+    <div class="breadth-wrap reveal">
+      <div class="breadth-grid" id="breadth-grid">
+        <div class="breadth-cell">Quality Systems</div>
+        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="#C7742D" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>Pharmaceuticals</div>
+        <div class="breadth-cell">Data Integrity</div>
+        <div class="breadth-cell">GxP Classification</div>
+        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="#C7742D" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>Biologics</div>
+        <div class="breadth-cell">Validation Strategy</div>
+
+        <div class="breadth-cell">Computer System Validation</div>
+        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="#C7742D" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>Cell &amp; Gene Therapy</div>
+        <div class="breadth-cell">AI &amp; Automation Governance</div>
+        <div class="breadth-cell">Regulatory Intelligence</div>
+        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="#C7742D" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>Medical Devices</div>
+        <div class="breadth-cell">Inspection Readiness</div>
+
+        <div class="breadth-cell">Governance Frameworks</div>
+        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="#C7742D" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>IVD</div>
+        <div class="breadth-cell">Drift Monitoring</div>
+        <div class="breadth-cell">Periodic Review</div>
+        <div class="breadth-cell">Change Planning</div>
+        <div class="breadth-cell">Documentation &amp; Evidence</div>
+        <div class="breadth-cell">Risk Ranking</div>
+        <div class="breadth-cell">Supplier Oversight</div>
+        <div class="breadth-cell">Training &amp; Competency</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW WE PARTNER ============ -->
+<section class="section dark-section" id="process">
+  <div class="inner" style="text-align:center;">
+    <h2 class="reveal" style="max-width:16ch;margin:0 auto;">How We Partner</h2>
+    <p class="lede reveal" style="max-width:58ch;margin:22px auto 0;">
+      Most relationships begin with a fixed-scope, fixed-fee readiness assessment. From there, the work moves in sequence.
+    </p>
+
+    <div class="path-wrap">
+      <svg class="path-svg" id="path-svg" aria-hidden="true">
+        <path id="path-guide" fill="none" stroke="#A6ACB2" stroke-opacity="0.3" stroke-width="2" stroke-dasharray="1 9" stroke-linecap="round"/>
+        <path id="path-progress" fill="none" stroke="#C7742D" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+
+      <div class="path-steps" style="text-align:left;">
+        <article class="step">
+          <p class="step-index">01</p>
+          <h3>Readiness Assessment</h3>
+          <p>Fixed scope, fixed fee. We inventory the innovation use cases in play, classify them against GxP, and rank the risk by system and data type.</p>
+        </article>
+        <article class="step">
+          <p class="step-index">02</p>
+          <h3>Gap Snapshot &amp; Roadmap</h3>
+          <p>A clear read on where exposure actually lives, with a phase-appropriate roadmap you can take to the people who sign off on spend.</p>
+        </article>
+        <article class="step">
+          <p class="step-index">03</p>
+          <h3>Implementation &amp; Evidence</h3>
+          <p>Governance frameworks, validation strategy, and the documentation trail &mdash; built so the evidence stands on its own in an inspection.</p>
+        </article>
+        <article class="step">
+          <p class="step-index">04</p>
+          <h3>Monitoring &amp; Change</h3>
+          <p>Performance and drift monitoring, periodic review, and change planning, so the system stays qualified as it evolves.</p>
+        </article>
+      </div>
+    </div>
+
+    <div class="pilot-quote reveal">
+      <blockquote>&ldquo;You stay pilot in command.&rdquo;</blockquote>
+      <p class="pilot-note">You decide and you fly &mdash; we guide, advise, verify, and equip.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TEAM ============ -->
+<section class="section dark-grad" id="team">
+  <div class="inner">
+    <h2 class="reveal" style="max-width:16ch;">Two Principals, Personally</h2>
+    <p class="lede reveal" style="max-width:56ch;margin-top:22px;">
+      Alexandra Pieper and Anthony Davis founded Complexant Partners as equal partners. Both are on every engagement.
+    </p>
+
+    <div class="team-grid" id="team-grid">
+      <article class="member" tabindex="0">
+        <div class="member-photo">
+          <img src="https://placehold.co/800x1000/235A74/F6F3ED?text=Lexie+Pieper" alt="Portrait placeholder for Alexandra Pieper" />
+          <span class="duo"></span>
+          <span class="tint"></span>
+        </div>
+        <h3>Alexandra &ldquo;Lexie&rdquo; Pieper</h3>
+        <p class="member-role">Co-Founder &amp; Partner</p>
+        <p class="member-bio">Co-founder and equal partner, working across quality, regulatory, and validation for regulated life sciences companies.</p>
+        <button class="bio-toggle" aria-expanded="false" aria-controls="bio-lexie">
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          Full bio
+        </button>
+        <div class="bio-more" id="bio-lexie">
+          <p>Full biography and CV are part of the launch content package and will be published here.</p>
+          <p style="margin-top:10px;"><a href="mailto:lexiepieper@complexantpartners.com" style="color:var(--pale);">lexiepieper@complexantpartners.com</a></p>
+        </div>
+      </article>
+
+      <article class="member" tabindex="0">
+        <div class="member-photo">
+          <img src="https://placehold.co/800x1000/235A74/F6F3ED?text=Anthony+Davis" alt="Portrait placeholder for Anthony Davis" />
+          <span class="duo"></span>
+          <span class="tint"></span>
+        </div>
+        <h3>Anthony Davis</h3>
+        <p class="member-role">Co-Founder &amp; Partner</p>
+        <p class="member-bio">Co-founder and equal partner, working across quality, regulatory, and validation for regulated life sciences companies.</p>
+        <button class="bio-toggle" aria-expanded="false" aria-controls="bio-anthony">
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          Full bio
+        </button>
+        <div class="bio-more" id="bio-anthony">
+          <p>Full biography and CV are part of the launch content package and will be published here.</p>
+          <p style="margin-top:10px;"><a href="mailto:anthonydavis@complexantpartners.com" style="color:var(--pale);">anthonydavis@complexantpartners.com</a></p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="section dark-section" id="contact">
+  <div class="inner contact-layout">
+    <div class="reveal">
+      <h2 style="max-width:14ch;">Bring Us What You Can&rsquo;t Yet Prove</h2>
+      <p class="lede" style="margin-top:22px;max-width:44ch;">
+        Start with a fixed-scope, fixed-fee readiness assessment &mdash; or just tell us what is keeping the question open.
+      </p>
+    </div>
+
+    <form id="contact-form" class="reveal" style="display:grid;gap:20px;">
+      <div class="form-grid two">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" required placeholder="Your name" />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required placeholder="you@company.com" />
+        </div>
+      </div>
+      <div class="form-grid two">
+        <div class="field">
+          <label for="company">Company</label>
+          <input id="company" name="company" type="text" placeholder="Company name" />
+        </div>
+        <div class="field">
+          <label for="role">Role</label>
+          <input id="role" name="role" type="text" placeholder="Head of Quality, CTO…" />
+        </div>
+      </div>
+      <div class="field">
+        <label for="message">What are you trying to prove?</label>
+        <textarea id="message" name="message" required placeholder="Tell us where the question is open."></textarea>
+      </div>
+      <div style="margin-top:6px;">
+        <button class="btn btn-copper" type="submit">
+          <span class="btn-bg"></span>
+          <span>Send to Complexant Partners</span>
+        </button>
+      </div>
+      <p style="font-size:var(--text-xs);color:var(--fog);">Opens your email client, addressed to info@complexantpartners.com.</p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div>
+      <div class="brand" style="margin-bottom:26px;">
+        <img src="assets/signal.png" alt="" />
+        <span class="brand-type">
+          <span class="brand-name">COMPLE<span class="copper-metal">X</span>ANT</span>
+          <span class="brand-sub">PARTNERS</span>
+          <span class="brand-llc">LLC</span>
+        </span>
+      </div>
+      <p style="font-family:'Bodoni Moda',serif;font-size:var(--text-l);">
+        <a href="mailto:info@complexantpartners.com">info@complexantpartners.com</a>
+      </p>
+      <p class="eyebrow" style="margin-top:18px;color:var(--fog);">Complexity · Competency · Clarity</p>
+      <div style="margin-top:34px;">
+      <p class="stat-label" style="margin-bottom:14px;">Entity</p>
+      <p style="color:var(--text-secondary);font-size:var(--text-s);">
+        Complexant Partners LLC<br />
+        Delaware limited liability company<br />
+        8 The Green, Suite 24683<br />Dover, DE 19901
+      </p>
+      </div>
+    </div>
+
+    <div>
+      <nav class="footer-links" aria-label="Footer">
+        <a href="#approach">Approach</a>
+        <a href="approach.html#journey">Services</a>
+        <a href="#breadth">Where We Work</a>
+        <a href="#team">Team</a>
+      </nav>
+      <a class="btn" href="#contact" style="margin-top:22px;">
+        <span class="btn-bg"></span>
+        <span>Let&rsquo;s Talk</span>
+      </a>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <span>&copy; 2026 Complexant Partners LLC</span>
+    <span>Safely adapting to innovation</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/lenis@1/dist/lenis.min.js"></script>
+<script>
+/* ============================================================
+   Lenis smooth scroll — gives the scrubbed helix a weighted, continuous
+   feel instead of stepping frame to frame on each wheel tick.
+   ============================================================ */
+(function(){
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (typeof Lenis === 'undefined') return;   // CDN blocked: native scroll still works
+  const lenis = new Lenis({
+    duration: 1.1,
+    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true
+  });
+  function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+  requestAnimationFrame(raf);
+  window.__lenis = lenis;   // lets the screenshot tooling stop smoothing for deterministic captures
+  // anchor links must go through Lenis or they fight the smoothing
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href');
+      if (!id || id === '#') return;
+      const target = document.querySelector(id);
+      if (!target) return;
+      e.preventDefault();
+      lenis.scrollTo(target, { offset: 0 });
+    });
+  });
+})();
+
+/* ============================================================
+   Menu overlay
+   ============================================================ */
+(function(){
+  const btn = document.getElementById('menu-btn');
+  const overlay = document.getElementById('overlay');
+  const label = document.getElementById('menu-btn-label');
+  let open = false;
+
+  function setOpen(next){
+    open = next;
+    btn.setAttribute('aria-expanded', String(open));
+    btn.classList.toggle('menu-open', open);
+    overlay.classList.toggle('is-open', open);
+    label.textContent = open ? 'Close' : 'Menu';
+    // the visible label is hidden below 560px in favour of an icon-only
+    // button, so keep an explicit accessible name in sync with it too
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  btn.addEventListener('click', () => setOpen(!open));
+  overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && open) setOpen(false); });
+})();
+
+/* ============================================================
+   Header scrim once the page has scrolled off the hero
+   ============================================================ */
+(function(){
+  const header = document.querySelector('.site-header');
+  if (!header) return;
+  const update = () => header.classList.toggle('is-stuck', window.scrollY > 80);
+  update();
+  window.addEventListener('scroll', update, { passive: true });
+})();
+
+/* ============================================================
+   Services dropdown — opens on hover and :focus-within in CSS;
+   the button adds a click toggle for touch, Escape closes it
+   ============================================================ */
+(function(){
+  const wrap = document.querySelector('.nav-services');
+  if (!wrap) return;
+  const btn = wrap.querySelector('button');
+  const set = open => { wrap.classList.toggle('is-open', open); btn.setAttribute('aria-expanded', String(open)); };
+  btn.addEventListener('click', () => set(!wrap.classList.contains('is-open')));
+  wrap.addEventListener('mouseenter', () => btn.setAttribute('aria-expanded', 'true'));
+  wrap.addEventListener('mouseleave', () => set(false));
+  wrap.addEventListener('focusin', () => wrap.classList.remove('is-dismissed'));
+  wrap.addEventListener('focusout', e => { if (!wrap.contains(e.relatedTarget)) set(false); });
+  wrap.addEventListener('keydown', e => {
+    if (e.key === 'Escape'){ set(false); wrap.classList.add('is-dismissed'); btn.focus(); }
+  });
+})();
+
+/* ============================================================
+   Team — focusing one principal greys the other
+   ============================================================ */
+(function(){
+  const grid = document.getElementById('team-grid');
+  const members = [...grid.querySelectorAll('.member')];
+
+  members.forEach(m => {
+    const on = () => {
+      grid.classList.add('has-focus');
+      members.forEach(x => x.classList.toggle('is-focused', x === m));
+    };
+    const off = () => {
+      grid.classList.remove('has-focus');
+      members.forEach(x => x.classList.remove('is-focused'));
+    };
+    m.addEventListener('mouseenter', on);
+    m.addEventListener('mouseleave', off);
+    m.addEventListener('focusin', on);
+    m.addEventListener('focusout', off);
+  });
+
+  document.querySelectorAll('.bio-toggle').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const panel = document.getElementById(btn.getAttribute('aria-controls'));
+      const isOpen = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!isOpen));
+      panel.classList.toggle('is-open', !isOpen);
+    });
+  });
+})();
+
+/* ============================================================
+   Contact form -> mailto
+   ============================================================ */
+document.getElementById('contact-form').addEventListener('submit', e => {
+  e.preventDefault();
+  const v = id => document.getElementById(id).value;
+  const subject = encodeURIComponent('Website inquiry from ' + v('name'));
+  const body = encodeURIComponent(
+    'Name: ' + v('name') + '\nEmail: ' + v('email') + '\nCompany: ' + v('company') +
+    '\nRole: ' + v('role') + '\n\n' + v('message')
+  );
+  window.location.href = 'mailto:info@complexantpartners.com?subject=' + subject + '&body=' + body;
+});
+
+/* ============================================================
+   Reveal on scroll + count-up stats + process path
+   ============================================================ */
+(function(){
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // (The .step cards are no longer revealed by an observer — the process-path
+  //  controller below drives their lit/dim state from scroll progress.)
+
+  // Count-up stats
+  const counters = [...document.querySelectorAll('.count')];
+  const statObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      statObserver.unobserve(entry.target);
+      const target = parseInt(entry.target.dataset.target, 10);
+      if (reduced) { entry.target.textContent = target; return; }
+      const dur = 1400, start = performance.now();
+      const tick = now => {
+        const p = Math.min((now - start) / dur, 1);
+        const eased = 1 - Math.pow(1 - p, 3);
+        entry.target.textContent = Math.round(target * eased);
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    });
+  }, { threshold: 0.6 });
+  counters.forEach(c => statObserver.observe(c));
+
+  // Process path: threaded through the actual step positions, drawn on scroll
+  const svg = document.getElementById('path-svg');
+  const guide = document.getElementById('path-guide');
+  const progress = document.getElementById('path-progress');
+  const wrap = document.querySelector('.path-wrap');
+
+  if (svg && progress && wrap) {
+    const steps = [...wrap.querySelectorAll('.step')];
+    let len = 0;
+    let nodes = [];        // the numbered discs, one per step
+    let nodeAt = [];       // each node's distance along the path, in px
+    let reached = [];      // current lit/dim state, so we only touch the DOM on change
+
+    // One disc per step, carrying the numeral the card used to show. Built here
+    // rather than in the markup so that a page whose script never runs keeps
+    // its in-card numbering instead of losing the numbers altogether.
+    function makeNodes(){
+      steps.forEach(step => {
+        const el = document.createElement('span');
+        el.className = 'step-node';
+        el.setAttribute('aria-hidden', 'true');
+        const src = step.querySelector('.step-index');
+        el.textContent = src ? src.textContent.trim() : '';
+        wrap.appendChild(el);
+        nodes.push(el);
+      });
+      reached = steps.map(() => false);
+      wrap.classList.add('has-nodes');
+    }
+
+    // Cubic segments with VERTICAL tangents at every waypoint: the curve leaves
+    // and arrives travelling downward and does its horizontal sweep in between.
+    // That gives one clean S per segment with no cusps and no doubling back,
+    // whatever the cards reflow to — unlike a Catmull-Rom through the same
+    // points, which overshoots into hooks when the x-jumps get large.
+    function sweepPath(pts){
+      if (pts.length < 2) return '';
+      let d = 'M' + pts[0].x + ',' + pts[0].y;
+      for (let i = 0; i < pts.length - 1; i++){
+        const a = pts[i], b = pts[i + 1];
+        const k = (b.y - a.y) * 0.5;
+        d += ' C' + a.x + ',' + (a.y + k) + ' ' + b.x + ',' + (b.y - k) + ' ' + b.x + ',' + b.y;
+      }
+      return d;
+    }
+
+    function build(){
+      const wrapRect = wrap.getBoundingClientRect();
+      if (!wrapRect.width || !wrapRect.height) return;
+      svg.setAttribute('viewBox', '0 0 ' + wrapRect.width + ' ' + wrapRect.height);
+
+      // Below 900px the cards are a single column and a sweeping map makes no
+      // sense, so every waypoint collapses onto one x and the same machinery
+      // draws a straight rail down the left with the nodes threaded on it.
+      const wide = window.matchMedia('(min-width:900px)').matches;
+      // centre of the gutter the stylesheet reserves for the rail, so the
+      // nodes always sit clear of the cards rather than on top of their text
+      const stepsEl = wrap.querySelector('.path-steps');
+      const railX = (parseFloat(getComputedStyle(stepsEl).paddingLeft) || 36) / 2;
+      const mid = wrapRect.width / 2;
+
+      const pts = steps.map(step => {
+        const r = step.getBoundingClientRect();
+        const top = r.top - wrapRect.top;
+        if (!wide) return { x: railX, y: top + r.height / 2 };
+        const isLeftColumn = (r.left - wrapRect.left + r.width / 2) < mid;
+        return {
+          x: isLeftColumn ? r.right - wrapRect.left + 34 : r.left - wrapRect.left - 34,
+          y: top + r.height / 2,
+        };
+      });
+      if (pts.length < 2) return;
+
+      const d = sweepPath(pts);
+      guide.setAttribute('d', d);
+      progress.setAttribute('d', d);
+      len = progress.getTotalLength();
+      progress.style.strokeDasharray = len;
+
+      // Where each waypoint falls along the drawn length. Walking the path once
+      // and keeping the closest sample is more robust than assuming the segment
+      // boundaries land on round fractions of the total.
+      const SAMPLES = 400;
+      nodeAt = pts.map(() => 0);
+      const best = pts.map(() => Infinity);
+      for (let s = 0; s <= SAMPLES; s++){
+        const dist = (len * s) / SAMPLES;
+        const pt = progress.getPointAtLength(dist);
+        pts.forEach((p, i) => {
+          const dx = pt.x - p.x, dy = pt.y - p.y;
+          const d2 = dx * dx + dy * dy;
+          if (d2 < best[i]) { best[i] = d2; nodeAt[i] = dist; }
+        });
+      }
+
+      nodes.forEach((el, i) => {
+        el.style.left = pts[i].x + 'px';
+        el.style.top  = pts[i].y + 'px';
+      });
+
+      onScroll();
+    }
+
+    function setReached(i, on){
+      if (reached[i] === on) return;
+      reached[i] = on;
+      steps[i].classList.toggle('is-reached', on);
+      nodes[i].classList.toggle('is-reached', on);
+    }
+
+    function onScroll(){
+      if (!len) return;
+      const r = wrap.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const p = Math.min(Math.max((vh * 0.85 - r.top) / (r.height + vh * 0.3), 0), 1);
+      progress.style.strokeDashoffset = len * (1 - p);
+      // Cumulative, and reversible: a step lights when the drawn end passes its
+      // node and goes back to dim if you scroll up past it again.
+      const drawn = len * p;
+      for (let i = 0; i < steps.length; i++) setReached(i, drawn >= nodeAt[i]);
+    }
+
+    makeNodes();
+
+    if (reduced) {
+      // No scrubbing: show the whole path and every step, immediately.
+      build();
+      progress.style.strokeDashoffset = 0;
+      steps.forEach((_, i) => setReached(i, true));
+    } else {
+      build();
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', build);
+      window.addEventListener('load', build);
+      // Node positions depend on measured card heights, so re-measure once the
+      // real faces are in — Bodoni swapping in changes the cards' heights.
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(build);
+    }
+  }
+})();
+
+/* ============================================================
+  Continuous particle background.
+
+  Three states, all driven by scroll:
+    hero   — the particles hold the Signal mark on the right of the viewport;
+    body   — scrolling out of the hero releases them, and they migrate out to
+             seats spread across the whole viewport, drifting and parallaxing
+             with the scroll for the rest of the page;
+    footer — as the footer comes into view they regroup into the mark again,
+             anchored to the footer so it scrolls in with it.
+  Scrolling back up reverses each step.
+  ============================================================ */
+(function(){
+  const spine = document.querySelector('.spine');
+  const signalCanvas = document.getElementById('signal-canvas');
+  if (!spine || !signalCanvas) return;
+  const hero = document.querySelector('.hero');
+  const footer = document.querySelector('.site-footer');
+
+  const sctx = signalCanvas.getContext('2d');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- tunables ---- */
+  // fraction of the hero's height scrolled: the mark starts letting go -> fully scattered
+  const RELEASE_START = 0.06;
+  const RELEASE_END   = 0.70;
+  // fraction of the footer on screen: particles start regrouping -> mark fully formed
+  const GATHER_START  = 0.20;
+  const GATHER_END    = 0.92;
+  /* Spread of per-particle start times, as a share of each transition. Nobody
+     leaves (or arrives) at once, so the mark unravels instead of popping. */
+  const STAGGER = 0.45;
+  const FORM_EASE = 2.6;        // per second — how quickly formation catches up to scroll
+  const ARC = 0.22;             // sideways swing of a migrating particle, share of the viewport
+  const DRIFT = 0.010;          // free drift of a scattered particle, viewport per second
+  const PARALLAX_NEAR = 0.34;   // scattered field's scroll parallax, near particles...
+  const PARALLAX_FAR  = 0.08;   // ...and far ones
+  const SCATTER_ALPHA = 0.38;   // scattered brightness relative to formed, keeps copy readable
+  const YAW = 0;                // the formed mark rests square on, exactly as the logo is drawn
+  const YAW_SWING = 0.12;       // and turns gently either side of that
+  // the light that passes over the field and catches the copper
+  const SWEEP_PERIOD = 7;       // seconds from one pass to the next
+  const SWEEP_TIME = 2.6;       // seconds a pass takes to cross the viewport
+  const SWEEP_SLOPE = 1.6;      // tilt of the light's edge: x + SLOPE*y = const
+  const SWEEP_SOFT = 0.09;      // width of the lit band, share of the distance it travels
+  const GLINT_RUN = 0.9;        // seconds of a bar's own occasional glint between passes
+  /* ------------------ */
+
+  const smoothstep = (a, b, t) => {
+    const x = Math.min(Math.max((t - a) / (b - a), 0), 1);
+    return x * x * (3 - 2 * x);
+  };
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const wrap = (v, lo, hi) => { const s = hi - lo; return ((v - lo) % s + s) % s + lo; };
+
+  function rand(seed){
+    const x = Math.sin(seed * 127.1 + 311.7) * 43758.5453;
+    return x - Math.floor(x);
+  }
+
+  /* ---------- the bar sprites ----------
+     Every particle is one of the shaded bar renders in "Bar icon files",
+     grouped here by finish. The copper is where the metal lives: its pixels
+     get a harder highlight, plus a set of glint frames — the same bar lit by
+     a warm band at a different height in each — so light can run along it. */
+  const SPRITE_DIR = 'Bar%20icon%20files/';
+  const FINISHES = {
+    copper:     ['14x71', '18x94'],
+    copperNavy: ['11x77', '13x102', '13x71', '14x62', '17x94', '18x83'],
+    navy:       ['14x60', '18x80'],
+    teal:       ['13x60', '18x79'],
+    cream:      ['14x72', '18x95'],
+    navyCream:  ['10x41', '13x55'],
+    silver:     ['silver:14x72', 'silver:18x95'],   // made from the cream bars, see prepareSilver
+  };
+  const GLINT_FRAMES = 24;
+  const GLINT_FROM = -0.35, GLINT_TO = 1.35;   // band centre along the bar, first frame to last
+  const sprites = {};                          // name -> { base:[up, flipped], glint:[up[], flipped[]] | null }
+
+  function canvasOf(w, h){
+    const c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    return c;
+  }
+  function flipped(src){
+    const c = canvasOf(src.width, src.height), g = c.getContext('2d');
+    g.translate(0, src.height); g.scale(1, -1);
+    g.drawImage(src, 0, 0);
+    return c;
+  }
+  const isCopperPx = (r, g, b) => r > 110 && r - b > 55 && r - g > 28;
+  // polished copper, dark to light; the body stop is the brand copper #C7742D
+  const COPPER_STOPS = [[0, [74, 34, 14]], [0.42, [158, 84, 32]], [0.68, [199, 116, 45]], [0.88, [236, 166, 104]], [1, [252, 214, 176]]];
+  // brushed silver for the logo's grey bars, cool rather than warm
+  const SILVER_STOPS = [[0, [66, 69, 72]], [0.4, [110, 113, 116]], [0.7, [162, 165, 168]], [0.9, [206, 208, 210]], [1, [234, 235, 236]]];
+  function ramp(stops, s){
+    let k = 1;
+    while (k < stops.length - 1 && s > stops[k][0]) k++;
+    const [a, ca] = stops[k - 1], [b, cb] = stops[k];
+    const f = Math.min(Math.max((s - a) / (b - a), 0), 1);
+    return [lerp(ca[0], cb[0], f), lerp(ca[1], cb[1], f), lerp(ca[2], cb[2], f)];
+  }
+
+  /* Polish the metal pixels (those in `mask`): re-map their own shading onto
+     a polished ramp — deep shadow, body, bright edge — with a steeper curve
+     than the render's soft one, then a hot specular line down the lit side.
+     One ramp per metal, so every bar of it reads as the same material.
+     Returns how lit each column is, 0..1, for the glint frames. */
+  function polish(px, w, h, mask, stops, spec){
+    const col = new Float32Array(w), colW = new Float32Array(w);
+    let lLo = Infinity, lHi = 0;
+    for (let i = 0; i < w * h; i++) if (mask[i]){
+      const l = px[i * 4] * 0.3 + px[i * 4 + 1] * 0.59 + px[i * 4 + 2] * 0.11;
+      col[i % w] += l * mask[i]; colW[i % w] += mask[i];
+      lLo = Math.min(lLo, l); lHi = Math.max(lHi, l);
+    }
+    let lo = Infinity, hi = 0;
+    for (let x = 0; x < w; x++) if (colW[x]){ col[x] /= colW[x]; lo = Math.min(lo, col[x]); hi = Math.max(hi, col[x]); }
+    for (let x = 0; x < w; x++) col[x] = colW[x] ? (col[x] - lo) / Math.max(hi - lo, 1) : 0;
+    for (let i = 0; i < w * h; i++){
+      if (!mask[i]) continue;
+      const l = (px[i * 4] * 0.3 + px[i * 4 + 1] * 0.59 + px[i * 4 + 2] * 0.11 - lLo) / Math.max(lHi - lLo, 1);
+      const rgb = ramp(stops, smoothstep(0.08, 0.95, l));
+      const s = Math.pow(col[i % w], 4) * spec;
+      px[i * 4]     = Math.min(255, rgb[0] + (255 - rgb[0]) * s);
+      px[i * 4 + 1] = Math.min(255, rgb[1] + (243 - rgb[1]) * s);
+      px[i * 4 + 2] = Math.min(255, rgb[2] + (226 - rgb[2]) * s);
+    }
+    return col;
+  }
+
+  // the sprite at 2x, so the specular line can be narrower than a source pixel
+  function upscale(img){
+    const w = img.naturalWidth * 2, h = img.naturalHeight * 2;
+    const c = canvasOf(w, h), g = c.getContext('2d');
+    g.imageSmoothingQuality = 'high';
+    g.drawImage(img, 0, 0, w, h);
+    return c;
+  }
+  const plain = (c) => ({ base: [c, flipped(c)], glint: null });
+
+  function prepare(img){
+    const base = upscale(img), bg = base.getContext('2d'), w = base.width, h = base.height;
+    let data;
+    try { data = bg.getImageData(0, 0, w, h); }
+    catch (err){ return plain(base); }   // tainted (file://): plain bars, no polish or glint
+
+    const px = data.data, mask = new Float32Array(w * h);
+    let copperPx = 0;
+    for (let i = 0; i < w * h; i++){
+      const a = px[i * 4 + 3] / 255;
+      if (a > 0.05 && isCopperPx(px[i * 4], px[i * 4 + 1], px[i * 4 + 2])){ mask[i] = a; copperPx++; }
+    }
+    if (!copperPx) return plain(base);
+    const col = polish(px, w, h, mask, COPPER_STOPS, 0.6);
+    bg.putImageData(data, 0, 0);
+
+    // glint frames: warm light on the copper only, strongest down the lit side
+    const up = [], down = [];
+    for (let f = 0; f < GLINT_FRAMES; f++){
+      const u = lerp(GLINT_FROM, GLINT_TO, f / (GLINT_FRAMES - 1));
+      const c = canvasOf(w, h), g = c.getContext('2d');
+      const out = g.createImageData(w, h), o = out.data;
+      for (let y = 0; y < h; y++){
+        const band = Math.exp(-Math.pow((y / h - u) / 0.15, 2));
+        for (let x = 0; x < w; x++){
+          const i = y * w + x;
+          if (!mask[i]) continue;
+          const k = col[x];
+          o[i * 4] = 255; o[i * 4 + 1] = 228; o[i * 4 + 2] = 196;
+          o[i * 4 + 3] = 255 * mask[i] * Math.min(1, 0.25 * k + band * (0.65 + 0.35 * k));
+        }
+      }
+      g.putImageData(out, 0, 0);
+      up.push(c);
+      down.push(flipped(c));
+    }
+    return { base: [base, flipped(base)], glint: [up, down] };
+  }
+
+  // silver, made from a cream bar: the whole bar re-mapped onto the silver ramp
+  function prepareSilver(img){
+    const base = upscale(img), bg = base.getContext('2d'), w = base.width, h = base.height;
+    let data;
+    try { data = bg.getImageData(0, 0, w, h); }
+    catch (err){ return plain(base); }
+    /* The cream bar is lit almost evenly, so the silver takes its cylinder
+       from position instead, as the logo's silver bars are drawn: dark grey
+       on the left rising to bright on the right, a little of the bar's own
+       shading kept for its rounded ends and edges. */
+    const px = data.data;
+    for (let i = 0; i < w * h; i++){
+      if (px[i * 4 + 3] <= 12) continue;
+      const l = (px[i * 4] * 0.3 + px[i * 4 + 1] * 0.59 + px[i * 4 + 2] * 0.11) / 255;
+      const across = smoothstep(0.02, 0.8, ((i % w) + 0.5) / w);
+      const rgb = ramp(SILVER_STOPS, Math.min(1, across * (0.55 + 0.45 * l)));
+      px[i * 4] = rgb[0]; px[i * 4 + 1] = rgb[1]; px[i * 4 + 2] = rgb[2];
+    }
+    bg.putImageData(data, 0, 0);
+    return plain(base);
+  }
+
+  // the soft warm flare where the light strikes a copper bar
+  const bloom = canvasOf(64, 64);
+  {
+    const g = bloom.getContext('2d');
+    const rg = g.createRadialGradient(32, 32, 0, 32, 32, 32);
+    rg.addColorStop(0, 'rgba(255, 236, 212, 0.9)');
+    rg.addColorStop(0.25, 'rgba(240, 168, 104, 0.35)');
+    rg.addColorStop(1, 'rgba(199, 116, 45, 0)');
+    g.fillStyle = rg;
+    g.fillRect(0, 0, 64, 64);
+  }
+
+  const files = [...new Set(Object.values(FINISHES).flat().map((n) => n.replace('silver:', '')))];
+  const spritesReady = Promise.all(files.map((name) => new Promise((done) => {
+    const img = new Image();
+    img.onload = () => {
+      sprites[name] = prepare(img);
+      if (FINISHES.silver.includes('silver:' + name)) sprites['silver:' + name] = prepareSilver(img);
+      done();
+    };
+    img.onerror = done;
+    img.src = SPRITE_DIR + name + '.png';
+  })));
+
+  /* A bar at any size without stretching its rounded ends: the two caps are
+     drawn at the bar's width, only the straight middle is stretched. */
+  function drawBar(src, cx, top, w, h){
+    const sw = src.width, sh = src.height, sc = sw * 0.5;
+    const dc = Math.min(w * 0.5, h * 0.5);
+    const x = cx - w * 0.5;
+    sctx.drawImage(src, 0, 0, sw, sc, x, top, w, dc);
+    sctx.drawImage(src, 0, sc, sw, sh - 2 * sc, x, top + dc, w, h - 2 * dc);
+    sctx.drawImage(src, 0, sh - sc, sw, sc, x, top + h - dc, w, dc);
+  }
+
+  /* ---------- build the particle field (the Signal) ----------
+     The formed mark is the logo itself (assets/signal.png), measured bar by
+     bar: [centre x, width, top y, height, segments] in the logo's 512px
+     space. Segments run top to bottom, finish letter + length in px:
+     K copper, N navy, T teal, W cream, S silver. Each segment is one
+     particle, so a line in the logo is a stack of bars, as it is drawn. */
+  const LOGO_BARS = [
+    [180, 6, 0, 39, 'S39'], [238.5, 7, 41, 68, 'S68'],
+    [326, 8, 59, 407, 'T12 N59 T49 S49 T12 K44 T8 N61 T46 S48 T19'],
+    [179.5, 7, 64, 23, 'T23'], [206.5, 7, 89, 41, 'S41'], [136.5, 7, 94, 24, 'T24'],
+    [272.5, 7, 97, 66, 'T66'], [342, 8, 97, 330, 'T13 S49 T56 K94 T38 N38 T42'],
+    [75, 6, 102, 24, 'T24'], [308, 8, 126, 274, 'S5 W35 T84 K25 T51 N39 T35'],
+    [238, 8, 130, 64, 'K21 N43'], [358, 6, 132, 261, 'T14 N45 T11 K121 T9 W29 T32'],
+    [154.5, 7, 138, 41, 'S41'], [91.5, 5, 161, 46, 'T18 N28'],
+    [372, 6, 162, 201, 'T6 W13 T7 K149 T7 N12 T7'], [197, 6, 167, 52, 'N21 W31'],
+    [255, 6, 177, 52, 'N21 W31'], [44, 6, 179, 23, 'T23'],
+    [286, 8, 186, 152, 'T16 N32 T21 K14 T23 W36 T10'], [386, 6, 188, 148, 'S16 K116 W16'],
+    [399, 4, 208, 108, 'N11 T7 K77 S6 T7'], [267.5, 5, 217, 63, 'T35 N28'],
+    [119.5, 7, 219, 24, 'T24'], [409, 4, 226, 72, 'T8 K57 T7'], [209, 8, 227, 47, 'S21 N26'],
+    [150.5, 7, 239, 46, 'W20 N26'], [88.5, 5, 240, 38, 'T14 N24'], [177, 6, 240, 31, 'T14 N17'],
+    [417.5, 3, 240, 45, 'K45'], [241.5, 7, 241, 62, 'K20 N42'], [424.5, 3, 245, 35, 'K35'],
+    [429, 2, 248, 29, 'K29'], [433, 2, 251, 22, 'K22'],
+    // the arrowhead at the point
+    [439, 4, 253, 19, 'K19'], [445, 3, 255, 14, 'K14'], [450, 3, 256, 12, 'K12'],
+    [454, 2, 257, 9, 'K9'], [458, 2, 259, 6, 'K6'],
+    [119.5, 7, 280, 29, 'S17 N12'], [264, 6, 295, 45, 'N20 W25'], [190, 6, 300, 48, 'N20 W28'],
+    [46.5, 7, 311, 23, 'T23'], [221, 6, 323, 94, 'N20 W74'], [104.5, 7, 330, 42, 'S42'],
+    [157.5, 7, 335, 62, 'T25 N37'], [271, 6, 350, 29, 'S29'], [271, 6, 387, 47, 'N20 W27'],
+    [199.5, 7, 403, 44, 'K6 N38'], [74, 6, 425, 33, 'S33'], [177.5, 7, 445, 67, 'T67'],
+    [237.5, 7, 449, 33, 'S33'],
+  ];
+  // the copper needle the lines converge on: from x to x, centre y, thickness
+  const LOGO_NEEDLE = [282, 472, 261.5, 5];
+  const LOGO_CX = 256, LOGO_CY = 261.5, LOGO_R = 256;   // logo px -> mark units
+  const LETTER = { K: 'copper', N: 'navy', T: 'teal', W: 'cream', S: 'silver' };
+  /* Scatter-only bars: they fill out the field mid-page and fade away as the
+     mark forms, so the mark itself stays exactly the logo. */
+  const EXTRA = 110;
+
+  const points = [];
+  let id = 0;
+  const finishOf = (finish) => {
+    const names = FINISHES[finish];
+    return { finish, sprite: names[Math.floor(rand(id * 8.2) * names.length)], metal: finish === 'copper' || finish === 'copperNavy' };
+  };
+
+  for (let i = 0; i < EXTRA; i++){
+    id++;
+    const r = rand(id * 5.9);
+    const finish = r < 0.04 ? 'copper' : r < 0.07 ? 'copperNavy'
+      : ['navy', 'teal', 'cream', 'navyCream', 'silver'][Math.floor(rand(id * 6.3) * 5)];
+    points.push({
+      x: (rand(id * 2.1) * 2 - 1) * 0.8, y: (rand(id * 1.3) * 2 - 1) * 0.9,
+      len: 0.05 + rand(id * 4.4) * 0.09, wid: 6 / LOGO_R,
+      ghost: true, flip: rand(id * 9.4) > 0.5 ? 1 : 0, ...finishOf(finish),
+    });
+  }
+  for (const [bx, bw, by, , runs] of LOGO_BARS){
+    let cursor = by;
+    for (const seg of runs.split(' ')){
+      id++;
+      const n = parseFloat(seg.slice(1));
+      points.push({
+        x: (bx - LOGO_CX) / LOGO_R, y: (cursor + n * 0.5 - LOGO_CY) / LOGO_R,
+        len: n / LOGO_R, wid: bw / LOGO_R, flip: 0, ...finishOf(LETTER[seg[0]]),
+      });
+      cursor += n;
+    }
+  }
+  {
+    // last, so it lies across the lines it threads, as in the logo
+    id++;
+    const [x0, x1, cy, t] = LOGO_NEEDLE;
+    points.push({
+      x: ((x0 + x1) * 0.5 - LOGO_CX) / LOGO_R, y: (cy - LOGO_CY) / LOGO_R,
+      len: (x1 - x0) / LOGO_R, wid: t / LOGO_R, flip: 0, horiz: true, ...finishOf('copper'),
+    });
+  }
+  // every bar is fully opaque in the mark; scattered, each keeps its own brightness
+  points.forEach((p, n) => { p.alpha = p.metal ? 0.9 + rand(n * 7.1) * 0.1 : 0.55 + rand(n * 7.1) * 0.4; });
+
+  /* ---------- give every particle a seat in the scattered field ----------
+     Seats come from the R2 low-discrepancy sequence, lightly jittered, so the
+     field reads as random but covers the whole viewport evenly — no clumps, no
+     empty quarters. */
+  points.forEach((p, n) => {
+    p.hx = wrap(0.5 + n * 0.7548776662 + (rand(n * 13.1) - 0.5) * 0.05, 0, 1);
+    p.hy = wrap(0.5 + n * 0.5698402910 + (rand(n * 14.7) - 0.5) * 0.05, 0, 1);
+    p.near = rand(n * 15.3);                         // 0 far .. 1 near
+    p.vx = (rand(n * 16.9) - 0.5) * 2 * DRIFT;
+    p.vy = (rand(n * 17.2) - 0.5) * 2 * DRIFT;
+    p.wob = 0.3 + rand(n * 18.4) * 0.7;              // wobble rate
+    p.delay = rand(n * 19.8) * STAGGER;
+    p.arcX = (rand(n * 20.3) - 0.5) * 2 * ARC;
+    p.arcY = (rand(n * 21.6) - 0.5) * 2 * ARC;
+    p.slen = 0.03 + rand(n * 11.8) * 0.07;
+    p.phase = rand(n * 12.9) * Math.PI * 2;          // desynchronised shimmer
+    p.gper = 8 + rand(n * 22.7) * 7;                 // seconds between its own glints
+  });
+
+  /* ---------- sizing ---------- */
+  let W = 0, H = 0, dpr = 1;
+  function resize(){
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = spine.clientWidth;
+    H = spine.clientHeight;
+    signalCanvas.width = Math.round(W * dpr);
+    signalCanvas.height = Math.round(H * dpr);
+    sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    render();
+  }
+
+  /* ---------- where the mark sits ----------
+     The hero mark keeps the geometry it had when the canvas was a right-hand
+     box (52vw wide on desktop, 78% below 1100px): centred 44% into that box,
+     scaled to it, faded towards its left edge. The footer mark reuses the same
+     box, centred on the footer. */
+  function heroAnchor(){
+    const box = W * (W >= 1100 ? 0.52 : 0.78);
+    const heroH = hero ? hero.offsetHeight : H;
+    return {
+      cx: W - box + box * 0.44,
+      cy: H * 0.5 - Math.min(window.scrollY, heroH) * 0.22,   // lifts gently with the hero
+      scale: Math.min(box, H) * 0.46,
+      right: W, box,
+    };
+  }
+  /* The footer mark sits in the left region the footer grid reserves for it
+     (its padding-left), tail on the left and the tapered point aimed right at
+     the contact column — it reads as an arrow towards "Let's talk". Sized from
+     that region so the mark and the copy beside it can't drift apart. */
+  function footerAnchor(){
+    const r = footer.getBoundingClientRect();
+    const grid = footer.querySelector('.footer-grid');
+    const g = grid ? grid.getBoundingClientRect() : r;
+    const region = grid ? (parseFloat(getComputedStyle(grid).paddingLeft) || 0) : 0;
+    let cx, cy, scale;
+    if (W >= 900 && region > 0){
+      cx = g.left + region * 0.46;
+      cy = g.top + g.height * 0.5;
+      scale = Math.min(region * 0.46, g.height * 0.62, H * 0.32);
+    } else {
+      // stacked footer: no spare column, so a small mark behind the copy
+      cx = W * 0.5;
+      cy = r.top + r.height * 0.5;
+      scale = Math.min(W * 0.28, r.height * 0.4);
+    }
+    // the tail fades out the same way the hero mark's does, just mirrored onto this box
+    return { cx, cy, scale, right: cx + scale * 0.9, box: scale * 1.9 };
+  }
+  /* The old box's CSS mask, as a function of screen x: solid over the right
+     third, 0.65 at two-thirds across, gone at the left edge. */
+  function boxMask(sx, a){
+    const r = (a.right - sx) / a.box;
+    if (r <= 0.34) return 1;
+    if (r <= 0.68) return lerp(1, 0.65, (r - 0.34) / 0.34);
+    if (r <= 1) return lerp(0.65, 0, (r - 0.68) / 0.32);
+    return 0;
+  }
+
+  /* ---------- state ---------- */
+  let heroForm = 1, footForm = 0;     // eased, 0..1
+  let clock = 0;                      // drives drift and shimmer; scrolling speeds it up
+  let drive = 0;                      // scroll energy, 0..1, bleeds off
+  let lastScroll = window.scrollY;
+  let lastT = performance.now();
+
+  function targets(){
+    const heroH = hero ? hero.offsetHeight : H;
+    const heroT = 1 - smoothstep(RELEASE_START, RELEASE_END, window.scrollY / Math.max(heroH, 1));
+    let footT = 0;
+    if (footer){
+      const r = footer.getBoundingClientRect();
+      const seen = (H - r.top) / Math.max(Math.min(r.height, H), 1);
+      footT = smoothstep(GATHER_START, GATHER_END, seen);
+    }
+    return { heroT, footT };
+  }
+
+  /* ---------- render ---------- */
+  function render(){
+    sctx.clearRect(0, 0, W, H);
+    if (!W || !H) return;
+    sctx.imageSmoothingQuality = 'high';   // the sprites draw well below their size; low quality skips the highlight
+
+    const form = Math.max(heroForm, footForm);
+    // which mark the particles are heading for — normally only one is live
+    const toFoot = footer && (heroForm + footForm) > 0 ? footForm / (heroForm + footForm) : 0;
+    const hA = heroAnchor();
+    const fA = footer ? footerAnchor() : hA;
+
+    const yaw = YAW + Math.sin(clock * 0.09) * YAW_SWING;
+    const cos = Math.cos(yaw), sin = Math.sin(yaw);
+    const FOV = 2.6;
+    const span = Math.min(W, H);
+    const scrollY = window.scrollY;
+    const M = 40;                     // wrap margin, px
+
+    // where the passing light is: a tilted edge, x + SLOPE*y = sweepS, moving
+    // from top-left to bottom-right, then resting off-screen until the next pass
+    const reach = W + SWEEP_SLOPE * H;
+    const soft = SWEEP_SOFT * reach;
+    const pass = (clock % SWEEP_PERIOD) / SWEEP_TIME;
+    const sweepS = lerp(-soft * 2, reach + soft * 2, pass);
+
+    for (let i = 0; i < points.length; i++){
+      const p = points[i];
+      const sprite = sprites[p.sprite];
+      if (!sprite) continue;
+      // this particle's own progress through the transition, offset by its delay
+      const e = smoothstep(p.delay, p.delay + 1 - STAGGER, form);
+
+      /* --- formed position, projected through the slowly swaying yaw --- */
+      const rx = p.x * cos;
+      const rz = p.x * sin;
+      const persp = FOV / (FOV + rz);
+      const lxH = hA.cx + rx * hA.scale * persp, lyH = hA.cy + p.y * hA.scale * persp;
+      const lxF = fA.cx + rx * fA.scale * persp, lyF = fA.cy + p.y * fA.scale * persp;
+      const lx = lerp(lxH, lxF, toFoot), ly = lerp(lyH, lyF, toFoot);
+      const lscale = lerp(hA.scale, fA.scale, toFoot);
+      // on wide screens the mark has the hero's right half to itself; narrower,
+      // it sits behind the copy and fades out towards the left
+      const mask = W >= 1100 ? 1 : lerp(boxMask(lxH, hA), boxMask(lxF, fA), toFoot);
+
+      /* --- scattered position: its seat, drifting, parallaxed by scroll,
+             wrapped round the viewport edges --- */
+      const par = lerp(PARALLAX_FAR, PARALLAX_NEAR, p.near);
+      const dx = (p.vx * clock + Math.sin(clock * 0.21 * p.wob + p.phase) * 0.018) * W;
+      const dy = (p.vy * clock + Math.cos(clock * 0.17 * p.wob + p.phase) * 0.018) * H;
+      const sx = wrap(p.hx * W + dx, -M, W + M);
+      const sy = wrap(p.hy * H + dy - scrollY * par, -M, H + M);
+      const edge = smoothstep(-M, M * 0.5, sx) * (1 - smoothstep(W - M * 0.5, W + M, sx))
+                 * smoothstep(-M, M * 0.5, sy) * (1 - smoothstep(H - M * 0.5, H + M, sy));
+
+      /* --- migrate between the two, swinging out along a curve rather than
+             sliding in a straight line --- */
+      const swing = Math.sin(Math.PI * e) * span;
+      const px = lerp(sx, lx, e) + p.arcX * swing;
+      const py = lerp(sy, ly, e) + p.arcY * swing;
+
+      // formed, every bar takes its exact size from the logo
+      const formedLen = p.len * lscale * persp;
+      const looseLen = p.slen * span * 0.46 * (0.7 + p.near * 0.6) * (1 + drive * 0.7);
+      const bw = lerp(2.6 + p.near * 3.4, Math.max(1.5, p.wid * lscale * persp), e);
+      const bh = Math.max(lerp(looseLen, formedLen, e), bw * lerp(1.6, 1, e));
+      // the needle swings from upright, like every scattered bar, to lying across the lines
+      const ang = p.horiz ? e * Math.PI * 0.5 : 0;
+
+      // scattered, the matte bars breathe; formed, the logo holds solid
+      const shimmer = p.metal ? 1 : lerp(0.84 + 0.16 * Math.sin(clock * 0.1 + p.phase), 1, e);
+      const formedA = p.ghost ? 0 : mask;
+      const looseA = p.alpha * SCATTER_ALPHA * (0.45 + p.near * 0.55) * edge;
+      const alpha = lerp(looseA, formedA, e) * shimmer;
+      if (alpha < 0.01) continue;
+
+      // drawn in the bar's own frame: centred on (px, py), long axis down
+      if (ang) sctx.setTransform(dpr * Math.cos(ang), dpr * Math.sin(ang), -dpr * Math.sin(ang), dpr * Math.cos(ang), dpr * px, dpr * py);
+      else sctx.setTransform(dpr, 0, 0, dpr, dpr * px, dpr * py);
+      sctx.globalAlpha = alpha;
+      drawBar(sprite.base[p.flip], 0, -bh * 0.5, bw, bh);
+
+      if (sprite.glint){
+        /* --- light on the copper: the passing sweep, or between passes the
+               bar's own brief glint; whichever is brighter right now --- */
+        let gk = 0, gu = 0.5;
+        if (pass < 1){
+          const d = (px + SWEEP_SLOPE * py - sweepS) / soft;
+          gk = Math.exp(-d * d);
+          // where the light's edge crosses this bar, 0 at its top end .. 1 at its bottom
+          const ax = -Math.sin(ang), ay = Math.cos(ang);
+          const t0 = (px - ax * bh * 0.5) + SWEEP_SLOPE * (py - ay * bh * 0.5);
+          gu = (sweepS - t0) / (bh * (ax + SWEEP_SLOPE * ay));
+        }
+        const own = ((clock + p.phase * 10) % p.gper) / GLINT_RUN;
+        if (own < 1 && Math.sin(Math.PI * own) * 0.8 > gk){
+          gk = Math.sin(Math.PI * own) * 0.8;
+          gu = lerp(GLINT_FROM, GLINT_TO, own);
+        }
+        if (gk >= 0.02){
+          let f = Math.round((Math.min(Math.max(gu, GLINT_FROM), GLINT_TO) - GLINT_FROM)
+                             / (GLINT_TO - GLINT_FROM) * (GLINT_FRAMES - 1));
+          if (p.flip) f = GLINT_FRAMES - 1 - f;   // flipped frames hold the band mirrored
+          sctx.globalCompositeOperation = 'lighter';
+          sctx.globalAlpha = alpha * gk;
+          drawBar(sprite.glint[p.flip][f], 0, -bh * 0.5, bw, bh);
+          if (gu > 0 && gu < 1){
+            const rad = Math.max(bw, 3) * 3.2;
+            sctx.globalAlpha = alpha * gk * 0.55 * Math.sin(Math.PI * gu);
+            sctx.drawImage(bloom, -rad, -bh * 0.5 + gu * bh - rad, rad * 2, rad * 2);
+          }
+          sctx.globalCompositeOperation = 'source-over';
+        }
+      }
+    }
+    sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    sctx.globalAlpha = 1;
+  }
+
+  function frame(now){
+    // everything advances on elapsed time, so the field runs at the same speed
+    // on a 60Hz panel and a 120Hz one
+    const dt = Math.min((now - lastT) / 1000, 0.05);
+    lastT = now;
+
+    const y = window.scrollY;
+    // saturating, so a flick and a fling feel related
+    drive = Math.min(1, drive + Math.min(Math.abs(y - lastScroll), 90) / 90);
+    lastScroll = y;
+    drive *= Math.pow(0.2, dt);                  // bleeds off over ~1.3s
+
+    const { heroT, footT } = targets();
+    const k = 1 - Math.exp(-FORM_EASE * dt);
+    heroForm += (heroT - heroForm) * k;
+    footForm += (footT - footForm) * k;
+
+    clock += dt * (1 + drive * 2.2);             // scrolling hurries the drift along
+
+    render();
+    requestAnimationFrame(frame);
+  }
+
+  resize();
+  window.addEventListener('resize', resize);
+  spritesReady.then(render);
+
+  if (reduced){
+    // no autonomous motion: snap to the scroll state and redraw only on scroll
+    const still = () => {
+      const { heroT, footT } = targets();
+      heroForm = heroT; footForm = footT;
+      render();
+    };
+    still();
+    window.addEventListener('scroll', still, { passive: true });
+  } else {
+    const { heroT, footT } = targets();
+    heroForm = heroT; footForm = footT;          // start in place, not mid-flight
+    requestAnimationFrame(frame);
+  }
+})();
+</script>
+
+</body>
+</html>

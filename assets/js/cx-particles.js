@@ -16,8 +16,10 @@
   const signalCanvas = document.getElementById('cx-signal-canvas');
   if (!spine || !signalCanvas) return;
   const hero = document.querySelector('.cx-hero');
-  const footer = document.querySelector('.cx-footer');
-  const HEADER_H = 84;          // the fixed header, kept clear of the hero mark
+  const footer = document.querySelector('.site-footer');
+  const headerEl = document.querySelector('.site-header');
+  // the fixed header, kept clear of the hero mark
+  const headerH = () => (headerEl ? headerEl.offsetHeight : 84);
 
   const sctx = signalCanvas.getContext('2d');
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -37,7 +39,8 @@
   const DRIFT = 0.010;          // free drift of a scattered particle, viewport per second
   const PARALLAX_NEAR = 0.34;   // scattered field's scroll parallax, near particles...
   const PARALLAX_FAR  = 0.08;   // ...and far ones
-  const SCATTER_ALPHA = 0.38;   // scattered brightness relative to formed, keeps copy readable
+  const SCATTER_ALPHA = 0.22;   // scattered brightness relative to formed: a quiet background, not a feature
+  const SCATTER_KEEP = 0.35;    // share of the mark's own bars still visible once scattered; the rest fade out
   const YAW = 0;                // the formed mark rests square on, exactly as the logo is drawn
   const YAW_SWING = 0.12;       // and turns gently either side of that
   // the light that passes over the field and catches the copper
@@ -273,7 +276,7 @@
   const LETTER = { K: 'copper', N: 'navy', T: 'teal', W: 'cream', S: 'silver' };
   /* Scatter-only bars: they fill out the field mid-page and fade away as the
      mark forms, so the mark itself stays exactly the logo. */
-  const EXTRA = 110;
+  const EXTRA = 40;
 
   const points = [];
   let id = 0;
@@ -316,6 +319,9 @@
   }
   // every bar is fully opaque in the mark; scattered, each keeps its own brightness
   points.forEach((p, n) => { p.alpha = p.metal ? 0.9 + rand(n * 7.1) * 0.1 : 0.55 + rand(n * 7.1) * 0.4; });
+  // the scattered field shows every scatter-only bar but only some of the mark's own;
+  // the others fade as they leave the mark and return as it forms again
+  points.forEach((p, n) => { p.loose = p.ghost || rand(n * 23.9) < SCATTER_KEEP ? 1 : 0; });
 
   /* ---------- give every particle a seat in the scattered field ----------
      Seats come from the R2 low-discrepancy sequence, lightly jittered, so the
@@ -358,22 +364,23 @@
     // a tall hero (the contact form lives inside its hero) counts as one screen,
     // so the mark always sits in the first view
     const heroH = Math.min(hero ? hero.offsetHeight : H, H);
+    const HEADER_H = headerH();
     const area = Math.max(heroH - HEADER_H, 240);
     return {
       cx: W - box + box * 0.44,
       cy: HEADER_H + area * 0.5 - Math.min(window.scrollY, heroH) * 0.4,
-      scale: Math.min(box, area * 1.05) * 0.46,
+      scale: Math.min(box, area * 1.05) * 0.38,   // kept modest so the mark sits beside the copy, not over it
       right: W, box,
     };
   }
   /* The footer mark sits in the left region the footer grid reserves for it
      (its padding-left), tail on the left and the tapered point aimed right at
-     the links — it reads as an arrow towards "Let's talk". Sized from that
+     the footer's links and location. Sized from that
      region so the mark and the copy beside it can't drift apart. */
   function footerAnchor(){
     if (!footer) return { cx: W * 0.5, cy: H * 0.5, scale: Math.min(W, H) * 0.3, right: W * 0.7, box: W * 0.5 };
     const r = footer.getBoundingClientRect();
-    const grid = footer.querySelector('.cx-footer-grid');
+    const grid = footer.querySelector('.footer-grid');
     const g = grid ? grid.getBoundingClientRect() : r;
     const region = grid ? (parseFloat(getComputedStyle(grid).paddingLeft) || 0) : 0;
     let cx, cy, scale;
@@ -494,7 +501,7 @@
       // scattered, the matte bars breathe; formed, the logo holds solid
       const shimmer = p.metal ? 1 : lerp(0.84 + 0.16 * Math.sin(clock * 0.1 + p.phase), 1, e);
       const formedA = p.ghost ? 0 : mask;
-      const looseA = p.alpha * SCATTER_ALPHA * (0.45 + p.near * 0.55) * edge;
+      const looseA = p.alpha * SCATTER_ALPHA * (0.45 + p.near * 0.55) * edge * p.loose;
       const alpha = lerp(looseA, formedA, e) * shimmer;
       if (alpha < 0.01) continue;
 
