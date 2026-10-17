@@ -143,7 +143,7 @@ img{ max-width:100%; display:block; }
 ::selection{ background: var(--blue); color: var(--ivory); }
 
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible, [tabindex]:focus-visible{
-  outline:2px solid var(--copper);
+  outline:2px solid var(--pale);
   outline-offset:3px;
   border-radius:2px;
 }
@@ -370,7 +370,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   transform:translateX(3px);
 }
 .header-nav .services-menu a:active{ transform:translateX(1px); }
-.services-menu img{ width:40px; height:20px; }
+.services-menu img{ width:40px; height:23px; }
 .services-menu strong{ display:block; font-family:'Bodoni Moda',serif; font-weight:400; font-size:1.1rem; line-height:1.25; }
 .services-menu small{ display:block; font-size:12px; line-height:1.5; color:var(--fog); }
 .services-menu em{
@@ -496,7 +496,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   padding:9px 0 9px 4px;
   color:var(--text-secondary);
 }
-.overlay-sub img{ width:34px; height:17px; flex:none; }
+.overlay-sub img{ width:34px; height:20px; flex:none; }
 .overlay-meta{ display:grid; gap:26px; align-content:start; }
 
 /* ---------- hero ---------- */
@@ -562,6 +562,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     color-mix(in srgb, var(--charcoal) 60%, transparent) 42%,
     transparent 68%);
 }
+/* phone width: the scrim's -90px side bleed pushed the page 52px wider than the viewport */
+@media (max-width:640px){ .hero-foot-block::before{ inset:-70px -16px; } }
 .hero .lede{ color:var(--ivory); }
 .hero-modalities{
   display:flex; flex-wrap:wrap; gap:10px clamp(18px,2.6vw,44px);
@@ -797,7 +799,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .step:hover{ border-color:var(--hairline-strong); }
 .step-index{
   font-family:'Bodoni Moda',serif; font-size:var(--text-s);
-  color:var(--copper); letter-spacing:0.08em;
+  color:var(--pale); letter-spacing:0.08em;
 }
 /* Once the script has built the numbered nodes on the line, the in-card
    numeral is a duplicate — hide it then, and only then, so a page where the
@@ -929,7 +931,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   transition:transform var(--speed) var(--ease-out);
 }
 .bio-toggle:hover, .bio-toggle:focus-visible{ transform:translateX(4px); }
-.bio-toggle .chev{ width:12px; height:12px; stroke:var(--copper); transition:transform var(--speed) var(--ease); }
+.bio-toggle .chev{ width:12px; height:12px; stroke:var(--pale); transition:transform var(--speed) var(--ease); }
 .bio-toggle[aria-expanded="true"] .chev{ transform:rotate(90deg); }
 .bio-more{ display:none; margin-top:14px; color:var(--text-secondary); font-size:var(--text-s); border-left:1px solid var(--hairline); padding-left:16px; }
 .bio-more.is-open{ display:block; }
@@ -969,7 +971,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 @media (min-width:640px){ .form-grid.two{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
 .contact-detail{ display:grid; gap:6px; }
 .contact-detail a{ transition:color var(--speed) var(--ease); }
-.contact-detail a:hover, .contact-detail a:focus-visible{ color:var(--copper); }
+.contact-detail a:hover, .contact-detail a:focus-visible{ color:var(--pale); }
+.contact-detail a:active{ opacity:0.7; }
 
 /* ---------- footer ---------- */
 /* Sits above the particle canvas, with a translucent fill so the Signal can
@@ -1007,6 +1010,20 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   font-size:var(--text-xs); letter-spacing:0.1em; text-transform:uppercase; color:var(--fog);
 }
 
+/* ---------- pressed / hover states for links and buttons that only had one of them ---------- */
+a.brand{ transition:opacity var(--speed) var(--ease-out); }
+a.brand:hover, a.brand:focus-visible{ opacity:0.85; }
+a.brand:active{ opacity:0.7; }
+.menu-btn:active{ transform:translateY(0); opacity:0.8; }
+.header-nav a:active{ opacity:0.7; }
+.overlay-nav a:active{ transform:translateX(4px); }
+.stat a:active{ transform:translateY(-1px); }
+.bio-toggle:active{ transform:translateX(1px); }
+.footer-links a:active{ transform:translateX(2px); }
+.site-footer p a, .bio-more a{ transition:opacity var(--speed) var(--ease-out); }
+.site-footer p a:hover, .site-footer p a:focus-visible, .bio-more a:hover, .bio-more a:focus-visible{ opacity:0.75; }
+.site-footer p a:active, .bio-more a:active{ opacity:0.55; }
+
 /* ---------- reveal on scroll ---------- */
 /* Scoped to .js so content stays visible if the script never runs. */
 .js .reveal{ opacity:0; transform:translateY(22px); transition:opacity 0.75s var(--ease-out), transform 0.75s var(--ease-out); }
@@ -1024,6 +1041,18 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 </style>
 </head>
 <body>
+<!-- shared metallic copper fills for the small inline icons (copper must read as metal, not flat) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="cx-copper-bb" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8E4E1C"/><stop offset="0.38" stop-color="#C7742D"/><stop offset="0.55" stop-color="#EFB67E"/><stop offset="0.78" stop-color="#C7742D"/><stop offset="1" stop-color="#8E4E1C"/>
+    </linearGradient>
+    <linearGradient id="cx-copper-glyph" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="40" y2="0">
+      <stop offset="0" stop-color="#8E4E1C"/><stop offset="0.38" stop-color="#C7742D"/><stop offset="0.55" stop-color="#EFB67E"/><stop offset="0.78" stop-color="#C7742D"/><stop offset="1" stop-color="#8E4E1C"/>
+    </linearGradient>
+  </defs>
+</svg>
+
 
 <a class="skip-link" href="#main">Skip to content</a>
 
@@ -1052,20 +1081,20 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
       </button>
       <div class="services-menu" id="services-menu">
         <a href="regulatory-risk.html">
-          <img src="assets/icons/pillar-01-regulatory-risk.svg" alt="" width="40" height="20" />
+          <img src="assets/icons/pillar-01-regulatory-risk.svg" alt="" width="40" height="23" />
           <span><strong>Regulatory Risk</strong><small>Find where the exposure actually is</small></span>
         </a>
         <a href="sandbox.html">
-          <img src="assets/icons/pillar-02-sandbox.svg" alt="" width="40" height="20" />
+          <img src="assets/icons/pillar-02-sandbox.svg" alt="" width="40" height="23" />
           <span><strong>Sandbox</strong><small>Prove it before it touches production</small></span>
           <em>Coming soon</em>
         </a>
         <a href="implementation.html">
-          <img src="assets/icons/pillar-03-implementation.svg" alt="" width="40" height="20" />
+          <img src="assets/icons/pillar-03-implementation.svg" alt="" width="40" height="23" />
           <span><strong>Implementation</strong><small>Put it in place and make it hold up</small></span>
         </a>
         <a href="monitoring.html">
-          <img src="assets/icons/pillar-04-monitoring.svg" alt="" width="40" height="20" />
+          <img src="assets/icons/pillar-04-monitoring.svg" alt="" width="40" height="23" />
           <span><strong>Monitoring</strong><small>Keep it qualified as it changes</small></span>
         </a>
       </div>
@@ -1093,10 +1122,10 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
       <a href="#approach">Approach</a>
       <p class="eyebrow overlay-label">Services</p>
       <div class="overlay-sub">
-        <a href="regulatory-risk.html"><img src="assets/icons/pillar-01-regulatory-risk.svg" alt="" width="40" height="20" />Regulatory Risk</a>
-        <a href="sandbox.html"><img src="assets/icons/pillar-02-sandbox.svg" alt="" width="40" height="20" />Sandbox</a>
-        <a href="implementation.html"><img src="assets/icons/pillar-03-implementation.svg" alt="" width="40" height="20" />Implementation</a>
-        <a href="monitoring.html"><img src="assets/icons/pillar-04-monitoring.svg" alt="" width="40" height="20" />Monitoring</a>
+        <a href="regulatory-risk.html"><img src="assets/icons/pillar-01-regulatory-risk.svg" alt="" width="40" height="23" />Regulatory Risk</a>
+        <a href="sandbox.html"><img src="assets/icons/pillar-02-sandbox.svg" alt="" width="40" height="23" />Sandbox</a>
+        <a href="implementation.html"><img src="assets/icons/pillar-03-implementation.svg" alt="" width="40" height="23" />Implementation</a>
+        <a href="monitoring.html"><img src="assets/icons/pillar-04-monitoring.svg" alt="" width="40" height="23" />Monitoring</a>
       </div>
       <a href="#breadth">Where We Work</a>
       <a href="#team">Team</a>
@@ -1211,6 +1240,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
         </div>
       </div>
 
+      <p style="font-size:var(--text-xs);color:var(--fog);">Figures as supplied by the principals, September 2026. [To be updated.]</p>
+
       <div>
         <a class="btn" href="#team">
           <span class="btn-bg"></span>
@@ -1234,7 +1265,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
             <g stroke="#4F8F8E" stroke-width="1.6" stroke-linecap="round">
               <path d="M8 22v12M16 16v24M24 12v32M32 18v20M40 24v8M48 27v2"/>
             </g>
-            <circle cx="48" cy="28" r="3" fill="#C7742D"/>
+            <circle cx="48" cy="28" r="3" fill="url(#cx-copper-bb)"/>
           </svg>
         </div>
         <p>We have held the roles our clients hold, and we answer &ldquo;who approved this, and on what evidence?&rdquo; the way people who have had to answer it do.</p>
@@ -1248,7 +1279,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
               <path d="M14 18v20M22 14v28"/>
               <path d="M34 14v28M42 18v20"/>
             </g>
-            <circle cx="28" cy="28" r="3" fill="#C7742D"/>
+            <circle cx="28" cy="28" r="3" fill="url(#cx-copper-bb)"/>
           </svg>
         </div>
         <p>Both founders stay on the engagement from first call through evidence delivery. No handoff to juniors once the work begins.</p>
@@ -1262,7 +1293,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
             <g stroke="#4F8F8E" stroke-width="1.6" stroke-linecap="round">
               <path d="M20 22v12M28 18v20M36 24v8"/>
             </g>
-            <circle cx="28" cy="28" r="2.6" fill="#C7742D"/>
+            <circle cx="28" cy="28" r="2.6" fill="url(#cx-copper-bb)"/>
           </svg>
         </div>
         <p>Governance, validation strategy, and documentation built to hold up under inspection &mdash; not just to close a finding.</p>
@@ -1275,7 +1306,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
             <g stroke="#4F8F8E" stroke-width="1.6" stroke-linecap="round">
               <path d="M8 26v4M17 22v12M26 17v22M35 21v14M44 25v6"/>
             </g>
-            <circle cx="50" cy="28" r="2.6" fill="#C7742D"/>
+            <circle cx="50" cy="28" r="2.6" fill="url(#cx-copper-bb)"/>
           </svg>
         </div>
         <p>Fit-for-purpose for where you actually are &mdash; paper-based systems through predictive analytics. Adopt, then adapt.</p>
@@ -1296,21 +1327,21 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     <div class="breadth-wrap reveal">
       <div class="breadth-grid" id="breadth-grid">
         <div class="breadth-cell">Quality Systems</div>
-        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="#C7742D" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>Pharmaceuticals</div>
+        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="url(#cx-copper-glyph)" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>Pharmaceuticals</div>
         <div class="breadth-cell">Data Integrity</div>
         <div class="breadth-cell">GxP Classification</div>
-        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="#C7742D" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>Biologics</div>
+        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="url(#cx-copper-glyph)" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>Biologics</div>
         <div class="breadth-cell">Validation Strategy</div>
 
         <div class="breadth-cell">Computer System Validation</div>
-        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="#C7742D" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>Cell &amp; Gene Therapy</div>
+        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="url(#cx-copper-glyph)" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>Cell &amp; Gene Therapy</div>
         <div class="breadth-cell">AI &amp; Automation Governance</div>
         <div class="breadth-cell">Regulatory Intelligence</div>
-        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="#C7742D" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>Medical Devices</div>
+        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="url(#cx-copper-glyph)" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>Medical Devices</div>
         <div class="breadth-cell">Inspection Readiness</div>
 
         <div class="breadth-cell">Governance Frameworks</div>
-        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="#C7742D" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>IVD</div>
+        <div class="breadth-cell is-anchor"><svg class="cell-glyph" viewBox="0 0 40 20" fill="none" aria-hidden="true"><g stroke="url(#cx-copper-glyph)" stroke-width="2" stroke-linecap="round"><path d="M4 4v12M12 6v8M20 3v14M28 7v6M36 9v2"/></g></svg>IVD</div>
         <div class="breadth-cell">Drift Monitoring</div>
         <div class="breadth-cell">Periodic Review</div>
         <div class="breadth-cell">Change Planning</div>
@@ -2098,7 +2129,10 @@ document.getElementById('contact-form').addEventListener('submit', e => {
   const LETTER = { K: 'copper', N: 'navy', T: 'teal', W: 'cream', S: 'silver' };
   /* Scatter-only bars: they fill out the field mid-page and fade away as the
      mark forms, so the mark itself stays exactly the logo. */
-  const EXTRA = 110;
+  const EXTRA = 50;
+  /* Share of the mark's own bars that stay visible once it has scattered; the
+     rest fade out as the mark comes apart and back in as it re-forms. */
+  const SCATTER_KEEP = 0.6;
 
   const points = [];
   let id = 0;
@@ -2159,6 +2193,8 @@ document.getElementById('contact-form').addEventListener('submit', e => {
     p.slen = 0.03 + rand(n * 11.8) * 0.07;
     p.phase = rand(n * 12.9) * Math.PI * 2;          // desynchronised shimmer
     p.gper = 8 + rand(n * 22.7) * 7;                 // seconds between its own glints
+    // ghosts are all scatter-only, so they all stay; of the mark's bars, only some
+    p.keep = p.ghost || rand(n * 23.9) < SCATTER_KEEP ? 1 : 0;
   });
 
   /* ---------- sizing ---------- */
@@ -2170,6 +2206,7 @@ document.getElementById('contact-form').addEventListener('submit', e => {
     signalCanvas.width = Math.round(W * dpr);
     signalCanvas.height = Math.round(H * dpr);
     sctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    measureHero();
     render();
   }
 
@@ -2178,13 +2215,35 @@ document.getElementById('contact-form').addEventListener('submit', e => {
      box (52vw wide on desktop, 78% below 1100px): centred 44% into that box,
      scaled to it, faded towards its left edge. The footer mark reuses the same
      box, centred on the footer. */
+  /* The mark is fitted to the space the hero leaves it: from the bottom of the
+     navbar down to the hairline above the modality list. Both are measured, so
+     the fit holds at any viewport size or font-loading state. The page-space
+     position of the hairline is cached (the header is fixed, so its bottom edge
+     never moves), and never grows the mark past its old, viewport-based size. */
+  const header = document.querySelector('.site-header');
+  const heroLine = document.querySelector('.hero-modalities');
+  let fitTop = 0, fitBottom = 0;        // viewport y at scroll 0
+  function measureHero(){
+    if (!header || !heroLine) { fitTop = fitBottom = 0; return; }
+    fitTop = header.getBoundingClientRect().bottom;
+    fitBottom = heroLine.getBoundingClientRect().top + window.scrollY;
+  }
+  /* The mark's own extent: bars run from -1.02 to 0.98 logo units tall, and the
+     slow yaw can push a bar up to ~5% nearer the camera. */
+  const MARK_HALF_H = 1.02 * 1.05;
   function heroAnchor(){
     const box = W * (W >= 1100 ? 0.52 : 0.78);
     const heroH = hero ? hero.offsetHeight : H;
+    let scale = Math.min(box, H) * 0.46;
+    let mid = H * 0.5;
+    if (fitBottom - fitTop > 120){
+      scale = Math.min(scale, (fitBottom - fitTop) / (2 * MARK_HALF_H));
+      mid = (fitTop + fitBottom) * 0.5;
+    }
     return {
       cx: W - box + box * 0.44,
-      cy: H * 0.5 - Math.min(window.scrollY, heroH) * 0.22,   // lifts gently with the hero
-      scale: Math.min(box, H) * 0.46,
+      cy: mid - Math.min(window.scrollY, heroH) * 0.22,   // lifts gently with the hero
+      scale,
       right: W, box,
     };
   }
@@ -2312,7 +2371,7 @@ document.getElementById('contact-form').addEventListener('submit', e => {
       // scattered, the matte bars breathe; formed, the logo holds solid
       const shimmer = p.metal ? 1 : lerp(0.84 + 0.16 * Math.sin(clock * 0.1 + p.phase), 1, e);
       const formedA = p.ghost ? 0 : mask;
-      const looseA = p.alpha * SCATTER_ALPHA * (0.45 + p.near * 0.55) * edge;
+      const looseA = p.alpha * SCATTER_ALPHA * (0.45 + p.near * 0.55) * edge * p.keep;
       const alpha = lerp(looseA, formedA, e) * shimmer;
       if (alpha < 0.01) continue;
 
@@ -2384,6 +2443,9 @@ document.getElementById('contact-form').addEventListener('submit', e => {
 
   resize();
   window.addEventListener('resize', resize);
+  // the hairline moves when the real fonts and images change the hero's height
+  window.addEventListener('load', resize);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(resize);
   spritesReady.then(render);
 
   if (reduced){

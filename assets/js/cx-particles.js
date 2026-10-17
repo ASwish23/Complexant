@@ -362,7 +362,7 @@
     return {
       cx: W - box + box * 0.44,
       cy: HEADER_H + area * 0.5 - Math.min(window.scrollY, heroH) * 0.4,
-      scale: Math.min(box, area * 1.05) * 0.46,
+      scale: Math.min(box, area * 1.05) * 0.34,
       right: W, box,
     };
   }
