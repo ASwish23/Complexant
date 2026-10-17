@@ -229,6 +229,8 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     color-mix(in srgb, var(--charcoal) 60%, transparent) 42%,
     transparent 68%);
 }
+/* phone width: the scrim's -90px side bleed pushed the page 52px wider than the viewport */
+@media (max-width:640px){ .hero-foot-block::before{ inset:-70px -16px; } }
 .hero .lede{ color:var(--ivory); }
 .hero .lede strong{ font-weight:500; color:var(--ivory); }
 .hero-actions{ display:flex; flex-wrap:wrap; align-items:center; gap:12px; }

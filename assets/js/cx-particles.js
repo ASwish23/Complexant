@@ -369,7 +369,7 @@
     return {
       cx: W - box + box * 0.44,
       cy: HEADER_H + area * 0.5 - Math.min(window.scrollY, heroH) * 0.4,
-      scale: Math.min(box, area * 1.05) * 0.38,   // kept modest so the mark sits beside the copy, not over it
+      scale: Math.min(box, area * 1.05) * 0.34,   // kept modest so the mark sits beside the copy, not over it
       right: W, box,
     };
   }

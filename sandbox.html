@@ -199,27 +199,13 @@
 <section class="cx-hero">
   <div class="cx-wrap cx-hero-grid">
     <div class="cx-hero-copy">
-      <nav class="cx-crumbs cx-rv" aria-label="Breadcrumb">
-        <ol><li><a href="index.html">Home</a></li><li><a href="approach.html">Services</a></li><li><span aria-current="page">Sandbox</span></li></ol>
-      </nav>
       <p class="cx-pillar-label cx-rv"><b>Pillar 02</b> of 04</p>
       <h1 class="cx-rv" data-d="1">Sandbox</h1>
       <p class="cx-lede cx-rv" data-d="2">A contained environment that emulates your real system, so tools and models are tested against regulatory expectations without any path back into live systems.</p>
       <div class="cx-actions cx-rv" data-d="3">
-        <a class="cx-btn" href="contact.html?topic=sandbox">Talk to us about Sandbox</a>
-        <a class="cx-ghost" href="#cx-included">What&rsquo;s included</a>
+        <a class="cx-btn cx-btn--talk" href="contact.html?topic=sandbox">Talk to us</a>
       </div>
     </div>
-    <aside class="cx-card cx-flat cx-dashed cx-summary cx-rv" data-d="2" aria-label="Sandbox at a glance">
-      <div class="cx-summary-head">
-        <span class="cx-summary-num" aria-hidden="true">02</span>
-        <span class="cx-summary-icon" aria-hidden="true" style="-webkit-mask-image:url(assets/icons/pillar-02-sandbox.svg);mask-image:url(assets/icons/pillar-02-sandbox.svg)"></span>
-      </div>
-      <div class="cx-summary-text">
-        <p class="cx-summary-tag cx-muted">Prove it before it touches production.</p>
-        <div class="cx-chips"><span class="cx-chip cx-chip--soon">Coming soon</span></div>
-      </div>
-    </aside>
   </div>
 </section>
 
@@ -227,7 +213,7 @@
 <section class="cx-section cx-section--tight" style="padding-top:0;padding-bottom:0">
   <div class="cx-wrap">
     <nav class="cx-rv" aria-label="The four pillars">
-      <div class="cx-switcher">
+      <div class="cx-switcher cx-switcher--slim">
         <a href="regulatory-risk.html"><img src="assets/icons/pillar-01-regulatory-risk.svg" alt="" /><span><small>Pillar 01</small><strong>Regulatory Risk</strong></span></a>
         <a href="sandbox.html" aria-current="page"><img src="assets/icons/pillar-02-sandbox.svg" alt="" /><span><small>Pillar 02</small><strong>Sandbox</strong></span></a>
         <a href="implementation.html"><img src="assets/icons/pillar-03-implementation.svg" alt="" /><span><small>Pillar 03</small><strong>Implementation</strong></span></a>
@@ -243,6 +229,9 @@
     <div class="cx-head cx-rv">
       <p class="cx-eyebrow">What&rsquo;s included</p>
       <h2>What Sandbox will include.</h2>
+    </div>
+    <div class="cx-included-intro cx-rv">
+      <p>Sandbox is a contained environment that emulates your real system. Tools and models are tested against regulatory expectations, every test is traced to a requirement, and there is no path back into production or live data. You get evidence that can be reused in validation instead of repeated.</p>
     </div>
     <div class="cx-grid cx-grid--wide">
       <article class="cx-card cx-rv">
@@ -270,27 +259,27 @@
         <h3>Evidence package</h3>
         <p>Results written up so they can be reused in validation, not repeated.</p>
       </article>
-    </div>
-    <div class="cx-outcome cx-rv">
-      <p class="cx-eyebrow">Outcome</p>
-      <p>Evidence that a tool does what it claims before it can affect a batch, a patient, or a record.</p>
+      <article class="cx-card cx-rv" data-d="2">
+        <div class="cx-card-top"><span class="cx-num">06</span></div>
+        <h3>Handover to validation</h3>
+        <p>Results and traceability passed to Implementation, so validation builds on them instead of starting again.</p>
+      </article>
     </div>
   </div>
 </section>
 
-<!-- ============ TOOL PREVIEW ============ -->
+<!-- ============ TOOL (COMING SOON) ============ -->
 <section class="cx-section cx-section--tight" style="padding-top:0">
   <div class="cx-wrap">
-    <div class="cx-card cx-flat cx-dashed cx-preview cx-rv">
-      <div>
-        <p class="cx-eyebrow">Tool preview</p>
-        <h3 style="margin-top:14px">Sandbox environment <span class="cx-chip cx-chip--soon">Coming soon</span></h3>
-        <p>The Sandbox is in development and rolls out after launch. [Release date to come.] Tell us your use case and we will let you know when it opens.</p>
+    <div class="cx-card cx-flat cx-dashed cx-soon cx-rv">
+      <div class="cx-soon-copy">
+        <span class="cx-soon-badge">Coming soon</span>
+        <h3>Sandbox environment</h3>
+        <p>The Sandbox is in development and will roll out after launch. Tell us your use case and we will let you know when it opens.</p>
       </div>
-      <div class="cx-actions">
-        <button class="cx-ghost" type="button" disabled aria-describedby="cx-tool-note">Request access</button>
-        <a class="cx-lnk" href="contact.html?topic=sandbox">Ask to be told when it opens <svg viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
-        <p class="cx-sr" id="cx-tool-note">Not available yet</p>
+      <div class="cx-soon-side">
+        <div class="cx-soon-frame" aria-hidden="true">[Tool preview placeholder]</div>
+        <button class="cx-soon-btn" type="button" disabled>Available after launch</button>
       </div>
     </div>
   </div>
@@ -321,16 +310,6 @@
         <div class="cx-faq-a" id="cx-faq-3" role="region" aria-labelledby="cx-faq-q-3"><div><p>Test results are written up with traceability to requirements, so Implementation can reuse them instead of repeating them.</p></div></div>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ============ PREV / NEXT ============ -->
-<section class="cx-section">
-  <div class="cx-wrap">
-    <nav class="cx-prevnext" aria-label="More pillars">
-      <a class="cx-card cx-rv" href="regulatory-risk.html"><small>Previous &middot; Pillar 01</small><strong class="cx-named"><img class="cx-named-icon" src="assets/icons/pillar-01-regulatory-risk.svg" alt="" width="48" height="24" />Regulatory Risk</strong><span class="cx-muted cx-small">Find where the exposure actually is.</span></a>
-      <a class="cx-card cx-next cx-rv" data-d="1" href="implementation.html"><small>Next &middot; Pillar 03</small><strong class="cx-named"><img class="cx-named-icon" src="assets/icons/pillar-03-implementation.svg" alt="" width="48" height="24" />Implementation</strong><span class="cx-muted cx-small">Put it in place and make it hold up.</span></a>
-    </nav>
   </div>
 </section>
 
