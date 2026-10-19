@@ -139,6 +139,8 @@ button{ font:inherit; color:inherit; }
 .cx-head{ display:grid; gap:18px; max-width:62ch; margin-bottom:clamp(32px, 3.6vw, 52px); }
 .cx-head--center{ margin-left:auto; margin-right:auto; text-align:center; justify-items:center; }
 .cx-head h2{ max-width:18ch; }
+/* a head whose title runs as wide as it needs, as on the home page */
+.cx-head--wide h2{ max-width:none; }
 
 .cx-grid{ display:grid; gap:clamp(14px, 1.6vw, 24px); grid-template-columns:repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
 .cx-grid--wide{ grid-template-columns:repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
@@ -304,12 +306,11 @@ button.cx-chip[aria-pressed="true"]{ background:color-mix(in srgb, var(--cx-teal
 :where(.cx-card) :where(p) + :where(p){ margin-top:12px; }
 .cx-card-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:16px; margin-bottom:20px; }
 .cx-card-icon{ width:52px; height:52px; flex:none; }
-.cx-card-icon--bar{ width:48px; height:24px; }
-.cx-num{ font-family:var(--cx-display); font-size:var(--cx-text-s); color:var(--cx-teal-pale); letter-spacing:0.08em; }
-/* the numbers on a service page's "What's included" cards are polished copper */
-#cx-included .cx-num{
-  font-size:clamp(1.6rem, 1.4rem + 0.6vw, 2rem); font-weight:600; line-height:1;
-  font-variant-numeric:lining-nums; letter-spacing:0.04em;
+/* the service bar icons are 80x46 */
+.cx-card-icon--bar{ width:56px; height:32px; }
+/* card numbers are polished copper, at the small eyebrow size */
+.cx-num{
+  font-family:var(--cx-display); font-size:var(--cx-text-s); letter-spacing:0.08em;
   background:linear-gradient(110deg,
     var(--cx-copper-dark) 0%,
     var(--cx-copper) 26%,
@@ -348,16 +349,21 @@ a.cx-card:active{ transform:translateY(-2px); }
 .cx-hero{ position:relative; isolation:isolate; overflow-x:clip; padding:calc(var(--cx-header-h, 84px) + clamp(40px, 6vw, 88px)) 0 clamp(48px, 6vw, 88px); }
 .cx-hero::after{
   content:""; position:absolute; z-index:-1; pointer-events:none;
-  top:calc(var(--cx-header-h, 84px) + clamp(16px, 2.6vw, 56px));
+  /* vertically centred on the copy: the middle of the area between the
+     hero's top and bottom padding */
+  top:calc((100% + var(--cx-header-h, 84px) + clamp(40px, 6vw, 88px) - clamp(48px, 6vw, 88px)) / 2);
   left:71%; width:clamp(240px, 23vw, 340px); aspect-ratio:1;
-  transform:translateX(-50%);
+  transform:translate(-50%, -50%);
   background:url("../signal.png") center / contain no-repeat;
   filter:drop-shadow(0 18px 40px color-mix(in srgb, var(--cx-copper) 16%, transparent));
 }
 /* the contact form fills that lane, so the mark steps aside there */
+/* the contact page ends with the letter, so the shell's "Not sure where to start?" panel would only point back to it */
+body[data-cx-page="contact"] .footer-cta{ display:none; }
+/* the form fills the hero's right-hand lane, so the signal mark steps aside */
 body[data-cx-page="contact"] .cx-hero::after{ display:none; }
 @media (max-width:1099px){
-  .cx-hero::after{ left:auto; right:-4%; transform:none; width:clamp(200px, 52vw, 320px); opacity:0.32; }
+  .cx-hero::after{ top:calc(var(--cx-header-h, 84px) + clamp(16px, 2.6vw, 56px)); left:auto; right:-4%; transform:none; width:clamp(200px, 52vw, 320px); opacity:0.32; }
 }
 .cx-hero-grid{ display:grid; gap:clamp(28px, 3.4vw, 44px); }
 .cx-hero-copy{ position:relative; display:grid; gap:24px; justify-items:start; }
@@ -388,43 +394,115 @@ body[data-cx-page="contact"] .cx-hero::after{ display:none; }
 .cx-split .cx-card ul{ display:grid; gap:10px; margin-top:18px; }
 .cx-check li{ display:grid; grid-template-columns:22px 1fr; gap:8px; color:var(--cx-text-2); font-size:var(--cx-text-m); line-height:1.6; }
 .cx-check li::before{ content:""; width:10px; height:2px; margin-top:0.8em; background:var(--cx-teal); border-radius:2px; }
-.cx-quote{ margin:clamp(40px, 5vw, 64px) auto 0; text-align:center; max-width:34ch; }
-.cx-quote blockquote{ margin:0; font-family:var(--cx-display); font-size:var(--cx-h3); line-height:1.24; letter-spacing:-0.02em; }
-.cx-quote p{ margin-top:16px; color:var(--cx-text-2); }
 
 /* ============================================================
-   Journey timeline (scroll-spy)
+   Pillar rail: the home page's "What we do" cards, shared so the
+   Approach page can carry the same section. Stacked, fully open cards
+   by default (narrow screens, or no script). From 1000px cx-port.js
+   turns them into a rail: the open card is --open-w wide, the rest
+   --closed-w, with --card-gap between them. Intentional, scoped
+   exception to "animate only transform and opacity": real gaps and
+   independent rounded corners between sliding cards need an actual
+   width change. Position (transform) and size (width) share one curve.
    ============================================================ */
-.cx-journey{ position:relative; padding-left:clamp(56px, 7vw, 92px); max-width:900px; }
-.cx-journey-list{ display:grid; gap:clamp(18px, 2vw, 28px); }
-.cx-journey-rail, .cx-journey-progress{
-  position:absolute; left:calc(clamp(56px, 7vw, 92px) / 2 - 1px); top:8px; width:2px; border-radius:2px;
+.pillar-rail{
+  --pillar-pad:clamp(22px,2vw,32px);
+  --card-gap:14px;   /* read by the script as a computed style: keep it a plain px value */
+  position:relative;
+  display:grid; gap:var(--card-gap);
 }
-.cx-journey-rail{ bottom:8px; background:repeating-linear-gradient(180deg, var(--cx-hairline-strong) 0 2px, transparent 2px 10px); }
-.cx-journey-progress{
-  height:0; background:var(--cx-copper-metal);
-  box-shadow:0 0 12px color-mix(in srgb, var(--cx-copper) 55%, transparent);
-  transition:height 0.7s var(--cx-spring);
+.card--pillar{
+  position:relative; overflow:hidden;
+  border-radius:16px;
+  border:1px solid var(--hairline);
+  background:linear-gradient(158deg, var(--surface-2) 0%, var(--surface-1) 100%);
+  padding:clamp(24px,2.4vw,34px) var(--pillar-pad);
+  box-shadow:0 24px 50px -34px color-mix(in srgb, var(--blue) 80%, transparent);
+  transition:border-color var(--speed) var(--ease);
 }
-.cx-step{ position:relative; transition:opacity 0.6s var(--cx-ease), transform 0.6s var(--cx-spring); }
-.cx-step-node{
-  position:absolute; top:clamp(24px, 2.4vw, 36px); left:calc(clamp(56px, 7vw, 92px) / -2 - 22px);
-  width:44px; height:44px; border-radius:50%;
-  display:grid; place-items:center;
-  font-family:var(--cx-display); font-size:0.95rem; color:var(--cx-silver);
-  border:1px solid var(--cx-hairline-strong);
-  background:var(--cx-bg);
-  transition:color var(--cx-speed) var(--cx-ease), border-color var(--cx-speed) var(--cx-ease), box-shadow 0.6s var(--cx-spring);
+/* soft glow inside the open card */
+.pillar::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(80% 70% at 18% 0%, color-mix(in srgb, var(--blue) 42%, transparent) 0%, transparent 70%),
+    radial-gradient(60% 50% at 90% 100%, color-mix(in srgb, var(--teal) 10%, transparent) 0%, transparent 70%);
+  opacity:0;
+  transition:opacity 0.6s var(--ease);
 }
-.cx-step.done .cx-step-node{ color:var(--cx-ink); border-color:var(--cx-teal); }
-.cx-step.active .cx-step-node{
-  color:var(--cx-ink); border-color:color-mix(in srgb, var(--cx-copper) 80%, transparent);
-  box-shadow:0 0 0 6px color-mix(in srgb, var(--cx-copper) 14%, transparent), 0 6px 22px -6px color-mix(in srgb, var(--cx-copper) 70%, transparent);
+.pillar > *{ position:relative; }
+.pillar-head{
+  display:flex; align-items:center; gap:16px 18px; flex-wrap:wrap;
+  width:100%; padding:0; border:0; background:none;
+  color:inherit; font:inherit; text-align:left;
+  cursor:default;
 }
-.js .cx-journey.is-live .cx-step:not(.active):not(.done){ opacity:0.45; }
-.cx-step .cx-card{ display:grid; gap:12px; }
-.cx-step .cx-card h3{ margin:0; }
-.cx-step-meta{ display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; justify-content:space-between; margin-top:6px; }
+.pillar-num{ font-family:var(--display); font-weight:500; font-size:var(--text-l); letter-spacing:0.06em; color:var(--copper); }
+/* the pillar icons are 80x46 */
+.pillar-icon{ width:56px; height:32px; }
+.pillar-name{
+  font-family:var(--display); font-weight:500;
+  font-size:clamp(1.6rem, 1.2rem + 0.75vw, 2.1rem); line-height:1.12; letter-spacing:-0.01em;
+  color:var(--ivory);
+}
+.pillar-body{ display:grid; gap:12px; margin-top:16px; max-width:64ch; }
+.pillar-line{
+  font-family:var(--display); font-weight:500; font-style:italic;
+  font-size:clamp(1.25rem, 1.1rem + 0.45vw, 1.55rem); line-height:1.3;
+  color:var(--pale);
+}
+.pillar-text{ color:var(--text-secondary); font-size:clamp(1rem, 0.95rem + 0.2vw, 1.15rem); line-height:1.55; }
+.pillar-foot{ display:flex; flex-wrap:wrap; align-items:center; gap:12px 18px; margin-top:6px; }
+.pillar-foot .soon-tag{ align-self:center; }
+/* card-sized button: the shared component one step down, as .header-actions .btn does */
+.pillar-foot .btn{ padding:13px 22px; font-size:var(--text-xs); }
+@media (max-width:520px){ .pillar-foot .btn{ flex:1 1 100%; } }
+
+@media (min-width:1000px){
+  .pillar-rail.is-live{ display:block; height:var(--rail-h, 520px); }
+  .pillar-rail.is-live{ --pillar-pad:clamp(20px,1.6vw,26px); }
+  .pillar-rail.is-live .pillar{
+    position:absolute; top:0; left:0;
+    height:100%;
+    width:var(--w, var(--open-w));
+    padding:clamp(24px,2vw,32px) var(--pillar-pad);
+    transform:translateX(var(--x, 0px));
+    transition:transform 0.85s var(--ease-out), width 0.85s var(--ease-out), border-color var(--speed) var(--ease);
+  }
+  .pillar-rail.is-live .pillar.is-open{ border-color:color-mix(in srgb, var(--teal) 55%, transparent); }
+  .pillar-rail.is-live .pillar.is-open::before{ opacity:1; }
+  /* number and icon share the top row, the name sits under them */
+  .pillar-rail.is-live .pillar-head{
+    align-items:center; gap:12px 14px;
+    width:calc(var(--closed-w) - var(--pillar-pad) * 2 - 2px);
+    cursor:pointer;
+  }
+  .pillar-rail.is-live .pillar-name{ flex-basis:100%; color:var(--text-secondary); transition:color var(--speed) var(--ease); }
+  /* the open card is wide enough for its name on one row */
+  .pillar-rail.is-live .pillar.is-open .pillar-name{ white-space:nowrap; }
+  .pillar-rail.is-live .pillar-num{ color:var(--fog); transition:color var(--speed) var(--ease); }
+  .pillar-rail.is-live .pillar-icon{ opacity:0.6; transition:opacity var(--speed) var(--ease); }
+  .pillar-rail.is-live .pillar-head:hover .pillar-name,
+  .pillar-rail.is-live .pillar.is-open .pillar-name{ color:var(--ivory); }
+  .pillar-rail.is-live .pillar.is-open .pillar-num{ color:var(--copper); }
+  .pillar-rail.is-live .pillar-head:hover .pillar-icon,
+  .pillar-rail.is-live .pillar.is-open .pillar-icon{ opacity:1; }
+  .pillar-rail.is-live .pillar-head:active .pillar-name{ opacity:0.75; }
+  .pillar-rail.is-live .pillar-body{
+    width:calc(var(--open-w) - var(--pillar-pad) * 2 - 2px);
+    max-width:none;
+    margin-top:18px;
+    opacity:0; visibility:hidden;
+    transform:translateY(12px);
+    transition:opacity 0.3s var(--ease), transform 0.45s var(--ease-out), visibility 0s linear 0.3s;
+  }
+  .pillar-rail.is-live .pillar.is-open .pillar-body{
+    opacity:1; visibility:visible;
+    transform:translateY(0);
+    transition:opacity 0.5s var(--ease) 0.2s, transform 0.7s var(--ease-out) 0.2s, visibility 0s;
+  }
+  .pillar-rail.is-live .pillar-text{ max-width:60ch; }
+}
+.pillar-rail.no-anim .pillar, .pillar-rail.no-anim .pillar::before, .pillar-rail.no-anim .pillar-body{ transition:none !important; }
 
 /* numbered "how it runs" list */
 .cx-runlist{ counter-reset:cx-run; display:grid; gap:0; border-top:1px solid var(--cx-hairline); }
@@ -502,38 +580,67 @@ body[data-cx-page="contact"] .cx-hero::after{ display:none; }
 @keyframes cx-fade{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:none; } }
 
 /* ============================================================
-   Maturity slider
+   Maturity slider: a wide copper-filled bar over five columns, each
+   stage's description under its own stop. The bar runs from the centre
+   of the first column to the centre of the last, so every stop sits
+   over its column. Below 760px the columns stack and only the chosen
+   stage's description shows.
    ============================================================ */
-.cx-maturity{ display:grid; gap:clamp(28px, 4vw, 64px); align-items:center; }
-@media (min-width:900px){ .cx-maturity{ grid-template-columns:minmax(0, 1fr) minmax(0, 1fr); } }
-.cx-mbars{ position:relative; display:flex; align-items:center; justify-content:center; gap:clamp(14px, 2vw, 26px); height:clamp(220px, 26vw, 320px); padding:0 24px; }
-.cx-mbar{
-  width:clamp(10px, 1.1vw, 14px); height:100%; border-radius:999px;
-  background:linear-gradient(180deg, var(--cx-teal-pale), var(--cx-teal) 40%, var(--cx-blue));
-  transform:translateY(var(--y, 0)) scaleY(var(--h, 0.5));
-  transition:transform 0.9s var(--cx-spring), background 0.6s var(--cx-ease);
-}
-.cx-mbar.is-apex{ background:var(--cx-copper-metal); box-shadow:0 0 18px color-mix(in srgb, var(--cx-copper) 50%, transparent); }
-.cx-range-wrap{ display:grid; gap:14px; }
+.cx-maturity{ --thumb:30px; --sgap:clamp(14px, 2vw, 28px); display:grid; gap:18px; }
+/* each stop sits over the left edge of its column: the bar runs from the
+   first column's edge to the last one's, the thumb's half-width hanging
+   past either end */
+.cx-maturity-bar{ margin-left:calc(var(--thumb) / -2); padding-right:calc((100% - var(--sgap) * 4) / 5 - var(--thumb) / 2); }
 .cx-range{
-  -webkit-appearance:none; appearance:none; width:100%; height:28px; background:transparent; cursor:pointer;
+  -webkit-appearance:none; appearance:none; display:block; width:100%; height:var(--thumb); margin:0; background:transparent; cursor:pointer;
 }
-.cx-range::-webkit-slider-runnable-track{ height:2px; background:linear-gradient(90deg, var(--cx-teal) var(--cx-fill, 0%), var(--cx-hairline-strong) var(--cx-fill, 0%)); border-radius:2px; }
-.cx-range::-moz-range-track{ height:2px; background:var(--cx-hairline-strong); border-radius:2px; }
-.cx-range::-moz-range-progress{ height:2px; background:var(--cx-teal); }
+.cx-range::-webkit-slider-runnable-track{
+  height:6px; border-radius:6px;
+  background:
+    linear-gradient(90deg, var(--cx-copper-dark), var(--cx-copper) 55%, var(--cx-copper-light)) 0 0 / var(--cx-fill, 0%) 100% no-repeat,
+    color-mix(in srgb, var(--cx-ink) 14%, transparent);
+}
+.cx-range::-moz-range-track{ height:6px; border-radius:6px; background:color-mix(in srgb, var(--cx-ink) 14%, transparent); }
+.cx-range::-moz-range-progress{ height:6px; border-radius:6px; background:var(--cx-copper-metal); }
 .cx-range::-webkit-slider-thumb{
-  -webkit-appearance:none; width:24px; height:24px; margin-top:-11px; border-radius:50%;
-  background:var(--cx-ink); border:5px solid var(--cx-teal-mid);
-  box-shadow:0 0 0 6px color-mix(in srgb, var(--cx-teal) 20%, transparent);
+  -webkit-appearance:none; width:var(--thumb); height:var(--thumb); margin-top:calc(3px - var(--thumb) / 2); border-radius:50%;
+  background:var(--cx-ink); border:7px solid var(--cx-copper);
+  box-shadow:0 0 0 6px color-mix(in srgb, var(--cx-copper) 20%, transparent), 0 8px 22px -6px color-mix(in srgb, var(--cx-copper) 70%, transparent);
   transition:transform var(--cx-speed) var(--cx-spring);
 }
-.cx-range::-moz-range-thumb{ width:14px; height:14px; border-radius:50%; background:var(--cx-ink); border:5px solid var(--cx-teal-mid); }
-.cx-range:hover::-webkit-slider-thumb{ transform:scale(1.12); }
+.cx-range::-moz-range-thumb{
+  width:16px; height:16px; border-radius:50%; background:var(--cx-ink); border:7px solid var(--cx-copper);
+  box-shadow:0 0 0 6px color-mix(in srgb, var(--cx-copper) 20%, transparent);
+}
+.cx-range:hover::-webkit-slider-thumb{ transform:scale(1.1); }
 .cx-range:active::-webkit-slider-thumb{ transform:scale(0.95); }
-.cx-range:focus-visible{ outline-offset:6px; }
-.cx-range-ticks{ display:flex; justify-content:space-between; font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--cx-text-3); }
-.cx-stage-name{ font-family:var(--cx-display); font-size:var(--cx-h3); line-height:1.2; margin-top:8px; }
-.cx-stage-desc{ color:var(--cx-text-2); min-height:5.2em; }
+.cx-range:focus-visible{ outline-offset:8px; }
+
+.cx-stages{ display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:var(--sgap); margin-top:10px; }
+.cx-stage{ display:grid; gap:10px; align-content:start; opacity:0.5; transition:opacity 0.5s var(--cx-ease); }
+.cx-stage.is-active{ opacity:1; }
+.cx-stage-pick{
+  display:grid; gap:8px; justify-items:start; padding:0; border:0; background:none; cursor:pointer;
+  color:inherit; font:inherit; text-align:left;
+}
+.cx-stage-pick:hover .cx-stage-name{ opacity:0.8; }
+.cx-stage-pick:active .cx-stage-name{ opacity:0.65; }
+/* a short copper rule marks the chosen stage */
+.cx-stage-pick::before{
+  content:""; width:28px; height:2px; border-radius:2px; background:var(--cx-copper-metal);
+  transform:scaleX(0); transform-origin:left; transition:transform 0.6s var(--cx-spring);
+}
+.cx-stage.is-active .cx-stage-pick::before{ transform:scaleX(1); }
+.cx-stage-label{ font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--cx-text-3); }
+.cx-stage-name{ font-family:var(--cx-display); font-size:var(--cx-h4); line-height:1.2; transition:opacity var(--cx-speed) var(--cx-ease); }
+.cx-stage-desc{ color:var(--cx-text-2); font-size:var(--cx-text-s); line-height:1.65; }
+@media (max-width:759px){
+  .cx-maturity-bar{ margin-left:0; padding-right:0; }
+  .cx-stages{ grid-template-columns:1fr; gap:0; }
+  .cx-stage{ display:none; opacity:1; }
+  .cx-stage.is-active{ display:grid; }
+  .cx-stage-pick{ cursor:default; }
+}
 
 /* ============================================================
    People
@@ -564,9 +671,25 @@ body[data-cx-page="contact"] .cx-hero::after{ display:none; }
 .cx-bio[hidden]{ display:none; }
 
 /* motto & values */
+/* Principal sections: one per person, the photo beside the main facts,
+   alternating sides */
+.cx-principal{ display:grid; gap:clamp(28px, 4vw, 64px); align-items:center; }
+@media (min-width:760px){
+  .cx-principal{ grid-template-columns:minmax(0, 360px) minmax(0, 1fr); }
+  .cx-principal--flip{ grid-template-columns:minmax(0, 1fr) minmax(0, 360px); }
+  .cx-principal--flip .cx-principal-photo{ order:2; }
+}
+.cx-principal-photo{ aspect-ratio:4/5; width:100%; max-width:360px; }
+.cx-principal-copy{ display:grid; gap:16px; justify-items:start; }
+.cx-principal-copy h2{ margin:0; }
+.cx-principal-copy .cx-lede{ margin:0; }
+.cx-principal-copy .cx-actions{ margin-top:8px; }
+/* the photo warms to colour while you read the copy beside it */
+.cx-principal:hover .cx-person-photo img, .cx-principal:focus-within .cx-person-photo img{ filter:grayscale(0); transform:scale(1.03); }
+.cx-principal:hover .cx-person-photo::before, .cx-principal:focus-within .cx-person-photo::before{ opacity:0.1; }
+
 .cx-motto{ display:flex; flex-wrap:wrap; justify-content:center; align-items:baseline; gap:clamp(12px, 3vw, 44px); font-family:var(--cx-display); font-size:var(--cx-h2); letter-spacing:-0.03em; line-height:1.1; }
 .cx-motto span:nth-child(even){ width:8px; height:8px; border-radius:50%; background:var(--cx-teal); align-self:center; }
-.cx-motto span:last-child{ font-style:italic; color:var(--cx-teal-pale); }
 .cx-values{ display:grid; border-top:1px solid var(--cx-hairline); }
 .cx-values li{ display:grid; gap:6px 32px; padding:22px 0; border-bottom:1px solid var(--cx-hairline); }
 @media (min-width:760px){ .cx-values li{ grid-template-columns:minmax(0, 0.7fr) minmax(0, 1.3fr); align-items:baseline; } }
@@ -629,10 +752,13 @@ body[data-cx-page="contact"] .cx-hero::after{ display:none; }
 @media (min-width:860px){ .cx-outcome{ grid-template-columns:auto 1fr; } }
 .cx-outcome p:last-child{ font-family:var(--cx-display); font-size:var(--cx-h4); line-height:1.4; }
 
-/* slimmer pillar switcher */
-.cx-switcher--slim a{ padding:8px 16px; gap:12px; border-radius:12px; }
-.cx-switcher--slim small{ font-size:9.5px; line-height:1.5; }
-.cx-switcher--slim strong{ font-size:1.05rem; line-height:1.25; }
+/* slimmer pillar switcher: icon, then "01 · Name" on one line */
+.cx-switcher--slim a{ padding:14px 22px; gap:16px; border-radius:12px; }
+.cx-switcher--slim img{ width:42px; height:24px; }
+.cx-switcher--slim span{ display:flex; align-items:baseline; gap:0.4em; font-size:var(--cx-text-s); line-height:1.3; color:var(--cx-ink); }
+.cx-switcher--slim small{ display:inline; font-size:inherit; letter-spacing:0.02em; text-transform:none; color:var(--cx-silver); }
+.cx-switcher--slim small::after{ content:" \00b7"; }
+.cx-switcher--slim strong{ display:inline; font-family:inherit; font-weight:400; font-size:inherit; line-height:inherit; }
 
 /* intro text above the inclusions grid: plain text on the background */
 .cx-included-intro{ max-width:1040px; margin-bottom:clamp(32px, 3.6vw, 52px); }
@@ -718,9 +844,6 @@ body[data-cx-page="contact"] .cx-hero::after{ display:none; }
 /* ============================================================
    Forms
    ============================================================ */
-.cx-contact-grid{ display:grid; gap:clamp(28px, 4vw, 56px); align-items:start; }
-.cx-contact-grid > *{ min-width:0; }
-@media (min-width:980px){ .cx-contact-grid{ grid-template-columns:minmax(0, 0.8fr) minmax(0, 1.2fr); } }
 .cx-panel{ padding:clamp(24px, 3.4vw, 48px); border-radius:24px; border:1px solid var(--cx-hairline); background:var(--cx-panel); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); box-shadow:0 40px 80px -40px color-mix(in srgb, var(--cx-bg) 95%, transparent); }
 .cx-form{ display:grid; gap:20px; }
 .cx-form-row{ display:grid; gap:20px; }
@@ -751,11 +874,6 @@ body[data-cx-page="contact"] .cx-hero::after{ display:none; }
 .cx-form-note a{ color:var(--cx-teal-pale); text-decoration:underline; text-underline-offset:3px; }
 .cx-thanks{ display:grid; gap:18px; justify-items:start; }
 .cx-thanks[hidden]{ display:none; }
-.cx-next-steps{ counter-reset:cx-ns; display:grid; gap:18px; }
-.cx-next-steps li{ counter-increment:cx-ns; display:grid; grid-template-columns:44px 1fr; gap:16px; }
-.cx-next-steps li::before{ content:counter(cx-ns); display:grid; place-items:center; width:40px; height:40px; border-radius:50%; border:1px solid var(--cx-teal); font-family:var(--cx-display); color:var(--cx-teal-pale); }
-.cx-next-steps strong{ display:block; font-weight:500; color:var(--cx-ink); }
-.cx-next-steps p{ color:var(--cx-text-2); font-size:var(--cx-text-s); }
 
 /* ============================================================
    Pressed / hover states for links and buttons that only had one of them
@@ -822,3 +940,34 @@ body[data-cx-page="contact"] .cx-hero::after{ display:none; }
     background:url("../signal.png") center / contain no-repeat;
   }
 }
+
+/* contact form: short intro beside the fields, no panel around them */
+.cx-contact{ display:grid; gap:clamp(28px, 4vw, 64px); align-items:start; }
+@media (min-width:980px){ .cx-contact{ grid-template-columns:minmax(0, 0.75fr) minmax(0, 1.25fr); } }
+.cx-contact > *{ min-width:0; }
+.cx-contact-intro{ display:grid; gap:18px; }
+
+/* what happens next: three steps in a row, numbered in copper */
+.cx-after{ counter-reset:cx-after; display:grid; gap:clamp(20px, 3vw, 40px); border-top:1px solid var(--cx-hairline); }
+@media (min-width:860px){ .cx-after{ grid-template-columns:repeat(3, minmax(0, 1fr)); } }
+.cx-after li{ counter-increment:cx-after; display:grid; gap:10px; align-content:start; padding-top:clamp(20px, 2.4vw, 32px); }
+.cx-after li::before{
+  content:counter(cx-after, decimal-leading-zero);
+  font-family:var(--cx-display); font-size:var(--cx-h3); line-height:1;
+  background:var(--cx-copper-metal); -webkit-background-clip:text; background-clip:text;
+  color:transparent; -webkit-text-fill-color:transparent;
+}
+.cx-after h3{ margin:0; }
+.cx-after p{ color:var(--cx-text-2); max-width:34ch; }
+
+/* direct lines: plain text in a row under the steps */
+.cx-direct{ display:grid; gap:20px 32px; margin:clamp(40px, 5vw, 64px) 0 0; padding-top:clamp(20px, 2.4vw, 28px); border-top:1px solid var(--cx-hairline); }
+@media (min-width:700px){ .cx-direct{ grid-template-columns:repeat(2, minmax(0, 1fr)); } }
+@media (min-width:1100px){ .cx-direct{ grid-template-columns:repeat(4, minmax(0, auto)); justify-content:space-between; } }
+.cx-direct dt{ font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--cx-silver); }
+.cx-direct dd{ margin:6px 0 0; font-size:var(--cx-text-s); color:var(--cx-text-2); overflow-wrap:anywhere; }
+.cx-direct a{ color:var(--cx-teal-pale); transition:color var(--cx-speed) var(--cx-ease); }
+.cx-direct a:hover, .cx-direct a:focus-visible{ color:var(--cx-ink); }
+.cx-direct a:active{ opacity:0.7; }
+.cx-contact .cx-form-foot{ justify-content:flex-start; }
+.cx-contact .cx-form-note{ max-width:40ch; }

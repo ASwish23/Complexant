@@ -129,76 +129,128 @@
     apply('all');
   });
 
-  /* ---------- journey timeline scroll-spy ---------- */
-  document.querySelectorAll('.cx-journey').forEach(function (j) {
-    var steps = Array.prototype.slice.call(j.querySelectorAll('.cx-step'));
-    var bar = j.querySelector('.cx-journey-progress');
-    var STOPS = [12, 38, 64, 100];
-    var last = -1;
-    var mark = function (idx) {
-      if (idx === last) return;
-      last = idx;
-      steps.forEach(function (s, i) {
-        s.classList.toggle('active', i === idx);
-        s.classList.toggle('done', i < idx);
+  /* ---------- pillar rail ----------
+     The home page's "What we do" cards: one open at a time from 1000px.
+     Regulatory Risk rests open; hovering, focusing or clicking another
+     opens it; leaving the rail returns to Regulatory Risk. Arrow keys move
+     between pillars. The open card is openW wide, the rest closedW, each
+     placed with transform and sized with width on the same curve. */
+  document.querySelectorAll('.pillar-rail').forEach(function (rail) {
+    var pillars = Array.prototype.slice.call(rail.querySelectorAll('.pillar'));
+    var heads = pillars.map(function (p) { return p.querySelector('.pillar-head'); });
+    var REST = 0;                                  // Regulatory Risk
+    var wide = window.matchMedia('(min-width:1000px)');
+    // narrowest open card that still fits its copy and button; short of it, stack
+    var MIN_OPEN = 340;
+    var open = REST, closedW = 0, openW = 0, gap = 0, live = false;
+
+    var place = function () {
+      var step = closedW + gap;   // a closed card plus the gap after it
+      pillars.forEach(function (p, i) {
+        var on = i === open;
+        p.classList.toggle('is-open', on);
+        heads[i].setAttribute('aria-expanded', String(on));
+        if (!live) return;
+        var x = i <= open ? i * step : openW + gap + (i - 1) * step;
+        p.style.setProperty('--x', x + 'px');
+        p.style.setProperty('--w', (on ? openW : closedW) + 'px');
       });
-      if (bar) {
-        var pct = STOPS[Math.round(idx / Math.max(steps.length - 1, 1) * (STOPS.length - 1))];
-        bar.style.height = 'calc((100% - 16px) * ' + pct / 100 + ')';
+    };
+
+    var layout = function () {
+      // a layout pass (load, resize, fonts) snaps into place; only switching animates
+      rail.classList.add('no-anim');
+      requestAnimationFrame(function () { requestAnimationFrame(function () { rail.classList.remove('no-anim'); }); });
+      var n = pillars.length;
+      var w = rail.clientWidth;
+      gap = parseFloat(getComputedStyle(rail).getPropertyValue('--card-gap')) || 0;
+      // wide enough for the longest one-word name ("Implementation") at its larger size
+      closedW = Math.round(Math.min(270, Math.max(220, w * 0.19)));
+      openW = w - (closedW + gap) * (n - 1);
+      live = wide.matches && openW >= MIN_OPEN;
+      rail.classList.toggle('is-live', live);
+      if (!live) {
+        // stacked: every card open, nothing to switch
+        pillars.forEach(function (p, i) {
+          p.classList.add('is-open');
+          p.style.removeProperty('--x');
+          p.style.removeProperty('--w');
+          heads[i].setAttribute('aria-expanded', 'true');
+          heads[i].tabIndex = -1;
+        });
+        return;
       }
-    };
-    if (reduced) { mark(steps.length - 1); steps.forEach(function (s) { s.classList.add('done'); }); return; }
-    j.classList.add('is-live');
-    var update = function () {
-      var target = window.innerHeight * 0.45, best = 0, bestD = Infinity;
-      steps.forEach(function (s, i) {
-        var r = s.getBoundingClientRect();
-        var d = Math.abs(r.top + r.height / 2 - target);
-        if (d < bestD) { bestD = d; best = i; }
+      rail.style.setProperty('--closed-w', closedW + 'px');
+      rail.style.setProperty('--open-w', openW + 'px');
+      heads.forEach(function (h) { h.tabIndex = 0; });
+      // the rail is as tall as the tallest pillar when open
+      var h = 0;
+      pillars.forEach(function (p) {
+        p.style.height = 'auto';
+        h = Math.max(h, p.offsetHeight);
+        p.style.height = '';
       });
-      mark(best);
+      rail.style.setProperty('--rail-h', Math.ceil(h) + 'px');
+      place();
     };
-    var queued = false;
-    window.addEventListener('scroll', function () {
-      if (!queued) { queued = true; requestAnimationFrame(function () { queued = false; update(); }); }
-    }, { passive: true });
-    window.addEventListener('resize', update);
-    update();
+
+    var show = function (i) {
+      if (!live || i === open) return;
+      open = i;
+      place();
+    };
+
+    pillars.forEach(function (p, i) {
+      p.addEventListener('mouseenter', function () { show(i); });
+      heads[i].addEventListener('focus', function () { show(i); });
+      heads[i].addEventListener('click', function () { show(i); });
+      heads[i].addEventListener('keydown', function (e) {
+        if (!live) return;
+        var n = pillars.length, next = null;
+        if (e.key === 'ArrowRight' || e.key === 'ArrowDown') next = (i + 1) % n;
+        else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') next = (i - 1 + n) % n;
+        else if (e.key === 'Home') next = 0;
+        else if (e.key === 'End') next = n - 1;
+        if (next === null) return;
+        e.preventDefault();
+        heads[next].focus();
+      });
+    });
+    // back to Regulatory Risk once the pointer leaves, unless the keyboard is still inside
+    rail.addEventListener('mouseleave', function () {
+      if (!rail.contains(document.activeElement)) show(REST);
+    });
+    rail.addEventListener('focusout', function (e) {
+      if (!rail.contains(e.relatedTarget) && !rail.matches(':hover')) show(REST);
+    });
+
+    layout();
+    window.addEventListener('resize', layout);
+    window.addEventListener('load', layout);
+    // the rail's height depends on the real faces, so re-measure once they are in
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
   });
 
-  /* ---------- maturity slider ---------- */
-  // Five bars move from scattered heights to an ordered taper that ends in
-  // the copper point: the signal's scatter-to-clarity, stage by stage.
-  var BARS = [
-    { h: [0.42, 0.86, 0.28, 0.66, 0.5], y: [-18, 5, 26, -14, 20] },
-    { h: [0.6, 0.78, 0.36, 0.6, 0.42], y: [-10, 8, 14, -8, 12] },
-    { h: [0.8, 0.7, 0.5, 0.46, 0.3], y: [-4, 4, 6, -3, 4] },
-    { h: [0.9, 0.72, 0.52, 0.34, 0.18], y: [0, 0, 0, 0, 0] },
-    { h: [0.94, 0.74, 0.54, 0.34, 0.12], y: [0, 0, 0, 0, 0] }
-  ];
-  document.querySelectorAll('[data-cx-stages]').forEach(function (input) {
-    var stages;
-    try { stages = JSON.parse(input.getAttribute('data-cx-stages')); } catch (err) { return; }
-    var root = input.closest('.cx-maturity') || document;
-    var nameEl = root.querySelector('.cx-stage-name');
-    var descEl = root.querySelector('.cx-stage-desc');
-    var numEl = root.querySelector('.cx-stage-num');
-    var bars = root.querySelectorAll('.cx-mbar');
+  /* ---------- maturity slider ----------
+     The bar fills copper up to the chosen stage; that stage's column lights
+     and the others dim. Clicking a column's name moves the slider there. */
+  document.querySelectorAll('.cx-maturity').forEach(function (root) {
+    var input = root.querySelector('.cx-range');
+    var stages = Array.prototype.slice.call(root.querySelectorAll('.cx-stage'));
+    if (!input || !stages.length) return;
     var set = function () {
       var v = parseInt(input.value, 10) || 0;
-      var s = stages[v] || stages[0];
-      if (nameEl) nameEl.textContent = s.name;
-      if (descEl) descEl.textContent = s.desc;
-      if (numEl) numEl.textContent = 'Stage ' + (v + 1) + ' of ' + stages.length;
-      input.setAttribute('aria-valuetext', 'Stage ' + (v + 1) + ': ' + s.name);
+      stages.forEach(function (s, i) { s.classList.toggle('is-active', i === v); });
+      var name = stages[v].querySelector('.cx-stage-name');
+      input.setAttribute('aria-valuetext', 'Stage ' + (v + 1) + ' of ' + stages.length + ': ' + (name ? name.textContent : ''));
       input.style.setProperty('--cx-fill', (v / (stages.length - 1) * 100) + '%');
-      var shape = BARS[Math.min(v, BARS.length - 1)];
-      bars.forEach(function (b, i) {
-        b.style.setProperty('--h', shape.h[i]);
-        b.style.setProperty('--y', shape.y[i] + '%');
-        b.classList.toggle('is-apex', v >= 3 && i === bars.length - 1);
-      });
     };
+    root.querySelectorAll('[data-cx-stage]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        input.value = btn.getAttribute('data-cx-stage');
+        set();
+      });
+    });
     input.addEventListener('input', set);
     set();
   });
@@ -255,8 +307,12 @@
       }
       msg.textContent = '';
       var val = function (n) { var f = form.elements[n]; if (!f) return ''; return f.tagName === 'SELECT' ? (f.value ? f.options[f.selectedIndex].text : '') : f.value.trim(); };
-      var body = ['Name: ' + val('name'), 'Email: ' + val('email'), 'Company: ' + val('company'), 'Role: ' + val('role'),
-        'Sector: ' + val('sector'), 'Stage: ' + val('stage'), 'Where to start: ' + val('start'), '', val('message')].join('\n');
+      // only the details that were filled in, then the message
+      var body = [['Name', 'name'], ['Email', 'email'], ['Company', 'company'], ['Role', 'role'],
+        ['Sector', 'sector'], ['Stage', 'stage'], ['Where to start', 'start']]
+        .filter(function (f) { return val(f[1]); })
+        .map(function (f) { return f[0] + ': ' + val(f[1]); })
+        .concat(['', val('message')]).join('\n');
       window.location.href = 'mailto:info@complexantpartners.com?subject=' +
         encodeURIComponent('Website inquiry from ' + val('name')) + '&body=' + encodeURIComponent(body);
       form.hidden = true;

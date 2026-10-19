@@ -153,47 +153,17 @@
 
 <main id="main">
 
-<section class="cx-hero" style="padding-bottom:var(--cx-sect)">
-  <div class="cx-wrap cx-contact-grid">
-
-    <!-- ============ INTRO ============ -->
-    <div class="cx-hero-copy" style="gap:28px">
-      <nav class="cx-crumbs cx-rv" aria-label="Breadcrumb">
-        <ol><li><a href="index.html">Home</a></li><li><span aria-current="page">Contact</span></li></ol>
-      </nav>
-      <p class="cx-eyebrow cx-rv">Let&rsquo;s talk</p>
-      <h1 class="cx-rv" data-d="1">Bring us what you can&rsquo;t yet <em>prove.</em></h1>
-      <p class="cx-lede cx-rv" data-d="2">Start with a fixed-scope, fixed-fee readiness assessment, or just tell us what is keeping the question open.</p>
-
-      <div class="cx-rv" data-d="2" style="width:100%;margin-top:8px">
-        <p class="cx-eyebrow" style="margin-bottom:20px">What happens next</p>
-        <ol class="cx-next-steps">
-          <li><div><strong>A reply from a principal</strong><p>Within [one business day], from Lexie or Anthony, not a sales team.</p></div></li>
-          <li><div><strong>A first conversation</strong><p>[30 minutes, no charge] to hear what is open and whether we are the right fit.</p></div></li>
-          <li><div><strong>A fixed-scope proposal</strong><p>If there is a fit, a readiness assessment with a fixed fee, so you can plan around it.</p></div></li>
-        </ol>
-      </div>
-
-      <div class="cx-card cx-flat cx-rv" style="width:100%">
-        <p class="cx-eyebrow">Contact details</p>
-        <dl class="cx-facts" style="margin:14px 0 0">
-          <div><dt>General</dt><dd><a href="mailto:info@complexantpartners.com">info@complexantpartners.com</a></dd></div>
-          <div><dt>Lexie Pieper</dt><dd><a href="mailto:lexiepieper@complexantpartners.com">lexiepieper@complexantpartners.com</a></dd></div>
-          <div><dt>Anthony Davis</dt><dd><a href="mailto:anthonydavis@complexantpartners.com">anthonydavis@complexantpartners.com</a></dd></div>
-          <div><dt>Address</dt><dd>Complexant Partners LLC<br />8 The Green, Suite 24683<br />Dover, DE 19901</dd></div>
-          <div><dt>Book a call</dt><dd>[Calendar booking link to come]</dd></div>
-        </dl>
-      </div>
+<!-- ============ HERO: THE FORM ============ -->
+<section class="cx-hero" id="write">
+  <div class="cx-wrap cx-contact">
+    <div class="cx-contact-intro cx-rv">
+      <p class="cx-eyebrow">Let&rsquo;s talk</p>
+      <h1>Tell us what is <em>open.</em></h1>
+      <p class="cx-lede">A few details help us reply with something useful. Only your name and email are required. <strong>A principal reads every message.</strong></p>
     </div>
 
-    <!-- ============ FORM ============ -->
-    <div class="cx-panel cx-rv" data-d="1">
-      <form class="cx-form" data-cx-form novalidate aria-describedby="cx-form-intro">
-        <div>
-          <h2 style="font-size:var(--cx-h3)">Start a conversation</h2>
-          <p class="cx-small cx-muted" id="cx-form-intro" style="margin-top:8px">Fields marked <span aria-hidden="true">*</span><span class="cx-sr">with an asterisk</span> are required.</p>
-        </div>
-
+    <div class="cx-contact-form cx-rv" data-d="1">
+      <form class="cx-form" data-cx-form novalidate aria-label="Contact form">
         <div class="cx-form-row">
           <div class="cx-fld">
             <label for="cx-name">Name <i aria-hidden="true">*</i></label>
@@ -230,43 +200,30 @@
             </select>
           </div>
           <div class="cx-fld">
-            <label for="cx-stage">Current stage</label>
-            <select id="cx-stage" name="stage">
-              <option value="">Choose a stage</option>
-              <option value="paper">Paper-based</option>
-              <option value="digitizing">Digitizing</option>
-              <option value="validated">Validated electronic systems</option>
-              <option value="automation">Automation in production</option>
-              <option value="predictive">Predictive analytics and AI</option>
-              <option value="unsure">Not sure</option>
+            <label for="cx-start">Where would you like to start?</label>
+            <select id="cx-start" name="start">
+              <option value="">Choose one</option>
+              <option value="assessment">Readiness assessment</option>
+              <option value="regulatory-risk">Regulatory Risk</option>
+              <option value="sandbox">Sandbox</option>
+              <option value="implementation">Implementation</option>
+              <option value="monitoring">Monitoring</option>
+              <option value="insights">A question for Insights</option>
+              <option value="unsure">Not sure yet</option>
             </select>
           </div>
         </div>
 
         <div class="cx-fld">
-          <label for="cx-start">Where would you like to start?</label>
-          <select id="cx-start" name="start">
-            <option value="">Choose one</option>
-            <option value="assessment">Readiness assessment</option>
-            <option value="regulatory-risk">Regulatory Risk</option>
-            <option value="sandbox">Sandbox</option>
-            <option value="implementation">Implementation</option>
-            <option value="monitoring">Monitoring</option>
-            <option value="insights">A question for Insights</option>
-            <option value="unsure">Not sure yet</option>
-          </select>
-        </div>
-
-        <div class="cx-fld">
-          <label for="cx-message">What are you trying to prove?</label>
-          <textarea id="cx-message" name="message" placeholder="Tell us where the question is open."></textarea>
+          <label for="cx-message">Message</label>
+          <textarea id="cx-message" name="message" placeholder="What are you trying to prove?"></textarea>
         </div>
 
         <p class="cx-form-msg" role="alert" aria-live="assertive"></p>
 
         <div class="cx-form-foot">
-          <p class="cx-form-note">We use these details only to reply to you. [Privacy notice link to come.] Sending opens your email app, addressed to info@complexantpartners.com.</p>
           <button class="cx-btn" type="submit">Send message</button>
+          <p class="cx-form-note">Sending opens your email app, addressed to info@complexantpartners.com. We use these details only to reply to you. [Privacy notice link to come.]</p>
         </div>
       </form>
 
@@ -278,7 +235,37 @@
         <button class="cx-ghost" type="button" data-cx-reset>Write another message</button>
       </div>
     </div>
+  </div>
+</section>
 
+<!-- ============ WHAT HAPPENS NEXT + DIRECT LINES ============ -->
+<section class="cx-section cx-section--tint">
+  <div class="cx-wrap">
+    <div class="cx-head cx-head--wide cx-rv">
+      <p class="cx-eyebrow">What happens next</p>
+      <h2>Three steps, no sales team.</h2>
+    </div>
+    <ol class="cx-after">
+      <li class="cx-rv"><h3>A reply from a principal</h3><p>Within [one business day], from Lexie or Anthony.</p></li>
+      <li class="cx-rv" data-d="1"><h3>A first conversation</h3><p>[30 minutes, no charge] to hear what is open and whether we are the right fit.</p></li>
+      <li class="cx-rv" data-d="2"><h3>A fixed-scope proposal</h3><p>If there is a fit, a readiness assessment with a fixed fee, so you can plan around it.</p></li>
+    </ol>
+
+    <dl class="cx-direct cx-rv">
+      <div><dt>General</dt><dd><a href="mailto:info@complexantpartners.com">info@complexantpartners.com</a></dd></div>
+      <div><dt>Lexie Pieper</dt><dd><a href="mailto:lexiepieper@complexantpartners.com">lexiepieper@complexantpartners.com</a></dd></div>
+      <div><dt>Anthony Davis</dt><dd><a href="mailto:anthonydavis@complexantpartners.com">anthonydavis@complexantpartners.com</a></dd></div>
+      <div><dt>Address</dt><dd>8 The Green, Suite 24683<br />Dover, DE 19901</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ MOTTO ============ -->
+<section class="cx-section">
+  <div class="cx-wrap" style="text-align:center">
+    <p class="cx-eyebrow cx-rv">Our motto</p>
+    <p class="cx-motto cx-rv" style="margin-top:28px"><span>Complexity.</span><span aria-hidden="true"></span><span>Competency.</span><span aria-hidden="true"></span><span>Clarity.</span></p>
+    <p class="cx-lede cx-rv" style="margin:24px auto 0;max-width:52ch">We take what is complex, build the competency to handle it, and leave you with the clarity to prove it.</p>
   </div>
 </section>
 

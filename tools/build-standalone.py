@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
-"""Export the home page as one self-contained file for review:
-dist/complexant-home.html.
+"""Export the site as a folder of self-contained pages for client review:
+dist/Complexant-preview/ and dist/Complexant-preview.zip.
 
-Local stylesheets and scripts are inlined, local images become data URIs,
-and the particle field's bar sprites are embedded as window.CX_SPRITES
-(the home page's loader reads them from there before falling back to the
-"Bar icon files" folder). CDN scripts and Google Fonts stay as links, and
-links to the other pages stay relative.
+Every page is written with its local stylesheets and scripts inlined and its
+local images turned into data URIs, so the pages open straight from disk with
+no server. The home page's particle sprites are embedded as window.CX_SPRITES
+(its loader reads them from there before falling back to the "Bar icon files"
+folder, which a browser won't let a file:// page read). Links between pages
+stay relative, so navigation works inside the unzipped folder. CDN scripts and
+Google Fonts stay as links and need an internet connection.
 
 Run from anywhere:  python3 tools/build-standalone.py
 """
@@ -16,10 +18,28 @@ from urllib.parse import unquote
 import json
 import mimetypes
 import re
+import shutil
 
 ROOT = Path(__file__).resolve().parent.parent
-OUT = ROOT / 'dist' / 'complexant-home.html'
+DIST = ROOT / 'dist'
+NAME = 'Complexant-preview'
+OUT = DIST / NAME
 SPRITES = ROOT / 'Bar icon files'
+PAGES = ['index', 'approach', 'regulatory-risk', 'sandbox', 'implementation',
+         'monitoring', 'who-we-serve', 'about', 'insights', 'contact']
+# the home page's particle script; the sprites go just ahead of it
+SPRITE_MARKER = '/* ============================================================\n  Continuous particle background.'
+README = """Complexant Partners - website preview
+
+1. Unzip this folder.
+2. Open index.html in Chrome, Safari or Edge.
+3. Use the menu to move between pages, as on the live site.
+
+Notes
+- The fonts load from Google Fonts, so keep an internet connection on.
+- The contact form opens your email app with the message filled in.
+- Photos and some texts are placeholders until the final content arrives.
+"""
 
 
 def data_uri(path):
@@ -42,8 +62,8 @@ def inline_css(path):
     return re.sub(r'url\((["\']?)([^)"\']+)\1\)', repl, css)
 
 
-def main():
-    html = (ROOT / 'index.html').read_text(encoding='utf-8')
+def build_page(name, sprites):
+    html = (ROOT / f'{name}.html').read_text(encoding='utf-8')
 
     # stylesheets
     html = re.sub(
@@ -61,20 +81,38 @@ def main():
     # images and the favicon
     html = re.sub(
         r'(src|href)="(assets/[^"]+\.(?:png|svg|jpg|jpeg|webp))"',
-        lambda m: f'{m.group(1)}="{data_uri(ROOT / m.group(2))}"', html)
+        lambda m: f'{m.group(1)}="{data_uri(ROOT / unquote(m.group(2)))}"', html)
 
-    # the particle sprites, ahead of the inline script that loads them
-    sprites = {p.stem: data_uri(p) for p in sorted(SPRITES.glob('*.png'))}
-    marker = '/* ============================================================\n  Continuous particle background.'
-    if marker not in html:
+    # the particle sprites, only on the page that draws them
+    if SPRITE_MARKER in html:
+        html = html.replace(
+            SPRITE_MARKER,
+            'window.CX_SPRITES = ' + json.dumps(sprites) + ';\n\n' + SPRITE_MARKER, 1)
+    elif name == 'index':
         raise SystemExit('index.html: particle script not found, sprites not embedded')
-    html = html.replace(
-        marker,
-        'window.CX_SPRITES = ' + json.dumps(sprites) + ';\n\n' + marker, 1)
 
-    OUT.parent.mkdir(exist_ok=True)
-    OUT.write_text(html, encoding='utf-8')
-    print(f'wrote  {OUT.relative_to(ROOT)} ({OUT.stat().st_size // 1024} KB)')
+    # anything local still unresolved would break once the page leaves the project
+    left = re.findall(r'(?:src|href)="(assets/[^"]+)"', html)
+    if left:
+        raise SystemExit(f'{name}.html: not inlined: {sorted(set(left))}')
+    return html
+
+
+def main():
+    sprites = {p.stem: data_uri(p) for p in sorted(SPRITES.glob('*.png'))}
+    if OUT.exists():
+        shutil.rmtree(OUT)
+    OUT.mkdir(parents=True)
+
+    for name in PAGES:
+        page = OUT / f'{name}.html'
+        page.write_text(build_page(name, sprites), encoding='utf-8')
+        print(f'wrote  {page.relative_to(ROOT)} ({page.stat().st_size // 1024} KB)')
+    (OUT / 'README.txt').write_text(README, encoding='utf-8')
+
+    # the zip holds the folder itself, so unzipping gives Complexant-preview/
+    archive = shutil.make_archive(str(DIST / NAME), 'zip', root_dir=DIST, base_dir=NAME)
+    print(f'zipped {Path(archive).relative_to(ROOT)} ({Path(archive).stat().st_size // 1024} KB)')
 
 
 if __name__ == '__main__':
