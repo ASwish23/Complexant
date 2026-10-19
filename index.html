@@ -288,7 +288,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 /* ---------- why we exist ---------- */
 /* wide measures on purpose: the title sits on two rows and the paragraph
    runs across the section instead of leaving the right half empty */
-.why-head h2{ max-width:34ch; margin-top:18px; }
+.why-head h2{ max-width:34ch; }
 .why-head .lede{ max-width:78ch; margin-top:clamp(22px,2.4vw,34px); color:var(--text-secondary); }
 
 /* ---------- what we do: the pillar cards ----------
@@ -304,7 +304,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .pillars-head{ display:grid; gap:28px; align-items:end; grid-template-columns:1fr; }
 @media (min-width:900px){ .pillars-head{ grid-template-columns:minmax(0,1fr) auto; } }
 /* two rows on wide screens, broken after the first sentence in the markup */
-.pillars-head h2{ max-width:none; margin-top:18px; }
+.pillars-head h2{ max-width:none; }
 .pillars-head .lede{ max-width:56ch; margin-top:clamp(22px,2.4vw,30px); color:var(--text-secondary); }
 .pillars-head .btn{ justify-self:start; padding:20px 40px; font-size:0.95rem; }
 
@@ -516,7 +516,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .breadth-cell:hover .cell-glyph{ opacity:1; }
 
 /* ---------- how we partner: process path ---------- */
-.path-wrap{ position:relative; margin-top:clamp(32px,4vw,56px); }
+/* one straight rail down the left of the cards, numbers on it in their discs,
+   the whole group centred under the section title */
+.path-wrap{ position:relative; margin:clamp(32px,4vw,56px) auto 0; max-width:780px; }
 .path-svg{ position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
 /* The drawn portion glows; drop-shadow only paints the stroke that is
    actually rendered, so the glow grows with the line. */
@@ -525,19 +527,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     drop-shadow(0 0 3px color-mix(in srgb, var(--copper) 85%, transparent))
     drop-shadow(0 0 12px color-mix(in srgb, var(--copper) 45%, transparent));
 }
-.path-steps{ position:relative; display:grid; gap:clamp(28px,4vw,64px); }
-/* Below the map breakpoint the connector collapses to a vertical rail down
-   the left, so the cards are inset to clear it. */
-@media (max-width:899px){
-  .path-steps{ padding-left:clamp(54px, 15vw, 76px); }
-}
+/* the cards are inset to clear the rail; the rail runs down the middle of that inset */
+.path-steps{ position:relative; display:grid; gap:clamp(28px,3vw,44px); padding-left:clamp(54px, 15vw, 76px); }
 @media (min-width:900px){
-  /* one card per row, alternating sides, so every segment of the path gets a
-     full row of vertical travel */
-  .path-steps{ grid-template-columns:1fr; }
-  .path-steps .step{ max-width:min(460px, 38%); }
-  .path-steps .step:nth-child(even){ margin-left:auto; }
+  .path-steps{ padding-left:calc(var(--node-size) * 1.5 + 12px); }
 }
+.path-steps .step{ max-width:none; }
 .step{
   position:relative;
   padding:clamp(22px,2.2vw,34px);
@@ -794,8 +789,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 <section class="section dark-section" id="why">
   <div class="inner">
     <div class="why-head reveal">
-      <p class="eyebrow">Why we exist</p>
-      <h2>Regulated operations are evolving faster than the confidence to trust them.</h2>
+      <h2>We exist because innovation is outpacing the confidence to trust it.</h2>
       <p class="lede">Every new tool, model and expectation arrives faster than the governance built to hold it. Teams are told to adopt or fall behind, then left to answer for it alone &mdash; in front of an inspector who will ask exactly one question: who approved this, and on what evidence?</p>
     </div>
   </div>
@@ -806,8 +800,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   <div class="inner">
     <div class="pillars-head">
       <div class="reveal">
-        <p class="eyebrow">What we do</p>
-        <h2>More than a QA consulting.<br />Four Pillars. Start with any one.</h2>
+        <h2>Our four pillars of service.<br />Start with any one.</h2>
         <p class="lede">Each pillar stands on its own. Start where your need is today, and add the others when they help.</p>
       </div>
       <a class="btn reveal" href="approach.html">
@@ -1070,6 +1063,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
       <a href="index.html" class="brand" aria-label="Complexant Partners LLC, home"><span class="brand-type"><span class="brand-name">COMPLE<span class="copper-metal">X</span>ANT</span><span class="brand-sub">PARTNERS</span><span class="brand-llc">LLC</span></span></a>
       <p class="footer-motto">Complexity &middot; Competency &middot; Clarity</p>
       <p><a class="footer-mail" href="mailto:info@complexantpartners.com">info@complexantpartners.com</a></p>
+      <p class="footer-msg"><a class="btn" href="mailto:info@complexantpartners.com"><span class="btn-bg"></span><span>Send us a message</span></a></p>
     </div>
 
     <nav class="footer-links" aria-label="Footer">
@@ -1322,22 +1316,14 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
       if (!wrapRect.width || !wrapRect.height) return;
       svg.setAttribute('viewBox', '0 0 ' + wrapRect.width + ' ' + wrapRect.height);
 
-      // Below 900px the cards are a single column, so every waypoint
-      // collapses onto one x and the path becomes a straight rail.
-      const wide = window.matchMedia('(min-width:900px)').matches;
+      // The cards are a single column, so every waypoint sits on one x, in
+      // the middle of the cards' inset, and the path is a straight rail.
       const stepsEl = wrap.querySelector('.path-steps');
       const railX = (parseFloat(getComputedStyle(stepsEl).paddingLeft) || 36) / 2;
-      const mid = wrapRect.width / 2;
 
       const pts = steps.map(step => {
         const r = step.getBoundingClientRect();
-        const top = r.top - wrapRect.top;
-        if (!wide) return { x: railX, y: top + r.height / 2 };
-        const isLeftColumn = (r.left - wrapRect.left + r.width / 2) < mid;
-        return {
-          x: isLeftColumn ? r.right - wrapRect.left + 34 : r.left - wrapRect.left - 34,
-          y: top + r.height / 2,
-        };
+        return { x: railX, y: r.top - wrapRect.top + r.height / 2 };
       });
       if (pts.length < 2) return;
 
@@ -1452,6 +1438,9 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   const SWEEP_SLOPE = 1.6;      // tilt of the light's edge: x + SLOPE*y = const
   const SWEEP_SOFT = 0.09;      // width of the lit band, share of the distance it travels
   const GLINT_RUN = 0.9;        // seconds of a bar's own occasional glint between passes
+  // scattered, every bar is this one colour (Pale Teal, as the small caps labels);
+  // only the formed mark keeps the logo's own finishes
+  const SCATTER_COLOR = '#B7D6D2';
   /* ------------------ */
 
   const smoothstep = (a, b, t) => {
@@ -1620,12 +1609,23 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
     g.fillRect(0, 0, 64, 64);
   }
 
+  // the bar's silhouette in the scatter colour, for when it has left the mark
+  function tinted(src){
+    const c = canvasOf(src.width, src.height), g = c.getContext('2d');
+    g.drawImage(src, 0, 0);
+    g.globalCompositeOperation = 'source-in';
+    g.fillStyle = SCATTER_COLOR;
+    g.fillRect(0, 0, c.width, c.height);
+    return c;
+  }
+  const withTint = (s) => { s.tint = s.base.map(tinted); return s; };
+
   const files = [...new Set(Object.values(FINISHES).flat().map((n) => n.replace('silver:', '')))];
   const spritesReady = Promise.all(files.map((name) => new Promise((done) => {
     const img = new Image();
     img.onload = () => {
-      sprites[name] = prepare(img);
-      if (FINISHES.silver.includes('silver:' + name)) sprites['silver:' + name] = prepareSilver(img);
+      sprites[name] = withTint(prepare(img));
+      if (FINISHES.silver.includes('silver:' + name)) sprites['silver:' + name] = withTint(prepareSilver(img));
       done();
     };
     img.onerror = done;
@@ -1905,10 +1905,19 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
       // drawn in the bar's own frame: centred on (px, py), long axis down
       if (ang) sctx.setTransform(dpr * Math.cos(ang), dpr * Math.sin(ang), -dpr * Math.sin(ang), dpr * Math.cos(ang), dpr * px, dpr * py);
       else sctx.setTransform(dpr, 0, 0, dpr, dpr * px, dpr * py);
-      sctx.globalAlpha = alpha;
-      drawBar(sprite.base[p.flip], 0, -bh * 0.5, bw, bh);
+      // the colour follows the formation: pale teal while scattered, the
+      // logo's own finish as the bar settles into the mark
+      if (e < 0.995){
+        sctx.globalAlpha = alpha * (1 - e);
+        drawBar(sprite.tint[p.flip], 0, -bh * 0.5, bw, bh);
+      }
+      if (e > 0.005){
+        sctx.globalAlpha = alpha * e;
+        drawBar(sprite.base[p.flip], 0, -bh * 0.5, bw, bh);
+      }
 
-      if (sprite.glint){
+      // the copper only catches the light once it is back in the mark
+      if (sprite.glint && e > 0.005){
         /* --- light on the copper: the passing sweep, or between passes the
                bar's own brief glint; whichever is brighter right now --- */
         let gk = 0, gu = 0.5;
@@ -1930,11 +1939,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
                              / (GLINT_TO - GLINT_FROM) * (GLINT_FRAMES - 1));
           if (p.flip) f = GLINT_FRAMES - 1 - f;   // flipped frames hold the band mirrored
           sctx.globalCompositeOperation = 'lighter';
-          sctx.globalAlpha = alpha * gk;
+          sctx.globalAlpha = alpha * gk * e;
           drawBar(sprite.glint[p.flip][f], 0, -bh * 0.5, bw, bh);
           if (gu > 0 && gu < 1){
             const rad = Math.max(bw, 3) * 3.2;
-            sctx.globalAlpha = alpha * gk * 0.55 * Math.sin(Math.PI * gu);
+            sctx.globalAlpha = alpha * gk * e * 0.55 * Math.sin(Math.PI * gu);
             sctx.drawImage(bloom, -rad, -bh * 0.5 + gu * bh - rad, rad * 2, rad * 2);
           }
           sctx.globalCompositeOperation = 'source-over';

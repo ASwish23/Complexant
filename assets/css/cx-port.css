@@ -138,7 +138,8 @@ button{ font:inherit; color:inherit; }
 .cx-section--tight{ padding-top:clamp(36px, 4vw, 56px); }
 .cx-head{ display:grid; gap:18px; max-width:62ch; margin-bottom:clamp(32px, 3.6vw, 52px); }
 .cx-head--center{ margin-left:auto; margin-right:auto; text-align:center; justify-items:center; }
-.cx-head h2{ max-width:18ch; }
+/* wide enough for a two-tone title (topic + message) to sit on two lines */
+.cx-head h2{ max-width:26ch; }
 /* a head whose title runs as wide as it needs, as on the home page */
 .cx-head--wide h2{ max-width:none; }
 
@@ -173,11 +174,8 @@ button{ font:inherit; color:inherit; }
   padding-right:max(var(--cx-gutter), calc((100% - var(--cx-max)) / 2));
 }
 
-/* the copper X in running text (the About page's "Lex, Ant, and the X") */
-.cx-x{
-  background:var(--cx-copper-metal); background-size:200% 100%;
-  -webkit-background-clip:text; background-clip:text; color:transparent;
-}
+/* the X in running text (the About page's "Lex, Ant, and the X"): white, not copper */
+.cx-x{ color:var(--cx-ink); }
 
 /* ============================================================
    Buttons & links
@@ -192,14 +190,12 @@ button{ font:inherit; color:inherit; }
   cursor:pointer; white-space:nowrap;
   transition:transform var(--cx-speed) var(--cx-spring), opacity var(--cx-speed) var(--cx-ease);
 }
-/* Copper: the single apex action in any view */
-.cx-btn{
-  border:1px solid color-mix(in srgb, var(--cx-copper-light) 45%, transparent);
-  color:var(--cx-ink);
-  background:var(--cx-copper-metal);
-  background-size:180% 100%;
-  text-shadow:0 1px 2px color-mix(in srgb, var(--cx-copper-dark) 80%, transparent);
-  box-shadow:0 10px 30px -12px color-mix(in srgb, var(--cx-copper) 70%, transparent), inset 0 1px 0 color-mix(in srgb, var(--cx-copper-light) 60%, transparent);
+/* Every button is the same solid pale teal with navy type */
+.cx-btn, .cx-ghost{
+  border:1px solid var(--cx-teal-pale);
+  color:var(--cx-bg);
+  background:var(--cx-teal-pale);
+  box-shadow:0 12px 30px -16px color-mix(in srgb, var(--cx-teal-pale) 60%, transparent), inset 0 1px 0 color-mix(in srgb, var(--cx-ink) 55%, transparent);
 }
 .cx-btn::after{
   content:""; position:absolute; inset:0; z-index:-1;
@@ -211,14 +207,9 @@ button{ font:inherit; color:inherit; }
 @media (prefers-reduced-motion: no-preference){
   .cx-btn:hover::after, .cx-btn:focus-visible::after{ transform:translateX(120%); transition:transform 0.9s var(--cx-ease); }
 }
-.cx-ghost{
-  border:1px solid var(--cx-hairline-strong);
-  color:var(--cx-ink);
-  background:transparent;
-}
 .cx-ghost::before{
   content:""; position:absolute; inset:0; z-index:-1; border-radius:inherit;
-  background:color-mix(in srgb, var(--cx-teal) 26%, transparent);
+  background:var(--cx-ink);
   transform:scaleX(0); transform-origin:left center;
   transition:transform 0.5s var(--cx-ease);
 }
@@ -320,7 +311,8 @@ button.cx-chip[aria-pressed="true"]{ background:color-mix(in srgb, var(--cx-teal
   -webkit-background-clip:text; background-clip:text;
   color:transparent; -webkit-text-fill-color:transparent;
 }
-/* service pages: the card numbers read as a figure, not a footnote */
+/* service pages and Who We Serve: the card numbers read as a figure, not a footnote */
+body[data-cx-page="who-we-serve"] .cx-num,
 body[data-cx-page="regulatory-risk"] .cx-num,
 body[data-cx-page="sandbox"] .cx-num,
 body[data-cx-page="implementation"] .cx-num,
@@ -694,7 +686,15 @@ body[data-cx-page="contact"] .cx-hero::after{ display:none; }
 .cx-principal:hover .cx-person-photo::before, .cx-principal:focus-within .cx-person-photo::before{ opacity:0.1; }
 
 .cx-motto{ display:flex; flex-wrap:wrap; justify-content:center; align-items:baseline; gap:clamp(12px, 3vw, 44px); font-family:var(--cx-display); font-size:var(--cx-h2); letter-spacing:-0.03em; line-height:1.1; }
-.cx-motto span:nth-child(even){ width:8px; height:8px; border-radius:50%; background:var(--cx-teal); align-self:center; }
+/* the copper point between the words, the same metal as the home page's motto */
+.cx-motto span:nth-child(even){
+  width:10px; height:10px; border-radius:50%; align-self:center;
+  background:linear-gradient(145deg,
+    color-mix(in srgb, var(--cx-copper) 40%, var(--cx-ink) 60%) 0%,
+    var(--cx-copper) 50%,
+    color-mix(in srgb, var(--cx-copper) 70%, var(--cx-bg) 30%) 100%);
+  box-shadow:0 0 12px color-mix(in srgb, var(--cx-copper) 45%, transparent);
+}
 .cx-values{ display:grid; border-top:1px solid var(--cx-hairline); }
 .cx-values li{ display:grid; gap:6px 32px; padding:22px 0; border-bottom:1px solid var(--cx-hairline); }
 @media (min-width:760px){ .cx-values li{ grid-template-columns:minmax(0, 0.7fr) minmax(0, 1.3fr); align-items:baseline; } }
@@ -789,10 +789,12 @@ body[data-cx-page="contact"] .cx-hero::after{ display:none; }
   border:1px dashed var(--cx-hairline-strong);
   font-size:11px; letter-spacing:0.16em; text-transform:uppercase; color:var(--cx-silver);
 }
+/* disabled: the same pale teal as every other button, held back */
 .cx-soon-btn{
   min-height:54px; padding:15px 30px; border-radius:999px;
-  border:1px solid var(--cx-hairline-strong); background:transparent;
-  font-family:var(--cx-sans); font-size:var(--cx-text-s); letter-spacing:0.01em; color:var(--cx-silver);
+  border:1px solid var(--cx-teal-pale); background:var(--cx-teal-pale);
+  font-family:var(--cx-sans); font-size:var(--cx-text-s); letter-spacing:0.01em; color:var(--cx-bg);
+  opacity:0.5;
   cursor:not-allowed;
 }
 

@@ -113,6 +113,68 @@
     });
   }
 
+  /* ---------- footer "Send us a message" ----------
+     The button is a plain mailto: link, which hands over to whatever mail app
+     the device has. A laptop with none set up gives no sign at all, so if the
+     page still has focus a moment after the click, a note appears offering to
+     copy the address instead. */
+  var msgLink = document.querySelector('.footer-msg a');
+  if (msgLink) {
+    var address = msgLink.getAttribute('href').replace(/^mailto:/, '').split('?')[0];
+    var msgNote = null;
+    var msgTimer = 0;
+
+    var copyAddress = function (done) {
+      var fallback = function () {
+        var t = document.createElement('textarea');
+        t.value = address;
+        t.setAttribute('readonly', '');
+        t.style.position = 'fixed';
+        t.style.opacity = '0';
+        document.body.appendChild(t);
+        t.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (err) { /* leave ok false */ }
+        document.body.removeChild(t);
+        done(ok);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(address).then(function () { done(true); }, fallback);
+      } else {
+        fallback();
+      }
+    };
+
+    var showMsgNote = function () {
+      msgNote = document.createElement('p');
+      msgNote.className = 'footer-msg-note';
+      msgNote.setAttribute('role', 'status');
+      var text = document.createElement('span');
+      text.textContent = 'Nothing opened? This device may not have a mail app set up. ';
+      var copy = document.createElement('button');
+      copy.type = 'button';
+      copy.className = 'footer-copy';
+      copy.textContent = 'Copy our address';
+      copy.addEventListener('click', function () {
+        copyAddress(function (ok) {
+          text.textContent = ok ? address + ' is copied. Paste it into any mail app. ' : 'Write to ' + address + ' from any mail app. ';
+          copy.hidden = true;
+        });
+      });
+      msgNote.appendChild(text);
+      msgNote.appendChild(copy);
+      msgLink.parentNode.insertAdjacentElement('afterend', msgNote);
+    };
+
+    msgLink.addEventListener('click', function () {
+      clearTimeout(msgTimer);
+      msgTimer = setTimeout(function () {
+        // a mail app opening takes focus from the page; no change means nothing opened
+        if (!msgNote && !document.hidden && document.hasFocus()) showMsgNote();
+      }, 1500);
+    });
+  }
+
   /* ---------- Escape closes whichever layer is open ---------- */
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;

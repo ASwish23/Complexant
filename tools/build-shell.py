@@ -252,6 +252,7 @@ def footer_block(page):
       {brand(signal=False)}
       <p class="footer-motto">{MOTTO}</p>
       <p><a class="footer-mail" href="mailto:{EMAIL}">{EMAIL}</a></p>
+      <p class="footer-msg"><a class="btn" href="mailto:{EMAIL}"><span class="btn-bg"></span><span>Send us a message</span></a></p>
     </div>
 
     <nav class="footer-links" aria-label="Footer">

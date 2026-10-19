@@ -128,6 +128,9 @@ function cxBoot(){
   const SWEEP_SLOPE = 1.6;      // tilt of the light's edge: x + SLOPE*y = const
   const SWEEP_SOFT = 0.09;      // width of the lit band, share of the distance it travels
   const GLINT_RUN = 0.9;        // seconds of a bar's own occasional glint between passes
+  // scattered, every bar is this one colour (Pale Teal, as the small caps labels);
+  // only the formed mark keeps the logo's own finishes
+  const SCATTER_COLOR = '#B7D6D2';
   /* ------------------ */
 
   const smoothstep = (a, b, t) => {
@@ -314,12 +317,23 @@ function cxBoot(){
     g.fillRect(0, 0, 64, 64);
   }
 
+  // the bar's silhouette in the scatter colour, for when it has left the mark
+  function tinted(src){
+    const c = canvasOf(src.width, src.height), g = c.getContext('2d');
+    g.drawImage(src, 0, 0);
+    g.globalCompositeOperation = 'source-in';
+    g.fillStyle = SCATTER_COLOR;
+    g.fillRect(0, 0, c.width, c.height);
+    return c;
+  }
+  const withTint = (s) => { s.tint = s.base.map(tinted); return s; };
+
   const files = [...new Set(Object.values(FINISHES).flat().map((n) => n.replace('silver:', '')))];
   const spritesReady = Promise.all(files.map((name) => new Promise((done) => {
     const img = new Image();
     img.onload = () => {
-      sprites[name] = prepare(img);
-      if (FINISHES.silver.includes('silver:' + name)) sprites['silver:' + name] = prepareSilver(img);
+      sprites[name] = withTint(prepare(img));
+      if (FINISHES.silver.includes('silver:' + name)) sprites['silver:' + name] = withTint(prepareSilver(img));
       done();
     };
     img.onerror = done;
@@ -595,10 +609,19 @@ function cxBoot(){
       // drawn in the bar's own frame: centred on (px, py), long axis down
       if (ang) sctx.setTransform(dpr * Math.cos(ang), dpr * Math.sin(ang), -dpr * Math.sin(ang), dpr * Math.cos(ang), dpr * px, dpr * py);
       else sctx.setTransform(dpr, 0, 0, dpr, dpr * px, dpr * py);
-      sctx.globalAlpha = alpha;
-      drawBar(sprite.base[p.flip], 0, -bh * 0.5, bw, bh);
+      // the colour follows the formation: pale teal while scattered, the
+      // logo's own finish as the bar settles into the mark
+      if (e < 0.995){
+        sctx.globalAlpha = alpha * (1 - e);
+        drawBar(sprite.tint[p.flip], 0, -bh * 0.5, bw, bh);
+      }
+      if (e > 0.005){
+        sctx.globalAlpha = alpha * e;
+        drawBar(sprite.base[p.flip], 0, -bh * 0.5, bw, bh);
+      }
 
-      if (sprite.glint){
+      // the copper only catches the light once it is back in the mark
+      if (sprite.glint && e > 0.005){
         /* --- light on the copper: the passing sweep, or between passes the
                bar's own brief glint; whichever is brighter right now --- */
         let gk = 0, gu = 0.5;
@@ -620,11 +643,11 @@ function cxBoot(){
                              / (GLINT_TO - GLINT_FROM) * (GLINT_FRAMES - 1));
           if (p.flip) f = GLINT_FRAMES - 1 - f;   // flipped frames hold the band mirrored
           sctx.globalCompositeOperation = 'lighter';
-          sctx.globalAlpha = alpha * gk;
+          sctx.globalAlpha = alpha * gk * e;
           drawBar(sprite.glint[p.flip][f], 0, -bh * 0.5, bw, bh);
           if (gu > 0 && gu < 1){
             const rad = Math.max(bw, 3) * 3.2;
-            sctx.globalAlpha = alpha * gk * 0.55 * Math.sin(Math.PI * gu);
+            sctx.globalAlpha = alpha * gk * e * 0.55 * Math.sin(Math.PI * gu);
             sctx.drawImage(bloom, -rad, -bh * 0.5 + gu * bh - rad, rad * 2, rad * 2);
           }
           sctx.globalCompositeOperation = 'source-over';
