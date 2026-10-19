@@ -320,6 +320,11 @@ button.cx-chip[aria-pressed="true"]{ background:color-mix(in srgb, var(--cx-teal
   -webkit-background-clip:text; background-clip:text;
   color:transparent; -webkit-text-fill-color:transparent;
 }
+/* service pages: the card numbers read as a figure, not a footnote */
+body[data-cx-page="regulatory-risk"] .cx-num,
+body[data-cx-page="sandbox"] .cx-num,
+body[data-cx-page="implementation"] .cx-num,
+body[data-cx-page="monitoring"] .cx-num{ font-size:1.575rem; line-height:1; letter-spacing:0.02em; }
 a.cx-card{ display:block; }
 a.cx-card:active{ transform:translateY(-2px); }
 
