@@ -998,3 +998,25 @@ body[data-cx-page="contact"] .cx-hero::after{ display:none; }
 .cx-direct a:active{ opacity:0.7; }
 .cx-contact .cx-form-foot{ justify-content:flex-start; }
 .cx-contact .cx-form-note{ max-width:40ch; }
+
+/* GDPR consent on the contact form */
+.cx-consent{ display:flex; gap:12px; align-items:flex-start; font-size:13px; line-height:1.6; color:var(--cx-text-2); }
+.cx-consent label{ text-transform:none; letter-spacing:0; font-weight:400; font-size:13px; color:inherit; cursor:pointer; }
+.cx-consent .cx-consent-req{ color:var(--cx-teal-pale); }
+.cx-consent a{ color:var(--cx-teal-pale); text-decoration:underline; text-underline-offset:3px; transition:color var(--cx-speed) var(--cx-ease), opacity var(--cx-speed) var(--cx-ease); }
+.cx-consent a:hover, .cx-consent a:focus-visible{ color:var(--cx-ink); }
+.cx-consent a:active{ opacity:0.7; }
+.cx-consent input[type="checkbox"]{
+  flex:none; appearance:none; -webkit-appearance:none; width:20px; height:20px; margin-top:2px; border-radius:5px; cursor:pointer;
+  background:color-mix(in srgb, var(--cx-silver) 13%, transparent);
+  border:1px solid color-mix(in srgb, var(--cx-silver) 45%, transparent);
+  display:grid; place-content:center;
+  transition:border-color var(--cx-speed) var(--cx-ease), background-color var(--cx-speed) var(--cx-ease);
+}
+.cx-consent input[type="checkbox"]::after{ content:""; width:10px; height:6px; border-left:2px solid var(--cx-bg); border-bottom:2px solid var(--cx-bg); transform:rotate(-45deg) scale(0); margin-top:-2px; transition:transform var(--cx-speed) var(--cx-ease); }
+.cx-consent input[type="checkbox"]:checked{ background:var(--cx-teal-pale); border-color:var(--cx-teal-pale); }
+.cx-consent input[type="checkbox"]:checked::after{ transform:rotate(-45deg) scale(1); }
+.cx-consent input[type="checkbox"]:hover{ border-color:var(--cx-teal-pale); }
+.cx-consent input[type="checkbox"]:focus-visible{ outline:2px solid var(--cx-teal-pale); outline-offset:3px; }
+.cx-consent input[type="checkbox"]:active{ transform:scale(0.92); }
+.cx-consent input[aria-invalid="true"]{ border-color:var(--cx-copper-light); }

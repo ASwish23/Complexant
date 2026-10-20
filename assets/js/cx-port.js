@@ -298,11 +298,14 @@
       var errors = [];
       name.setAttribute('aria-invalid', String(!name.value.trim()));
       email.setAttribute('aria-invalid', String(!EMAIL.test(email.value.trim())));
+      var consent = form.elements.consent;
+      if (consent) consent.setAttribute('aria-invalid', String(!consent.checked));
       if (!name.value.trim()) errors.push('add your name');
       if (!EMAIL.test(email.value.trim())) errors.push('enter an email address like you@company.com');
+      if (consent && !consent.checked) errors.push('tick the consent box');
       if (errors.length) {
         msg.textContent = 'To send this, ' + errors.join(' and ') + '.';
-        (name.getAttribute('aria-invalid') === 'true' ? name : email).focus();
+        (name.getAttribute('aria-invalid') === 'true' ? name : email.getAttribute('aria-invalid') === 'true' ? email : consent).focus();
         return;
       }
       msg.textContent = '';
@@ -312,7 +315,7 @@
         ['Sector', 'sector'], ['Stage', 'stage'], ['Where to start', 'start']]
         .filter(function (f) { return val(f[1]); })
         .map(function (f) { return f[0] + ': ' + val(f[1]); })
-        .concat(['', val('message')]).join('\n');
+        .concat(['', val('message'), '', 'GDPR consent: given on the website form on ' + new Date().toISOString().slice(0, 10)]).join('\n');
       window.location.href = 'mailto:info@complexantpartners.com?subject=' +
         encodeURIComponent('Website inquiry from ' + val('name')) + '&body=' + encodeURIComponent(body);
       form.hidden = true;
