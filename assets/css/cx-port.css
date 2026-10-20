@@ -694,7 +694,7 @@ body[data-cx-page="contact"] .cx-hero::after{ display:none; }
 .cx-principal:hover .cx-person-photo::before, .cx-principal:focus-within .cx-person-photo::before{ opacity:0.1; }
 
 .cx-motto{ display:flex; flex-wrap:wrap; justify-content:center; align-items:baseline; gap:clamp(12px, 3vw, 44px); font-family:var(--cx-display); font-size:var(--cx-h2); letter-spacing:-0.03em; line-height:1.1; }
-.cx-motto span:nth-child(even){ width:8px; height:8px; border-radius:50%; background:var(--cx-teal); align-self:center; }
+.cx-motto span:nth-child(even){ width:8px; height:8px; border-radius:50%; background:var(--copper); align-self:center; }
 .cx-values{ display:grid; border-top:1px solid var(--cx-hairline); }
 .cx-values li{ display:grid; gap:6px 32px; padding:22px 0; border-bottom:1px solid var(--cx-hairline); }
 @media (min-width:760px){ .cx-values li{ grid-template-columns:minmax(0, 0.7fr) minmax(0, 1.3fr); align-items:baseline; } }

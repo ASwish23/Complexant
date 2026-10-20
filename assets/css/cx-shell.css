@@ -577,6 +577,7 @@ a.brand:active{ opacity:0.7; }
 }
 .footer-mail:hover, .footer-mail:focus-visible{ color:var(--pale); }
 .footer-mail:active{ opacity:0.75; }
+.footer-btn{ margin-top:22px; text-shadow:none; }
 /* the motto sits above the email, a step up from the eyebrow size */
 .footer-motto{
   margin-bottom:14px;
