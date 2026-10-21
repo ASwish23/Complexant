@@ -175,18 +175,27 @@
   display:flex; align-items:center; justify-content:space-between; gap:20px;
   pointer-events:none;
 }
-/* content scrolls under the fixed header, so it needs a scrim to stay legible */
+/* Once the page scrolls, the header stays transparent: a lighter blue wash, like
+   the glow at the top of the page, that dissolves downward with no edge, border
+   or shadow. A soft blur, masked to fade out the same way, keeps the menu text
+   legible over content. Only opacity is animated. */
 .site-header::before{
   content:"";
   position:absolute; inset:0; z-index:-1;
   background:linear-gradient(180deg,
-    color-mix(in srgb, var(--charcoal) 92%, transparent) 0%,
-    color-mix(in srgb, var(--charcoal) 62%, transparent) 55%,
+    color-mix(in srgb, var(--blue) 62%, transparent) 0%,
+    color-mix(in srgb, var(--blue) 34%, transparent) 55%,
     transparent 100%);
+  -webkit-backdrop-filter:blur(18px);
+  backdrop-filter:blur(18px);
+  -webkit-mask-image:linear-gradient(180deg, #000 0%, #000 68%, transparent 100%);
+  mask-image:linear-gradient(180deg, #000 0%, #000 68%, transparent 100%);
   opacity:0;
   transition:opacity 0.4s var(--ease);
   pointer-events:none;
 }
+/* full opacity at rest: anything below 1 turns the bar into a backdrop root and
+   the blur would stop seeing the page behind it */
 .site-header.is-stuck::before{ opacity:1; }
 .site-header > *{ pointer-events:auto; }
 
